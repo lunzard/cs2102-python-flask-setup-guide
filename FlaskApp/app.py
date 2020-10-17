@@ -12,11 +12,11 @@ app.register_blueprint(view)
 # Config
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{username}:{password}@{host}:{port}/{database}"\
     .format(
-        username="<username>",
-        password="<password>",
+        username="postgres",
+        password="12300000",
         host="localhost",
-        port=<port number>,
-        database="<database_name>"
+        port=5432,
+        database="postgres"
     )
 app.config["SECRET_KEY"] = "A random key to use flask extensions that require encryption"
 
