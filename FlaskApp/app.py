@@ -15,7 +15,6 @@ app.config["SECRET_KEY"] = "A random key to use flask extensions that require en
 
 # Initialize other components
 db.init_app(app)
-db.session.execute("DROP TABLE petowners")
 login_manager.init_app(app)
 
 
