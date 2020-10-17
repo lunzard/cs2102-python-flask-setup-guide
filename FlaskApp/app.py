@@ -13,7 +13,7 @@ app.register_blueprint(view)
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{username}:{password}@{host}:{port}/{database}"\
     .format(
         username="postgres",
-        password="12300000",
+        password="Wgzesg",
         host="localhost",
         port=5432,
         database="postgres"
