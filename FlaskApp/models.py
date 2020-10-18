@@ -18,7 +18,7 @@ class Admins(db.Model):
     def get_id(self):
         return self.username
 
-class PetOwners(db.Model):
+class Petowners(db.Model):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     contact = db.Column(db.String, primary_key=True)
@@ -35,7 +35,7 @@ class PetOwners(db.Model):
     def get_id(self):
         return self.username
     
-class CareTakers(db.Model):
+class Caretakers(db.Model):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     contact = db.Column(db.String, primary_key=True)
