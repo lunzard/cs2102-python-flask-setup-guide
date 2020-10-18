@@ -39,7 +39,7 @@ class Caretakers(db.Model):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     contact = db.Column(db.String, primary_key=True)
-    is_part_time = db.Column(db.Boolean, nullable=False)
+    isPartTime = db.Column(db.Boolean, nullable=False)
     def is_authenticated(self):
         return True
 
