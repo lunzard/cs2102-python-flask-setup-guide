@@ -1,6 +1,5 @@
 import os
 from flask import Flask
-
 from __init__ import db, login_manager, bcrypt
 from views import view
 
