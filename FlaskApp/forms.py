@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import InputRequired, ValidationError, EqualTo
-from models import Admins, Petowners, CareTakers
+from models import Admins, Petowners, Caretakers
 
 def is_valid_name(form, field):
     if not all(map(lambda char: char.isalpha(), field.data)):
@@ -10,7 +10,7 @@ def is_valid_name(form, field):
 def is_valid_contact(self, contact):
         contact = ((Admins.query.filter_by(contact=contact.data).first()) or
                    (Petowners.query.filter_by(contact=contact.data).first()) or
-                   (CareTakers.query.filter_by(contact=contact.data).first()))
+                   (Caretakers.query.filter_by(contact=contact.data).first()))
         if contact:
             raise ValidationError('That contact is already being registered. Please choose a different one.')
 
