@@ -27,13 +27,13 @@ def render_registration_page():
         username = form.username.data
         preferred_name = form.preferred_name.data
         password = form.password.data
-        query = "SELECT * FROM web_user WHERE username = '{}'".format(username)
+        query = "SELECT * FROM admins WHERE username = '{}'".format(username)
         exists_user = db.session.execute(query).fetchone()
         if exists_user:
             form.username.errors.append("{} is already in use.".format(username))
         else:
-            query = "INSERT INTO web_user(username, preferred_name, password) VALUES ('{}', '{}', '{}')"\
-                .format(username, preferred_name, password)
+            query = "INSERT INTO admins(username, contact, password, card) VALUES ('{}', '{}', '{}', '{}')"\
+                .format(username, preferred_name, password, password)
             db.session.execute(query)
             db.session.commit()
             return "You have successfully signed up!"
