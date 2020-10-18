@@ -59,7 +59,7 @@ CREATE TABLE biddings(
 
   /* paymentmode is either 'creditcard' or 'cash' */
   paymentmode VARCHAR NOT NULL,
-  /* delivermode is either 'selfcollect' or 'ninjavan' */
+  /* delivermode is either 'pet owner deliver' or 'pick up' or 'transfer through PCS' */
   deliverymode VARCHAR NOT NULL,
 
   rating INT,

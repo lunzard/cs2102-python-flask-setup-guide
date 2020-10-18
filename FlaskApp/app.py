@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 
 from __init__ import db, login_manager
@@ -10,14 +11,9 @@ app.register_blueprint(view)
 
 
 # Config
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{username}:{password}@{host}:{port}/{database}"\
-    .format(
-        username="postgres",
-        password="zsk990612",
-        host="localhost",
-        port=5432,
-        database="cs2102project"
-    )
+DATABASE_URL = os.environ['DATABASE_URL']
+
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL+"?sslmode=require"
 app.config["SECRET_KEY"] = "A random key to use flask extensions that require encryption"
 
 # Initialize other components

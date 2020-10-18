@@ -40,6 +40,7 @@ def render_registration_page():
         if user_type == "admin":
             query = "INSERT INTO admins(username, contact, card, password) VALUES ('{}', '{}', '{}', '{}')"\
                 .format(username, contact, credit_card, password)
+
             db.session.execute(query)
             db.session.commit()
         elif user_type == "petowner":
