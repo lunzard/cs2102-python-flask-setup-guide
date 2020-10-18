@@ -5,7 +5,7 @@ class Admins(db.Model):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     contact = db.Column(db.Integer, primary_key=True)
-    credit_card = db.Column(db.Integer, nullable=True)
+    card = db.Column(db.Integer, nullable=True)
     def is_authenticated(self):
         return True
 
@@ -22,7 +22,7 @@ class PetOwners(db.Model):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     contact = db.Column(db.Integer, primary_key=True)
-    credit_card = db.Column(db.Integer, nullable=True)
+    card = db.Column(db.Integer, nullable=True)
     def is_authenticated(self):
         return True
 
