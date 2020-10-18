@@ -1,9 +1,9 @@
 from flask import Blueprint, redirect, flash, url_for, render_template
 from flask_login import current_user, login_required, login_user, logout_user
 
-from FlaskApp.__init__ import db, login_manager
-from FlaskApp.forms import LoginForm, RegistrationForm
-from FlaskApp.models import Admin, PetOwner, CareTaker
+from __init__ import db, login_manager
+from forms import LoginForm, RegistrationForm
+from models import Admin, PetOwner, CareTaker
 
 view = Blueprint("view", __name__)
 
