@@ -33,7 +33,7 @@ class RegistrationForm(FlaskForm):
         validators=[InputRequired(), is_valid_name],
         render_kw={'placeholder': 'Name'}
     )
-    user_type = StringField(
+    usertype = StringField(
         label='Usertype',
         validators=[InputRequired()],
         render_kw={'placeholder': 'User Type'}
