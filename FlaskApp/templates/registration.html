@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+
+    <link rel="stylesheet" href="static/css/style-simple.css">
+</head>
+
+<body>
+    <form class="registrationForm">
+        {{ form.hidden_tag() }}
+
+        <div class="formField">
+            {{ form.username }} {% if form.username.errors %}
+            <div class="errorMessage">
+                {% for error in form.username.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="formField">
+            {{ form.user_type }} {% if form.user_type.errors %}
+            <div class="errorMessage">
+                {% for error in form.user_type.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="formField">
+            {{ form.contact }} {% if form.contact.errors %}
+            <div class="errorMessage">
+                {% for error in form.contact.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="formField">
+            {{ form.password }} {% if form.password.errors %}
+            <div class="errorMessage">
+                {% for error in form.password.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="formField">
+            {{ form.confirm_password }} {% if form.confirm_password.errors %}
+            <div class="errorMessage">
+                {% for error in form.confirm_password.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="formField">
+            {{ form.credit_card }}
+            <!-- {% if form.credit_card.errors %}
+                <div class="errorMessage">
+                {% for error in form.credit_card.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </div>
+            {% endif %} -->
+        </div>
+
+        <div class="formField">
+            {{ form.is_part_time }}
+            <!-- {% if form.is_part_time.errors %}
+                <div class="errorMessage">
+                {% for error in form.is_part_time.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </div>
+            {% endif %} -->
+        </div>
+
+        <button id="registerButton" formmethod="post">register</button>
+    </form>
+    <p>Already registered? <a href="#">Login</a></p>
+</body>
+
+</html>
