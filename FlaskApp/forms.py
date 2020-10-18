@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField, BooleanField
 from wtforms.validators import InputRequired, ValidationError, EqualTo
-from FlaskApp.models import Admin, PetOwner, CareTaker
+from models import Admin, PetOwner, CareTaker
 
 def is_valid_name(form, field):
     if not all(map(lambda char: char.isalpha(), field.data)):
