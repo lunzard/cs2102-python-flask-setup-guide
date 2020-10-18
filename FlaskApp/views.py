@@ -3,7 +3,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 
 from __init__ import db, login_manager
 from forms import LoginForm, RegistrationForm
-from models import Admins, PetOwners, CareTakers
+from models import Admins, Petowners, CareTakers
 
 view = Blueprint("view", __name__)
 
@@ -11,7 +11,7 @@ view = Blueprint("view", __name__)
 @login_manager.user_loader
 def load_user(contact):
     contact = ((Admins.query.filter_by(contact=contact.data).first()) or
-                (PetOwners.query.filter_by(contact=contact.data).first()) or
+                (Petowners.query.filter_by(contact=contact.data).first()) or
                 (CareTakers.query.filter_by(contact=contact.data).first()))
     return contact or current_user
 
@@ -67,7 +67,7 @@ def render_login_page():
         print("password entered:", form.password.data)
     if form.validate_on_submit():
         contact = ((Admins.query.filter_by(contact=contact.data).first()) or
-                   (PetOwners.query.filter_by(contact=contact.data).first()) or
+                   (Petowners.query.filter_by(contact=contact.data).first()) or
                    (CareTakers.query.filter_by(contact=contact.data).first()))
         if contact:
             # TODO: You may want to verify if password is correct
