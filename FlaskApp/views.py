@@ -1,7 +1,6 @@
 from flask import Blueprint, redirect, flash, url_for, render_template
 from flask_login import current_user, login_required, login_user, logout_user
-
-from __init__ import db, login_manager
+from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm
 from models import Admins, Petowners, Caretakers
 
@@ -32,6 +31,7 @@ def render_registration_page():
         contact = form.contact.data
         credit_card = form.credit_card.data
         is_part_time = form.is_part_time.data
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         #query = "SELECT * FROM admins, petowners, caretakers WHERE contact = '{}'".format(contact)
         # exists_user = db.session.execute(query).fetchone()
         # if exists_user:
@@ -39,18 +39,17 @@ def render_registration_page():
         # else:
         if user_type == "admin":
             query = "INSERT INTO admins(username, contact, card, password) VALUES ('{}', '{}', '{}', '{}')"\
-                .format(username, contact, credit_card, password)
-
+                .format(username, contact, credit_card, hashed_password)
             db.session.execute(query)
             db.session.commit()
         elif user_type == "petowner":
             query = "INSERT INTO petowners(username, contact, card, password) VALUES ('{}', '{}', '{}', '{}')"\
-                .format(username, contact, credit_card, password)
+                .format(username, contact, credit_card, hashed_password)
             db.session.execute(query)
             db.session.commit()
         elif user_type == "caretaker":
             query = "INSERT INTO caretakers(username, contact, isPartTime, password) VALUES ('{}', '{}', '{}', '{}')"\
-                .format(username, contact, is_part_time, password)
+                .format(username, contact, is_part_time, hashed_password)
             db.session.execute(query)
             db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')

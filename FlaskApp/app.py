@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 
-from __init__ import db, login_manager
+from __init__ import db, login_manager, bcrypt
 from views import view
 
 app = Flask(__name__)
@@ -19,6 +19,9 @@ app.config["SECRET_KEY"] = "A random key to use flask extensions that require en
 # Initialize other components
 db.init_app(app)
 login_manager.init_app(app)
+
+
+bcrypt.init_app(app)
 
 
 if __name__ == "__main__":
