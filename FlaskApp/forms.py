@@ -18,9 +18,9 @@ def is_valid_contact(self, contact):
 #     if not all(map(lambda char: char.isnumber(), field.data)):
 #         raise ValidationError('This field should only contain numbers')
     
-# def is_valid_type(form, field):
-#     if not all(map("pet owner", "admin", "caretaker")):
-#         raise ValidationError('Please input valid user types such as pet owner, admin and caretaker')
+def is_valid_type(form, field):
+    if not all(map(lambda type: type in {"pet owner", "admin", "caretaker"}, field.data)):
+        raise ValidationError('Please input valid user types such as pet owner, admin and caretaker')
     
 def agrees_terms_and_conditions(form, field):
     if not field.data:
@@ -35,7 +35,7 @@ class RegistrationForm(FlaskForm):
     )
     user_type = StringField(
         label='User Type',
-        validators=[InputRequired(), EqualTo("pet onwer", "admin", "caretaker")],
+        validators=[InputRequired(), is_valid_type],
         render_kw={'placeholder': 'User Type'}
     )
     contact = IntegerField(

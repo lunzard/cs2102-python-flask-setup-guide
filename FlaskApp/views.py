@@ -32,7 +32,7 @@ def render_registration_page():
         contact = form.contact.data
         credit_card = form.credit_card.data
         is_part_time = form.is_part_time.data
-        query = "SELECT * FROM admins, petowners, caretakers WHERE contact = '{}'".format(contact)
+        #query = "SELECT * FROM admins, petowners, caretakers WHERE contact = '{}'".format(contact)
         # exists_user = db.session.execute(query).fetchone()
         # if exists_user:
         #     form.username.errors.append("{} is already in use.".format(username))
