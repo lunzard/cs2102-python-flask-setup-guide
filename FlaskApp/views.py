@@ -18,8 +18,8 @@ def load_user(contact):
 
 @view.route("/", methods=["GET"])
 def render_dummy_page():
-    return "<h1>CS2102</h1>\
-    <h2>Flask App started successfully!</h2>"
+    return "<h1>Welcome to our CS2102 Project!</h1>\
+    <h2>First time here? Click Register! If not, Login!</h2>"
 
 
 @view.route("/registration", methods=["GET", "POST"])
