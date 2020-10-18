@@ -1,16 +1,16 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField, BooleanField
 from wtforms.validators import InputRequired, ValidationError, EqualTo
-from models import Admin, PetOwner, CareTaker
+from models import Admins, PetOwners, CareTakers
 
 def is_valid_name(form, field):
     if not all(map(lambda char: char.isalpha(), field.data)):
         raise ValidationError('This field should only contain alphabets')
 
 def is_valid_contact(self, contact):
-        contact = ((Admin.query.filter_by(contact=contact.data).first()) or
-                   (PetOwner.query.filter_by(contact=contact.data).first()) or
-                   (CareTaker.query.filter_by(contact=contact.data).first()))
+        contact = ((Admins.query.filter_by(contact=contact.data).first()) or
+                   (PetOwners.query.filter_by(contact=contact.data).first()) or
+                   (CareTakers.query.filter_by(contact=contact.data).first()))
         if contact:
             raise ValidationError('That contact is already being registered. Please choose a different one.')
 

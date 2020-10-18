@@ -1,7 +1,7 @@
 from __init__ import db
 
 
-class Admin(db.Model):
+class Admins(db.Model):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     contact = db.Column(db.Integer, primary_key=True)
@@ -18,7 +18,7 @@ class Admin(db.Model):
     def get_id(self):
         return self.username
 
-class PetOwner(db.Model):
+class PetOwners(db.Model):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     contact = db.Column(db.Integer, primary_key=True)
@@ -35,7 +35,7 @@ class PetOwner(db.Model):
     def get_id(self):
         return self.username
     
-class CareTaker(db.Model):
+class CareTakers(db.Model):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     contact = db.Column(db.Integer, primary_key=True)
