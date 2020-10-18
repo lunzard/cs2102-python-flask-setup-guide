@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, IntegerField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import InputRequired, ValidationError, EqualTo
 from models import Admins, PetOwners, CareTakers
 
@@ -38,7 +38,7 @@ class RegistrationForm(FlaskForm):
         validators=[InputRequired(), is_valid_type],
         render_kw={'placeholder': 'User Type'}
     )
-    contact = IntegerField(
+    contact = StringField(
         label='Contact',
         validators=[InputRequired(), is_valid_contact],
         render_kw={'placeholder': 'Contact'}
@@ -53,7 +53,7 @@ class RegistrationForm(FlaskForm):
         validators=[InputRequired(), EqualTo('password')],
         render_kw={'placeholder': 'Confirmed Password'}
     )
-    credit_card = IntegerField(
+    credit_card = StringField(
         label='Credit Card',
         render_kw={'placeholder': 'Credit Card'}
     )
@@ -69,7 +69,7 @@ class LoginForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Name', 'class': 'input100'}
     )
-    contact = IntegerField(
+    contact = StringField(
         label='Contact',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Contact', 'class': 'input100'}
