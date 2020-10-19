@@ -72,7 +72,7 @@ def render_login_page():
         else:
             print("not found", flush=False)
             flash('Login unsuccessful. Please check your contact and password', 'danger')
-    return render_template("index.html", form=form)
+    return render_template("realLogin.html", form=form)
 
 @view.route("/logout")
 def logout():
