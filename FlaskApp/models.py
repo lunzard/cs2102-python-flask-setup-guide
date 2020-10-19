@@ -1,7 +1,12 @@
-from __init__ import db
+from __init__ import db, login_manager
+from flask_login import UserMixin
+
+@login_manager.user_loader
+def load_user(username):
+    return User.query.get(int(user_id))
 
 
-class Admins(db.Model):
+class Admins(db.Model, UserMixin):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     contact = db.Column(db.String, primary_key=True)

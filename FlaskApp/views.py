@@ -68,10 +68,12 @@ def render_login_page():
         contact = ((Admins.query.filter_by(contact=contact.data).first()) or
                    (Petowners.query.filter_by(contact=contact.data).first()) or
                    (Caretakers.query.filter_by(contact=contact.data).first()))
-        if contact:
+        if contact and bcrypt.check_password_hash(contact.password, form.password.data):
             # TODO: You may want to verify if password is correct
-            login_user(contact)
-            return redirect("/privileged-page")
+            login_user(contact, remember=form.remember.data)
+            return redirect("/")
+        else:
+            flash('Login unsuccessful. Please check your contact and password', 'danger')
     return render_template("index.html", form=form)
 
 @view.route("/logout")
