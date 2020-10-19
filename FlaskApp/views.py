@@ -60,13 +60,13 @@ def render_registration_page():
 def render_login_page():
     form = LoginForm()  
     if form.validate_on_submit():
-        contact = ((Admins.query.filter_by(contact=form.contact.data).first()) or
+        user = ((Admins.query.filter_by(contact=form.contact.data).first()) or
                    (Petowners.query.filter_by(contact=form.contact.data).first()) or
                    (Caretakers.query.filter_by(contact=form.contact.data).first()))
-        if contact and bcrypt.check_password_hash(contact.password, form.password.data):
+        if contact and bcrypt.check_password_hash(user.password, form.password.data):
             print("found", flush=True)
             # TODO: You may want to verify if password is correct
-            login_user(contact, remember=form.remember.data)
+            login_user(user)
             return redirect("/")
         else:
             print("not found", flush=False)

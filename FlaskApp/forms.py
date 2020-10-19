@@ -64,11 +64,6 @@ class RegistrationForm(FlaskForm):
     # submit = SubmitField('Sign Up')
 
 class LoginForm(FlaskForm):
-    username = StringField(
-        label='Name',
-        validators=[InputRequired()],
-        render_kw={'placeholder': 'Name', 'class': 'input100'}
-    )
     contact = StringField(
         label='Contact',
         validators=[InputRequired()],
