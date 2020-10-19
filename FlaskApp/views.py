@@ -63,7 +63,7 @@ def render_login_page():
         user = ((Admins.query.filter_by(contact=form.contact.data).first()) or
                    (Petowners.query.filter_by(contact=form.contact.data).first()) or
                    (Caretakers.query.filter_by(contact=form.contact.data).first()))
-        if contact and bcrypt.check_password_hash(user.password, form.password.data):
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
             print("found", flush=True)
             # TODO: You may want to verify if password is correct
             login_user(user)
