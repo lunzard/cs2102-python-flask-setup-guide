@@ -63,7 +63,7 @@ def render_login_page():
         user = ((Admins.query.filter_by(contact=form.contact.data).first()) or
                    (Petowners.query.filter_by(contact=form.contact.data).first()) or
                    (Caretakers.query.filter_by(contact=form.contact.data).first()))
-        if contact and bcrypt.check_password_hash(user.password, form.password.data):
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
             print("found", flush=True)
             # TODO: You may want to verify if password is correct
             login_user(user)
@@ -83,4 +83,7 @@ def logout():
 def render_privileged_page():
     return "<h1>Hello, {}!</h1>".format(current_user.preferred_name or current_user.username)
 
-@view.route("/index")
+@view.route("/profile")
+@login_required
+def render_profile_page():
+    return render_template("profile.html")
