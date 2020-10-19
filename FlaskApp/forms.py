@@ -1,16 +1,16 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, IntegerField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import InputRequired, ValidationError, EqualTo
-from models import Admin, PetOwner, CareTaker
+from models import Admins, Petowners, Caretakers
 
 def is_valid_name(form, field):
     if not all(map(lambda char: char.isalpha(), field.data)):
         raise ValidationError('This field should only contain alphabets')
 
 def is_valid_contact(self, contact):
-        contact = ((Admin.query.filter_by(contact=contact.data).first()) or
-                   (PetOwner.query.filter_by(contact=contact.data).first()) or
-                   (CareTaker.query.filter_by(contact=contact.data).first()))
+        contact = ((Admins.query.filter_by(contact=contact.data).first()) or
+                   (Petowners.query.filter_by(contact=contact.data).first()) or
+                   (Caretakers.query.filter_by(contact=contact.data).first()))
         if contact:
             raise ValidationError('That contact is already being registered. Please choose a different one.')
 
@@ -18,9 +18,9 @@ def is_valid_contact(self, contact):
 #     if not all(map(lambda char: char.isnumber(), field.data)):
 #         raise ValidationError('This field should only contain numbers')
     
-def is_valid_type(form, field):
-    if not all(map(lambda type: type in {"pet owner", "admin", "caretaker"}, field.data)):
-        raise ValidationError('Please input valid user types such as pet owner, admin and caretaker')
+# def is_valid_type(form, field):
+#     if not all(map(lambda type: type == "pet owner" or type == "admin" or type == "caretaker", field.data)):
+#         raise ValidationError('Please input valid user types such as pet owner, admin and caretaker')
     
 def agrees_terms_and_conditions(form, field):
     if not field.data:
@@ -33,12 +33,12 @@ class RegistrationForm(FlaskForm):
         validators=[InputRequired(), is_valid_name],
         render_kw={'placeholder': 'Name'}
     )
-    user_type = StringField(
-        label='User Type',
-        validators=[InputRequired(), is_valid_type],
+    usertype = StringField(
+        label='Usertype',
+        validators=[InputRequired()],
         render_kw={'placeholder': 'User Type'}
     )
-    contact = IntegerField(
+    contact = StringField(
         label='Contact',
         validators=[InputRequired(), is_valid_contact],
         render_kw={'placeholder': 'Contact'}
@@ -53,7 +53,7 @@ class RegistrationForm(FlaskForm):
         validators=[InputRequired(), EqualTo('password')],
         render_kw={'placeholder': 'Confirmed Password'}
     )
-    credit_card = IntegerField(
+    credit_card = StringField(
         label='Credit Card',
         render_kw={'placeholder': 'Credit Card'}
     )
@@ -69,7 +69,7 @@ class LoginForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Name', 'class': 'input100'}
     )
-    contact = IntegerField(
+    contact = StringField(
         label='Contact',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Contact', 'class': 'input100'}

@@ -1,11 +1,16 @@
-from __init__ import db
+from __init__ import db, login_manager
+from flask_login import UserMixin
+
+@login_manager.user_loader
+def load_user(username):
+    return User.query.get(int(user_id))
 
 
-class Admin(db.Model):
+class Admins(db.Model, UserMixin):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
-    contact = db.Column(db.Integer, primary_key=True)
-    credit_card = db.Column(db.Integer, nullable=True)
+    contact = db.Column(db.String, primary_key=True)
+    card = db.Column(db.String, nullable=True)
     def is_authenticated(self):
         return True
 
@@ -18,11 +23,11 @@ class Admin(db.Model):
     def get_id(self):
         return self.username
 
-class PetOwner(db.Model):
+class Petowners(db.Model):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
-    contact = db.Column(db.Integer, primary_key=True)
-    credit_card = db.Column(db.Integer, nullable=True)
+    contact = db.Column(db.String, primary_key=True)
+    card = db.Column(db.String, nullable=True)
     def is_authenticated(self):
         return True
 
@@ -35,11 +40,11 @@ class PetOwner(db.Model):
     def get_id(self):
         return self.username
     
-class CareTaker(db.Model):
+class Caretakers(db.Model):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
-    contact = db.Column(db.Integer, primary_key=True)
-    is_part_time = db.Column(db.Boolean, nullable=False)
+    contact = db.Column(db.String, primary_key=True)
+    isparttime = db.Column(db.Boolean, nullable=False)
     def is_authenticated(self):
         return True
 

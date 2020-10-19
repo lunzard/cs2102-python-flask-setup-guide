@@ -1,18 +1,17 @@
 from flask import Blueprint, redirect, flash, url_for, render_template
 from flask_login import current_user, login_required, login_user, logout_user
-
-from __init__ import db, login_manager
+from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm
-from models import Admin, PetOwner, CareTaker
+from models import Admins, Petowners, Caretakers
 
 view = Blueprint("view", __name__)
 
 
 @login_manager.user_loader
 def load_user(contact):
-    contact = ((Admin.query.filter_by(contact=contact.data).first()) or
-                (PetOwner.query.filter_by(contact=contact.data).first()) or
-                (CareTaker.query.filter_by(contact=contact.data).first()))
+    contact = ((Admins.query.filter_by(contact=contact.data).first()) or
+                (Petowners.query.filter_by(contact=contact.data).first()) or
+                (Caretakers.query.filter_by(contact=contact.data).first()))
     return contact or current_user
 
 
@@ -31,6 +30,7 @@ def render_registration_page():
         contact = form.contact.data
         credit_card = form.credit_card.data
         is_part_time = form.is_part_time.data
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         #query = "SELECT * FROM admins, petowners, caretakers WHERE contact = '{}'".format(contact)
         # exists_user = db.session.execute(query).fetchone()
         # if exists_user:
@@ -38,40 +38,39 @@ def render_registration_page():
         # else:
         if user_type == "admin":
             query = "INSERT INTO admins(username, contact, card, password) VALUES ('{}', '{}', '{}', '{}')"\
-                .format(username, contact, credit_card, password)
-
+                .format(username, contact, credit_card, hashed_password)
             db.session.execute(query)
             db.session.commit()
         elif user_type == "petowner":
             query = "INSERT INTO petowners(username, contact, card, password) VALUES ('{}', '{}', '{}', '{}')"\
-                .format(username, contact, credit_card, password)
+                .format(username, contact, credit_card, hashed_password)
             db.session.execute(query)
             db.session.commit()
         elif user_type == "caretaker":
             query = "INSERT INTO caretakers(username, contact, isPartTime, password) VALUES ('{}', '{}', '{}', '{}')"\
-                .format(username, contact, is_part_time, password)
+                .format(username, contact, is_part_time, hashed_password)
             db.session.execute(query)
             db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
-        return redirect(url_for('login'))
+        return redirect("/login")
     return render_template("registration.html", title='Registration', form=form)
 
 
 @view.route("/login", methods=["GET", "POST"])
 def render_login_page():
-    form = LoginForm()
-    if form.is_submitted():
-        print("username entered:", form.username.data)
-        print("contact entered:", form.contact.data)
-        print("password entered:", form.password.data)
+    form = LoginForm()  
     if form.validate_on_submit():
-        contact = ((Admin.query.filter_by(contact=contact.data).first()) or
-                   (PetOwner.query.filter_by(contact=contact.data).first()) or
-                   (CareTaker.query.filter_by(contact=contact.data).first()))
-        if contact:
+        contact = ((Admins.query.filter_by(contact=form.contact.data).first()) or
+                   (Petowners.query.filter_by(contact=form.contact.data).first()) or
+                   (Caretakers.query.filter_by(contact=form.contact.data).first()))
+        if contact and bcrypt.check_password_hash(contact.password, form.password.data):
+            print("found", flush=True)
             # TODO: You may want to verify if password is correct
-            login_user(contact)
-            return redirect("/privileged-page")
+            login_user(contact, remember=form.remember.data)
+            return redirect("/")
+        else:
+            print("not found", flush=False)
+            flash('Login unsuccessful. Please check your contact and password', 'danger')
     return render_template("index.html", form=form)
 
 @view.route("/logout")

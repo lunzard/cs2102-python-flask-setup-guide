@@ -4,3 +4,4 @@ __pycache__/
 venv/
 FlaskApp/venv-python37/
 FlaskApp/downloaded/
+.env
