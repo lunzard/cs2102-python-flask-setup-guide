@@ -27,11 +27,25 @@
 	<link rel="stylesheet" type="text/css" href="../static/css/util.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
 <!--===============================================================================================-->
+
+    <style>
+        .container{
+            width: 390px;
+        }
+        .buttonWrapper{
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+        #partTimeOption{
+            padding-left: 40px;
+        }
+    </style>
 </head>
 
 <body>
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('../static/images/bg-01.jpg');">
+		<div class="container-login100 container" style="background-image: url('../static/images/bg-01.jpg');">
             <form class="registrationForm login100-form">
                 {{ form.hidden_tag() }}
 
@@ -97,7 +111,7 @@
                 </div>
 
                 <div class="formField">
-                    <p>Are you a part-time caretaker? </p>
+                    <p id="partTimeOption">Are you a part-time caretaker? </p>
                     {{ form.is_part_time }}
                     <!-- {% if form.is_part_time.errors %}
                         <div class="errorMessage">
@@ -107,8 +121,9 @@
                         </div>
                     {% endif %} -->
                 </div>
-
-                <button id="registerButton" class="login100-form-btn" formmethod="post">register</button>
+                <div class="buttonWrapper m-t-32">
+                    <button id="registerButton" class="login100-form-btn" formmethod="post">register</button>
+                </div>
             </form>
         </div>
     </div>
