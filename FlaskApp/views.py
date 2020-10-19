@@ -65,9 +65,9 @@ def render_login_page():
         print("contact entered:", form.contact.data)
         print("password entered:", form.password.data)
     if form.validate_on_submit():
-        contact = ((Admins.query.filter_by(contact=contact.data).first()) or
-                   (Petowners.query.filter_by(contact=contact.data).first()) or
-                   (Caretakers.query.filter_by(contact=contact.data).first()))
+        contact = ((Admins.query.filter_by(contact=form.contact.data).first()) or
+                   (Petowners.query.filter_by(contact=form.contact.data).first()) or
+                   (Caretakers.query.filter_by(contact=form.contact.data).first()))
         if contact and bcrypt.check_password_hash(contact.password, form.password.data):
             # TODO: You may want to verify if password is correct
             login_user(contact, remember=form.remember.data)
