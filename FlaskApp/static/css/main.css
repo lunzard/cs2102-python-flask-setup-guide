@@ -128,38 +128,6 @@ iframe {
 	border: none !important;
 }
 
-.clickbutton {
-   border-top: 1px solid #96d1f8;
-   background: #cf3259;
-   background: -webkit-gradient(linear, left top, left bottom, from(#9646b0), to(#cf3259));
-   background: -webkit-linear-gradient(top, #9646b0, #cf3259);
-   background: -moz-linear-gradient(top, #9646b0, #cf3259);
-   background: -ms-linear-gradient(top, #9646b0, #cf3259);
-   background: -o-linear-gradient(top, #9646b0, #cf3259);
-   padding: 5px 10px;
-   -webkit-border-radius: 8px;
-   -moz-border-radius: 8px;
-   border-radius: 8px;
-   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-   box-shadow: rgba(0,0,0,1) 0 1px 0;
-   text-shadow: rgba(0,0,0,.4) 0 1px 0;
-   color: white;
-   font-size: 14px;
-   font-family: Georgia, serif;
-   text-decoration: none;
-   vertical-align: middle;
-   }
-.clickbutton:hover {
-   border-top-color: #630e0e;
-   background: #630e0e;
-   color: #ccc;
-   }
-.clickbutton:active {
-   border-top-color: #1b435e;
-   background: #1b435e;
-   }
-
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
 .txt1 {
