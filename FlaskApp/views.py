@@ -59,20 +59,18 @@ def render_registration_page():
 
 @view.route("/login", methods=["GET", "POST"])
 def render_login_page():
-    form = LoginForm()
-    if form.is_submitted():
-        print("username entered:", form.username.data)
-        print("contact entered:", form.contact.data)
-        print("password entered:", form.password.data)
+    form = LoginForm()  
     if form.validate_on_submit():
         contact = ((Admins.query.filter_by(contact=form.contact.data).first()) or
                    (Petowners.query.filter_by(contact=form.contact.data).first()) or
                    (Caretakers.query.filter_by(contact=form.contact.data).first()))
         if contact and bcrypt.check_password_hash(contact.password, form.password.data):
+            print("found", flush=True)
             # TODO: You may want to verify if password is correct
             login_user(contact, remember=form.remember.data)
             return redirect("/")
         else:
+            print("not found", flush=False)
             flash('Login unsuccessful. Please check your contact and password', 'danger')
     return render_template("index.html", form=form)
 
