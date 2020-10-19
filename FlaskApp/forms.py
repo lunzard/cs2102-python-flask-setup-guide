@@ -31,35 +31,35 @@ class RegistrationForm(FlaskForm):
     username = StringField(
         label='Name',
         validators=[InputRequired(), is_valid_name],
-        render_kw={'placeholder': 'Name'}
+        render_kw={'placeholder': 'Name', 'class': 'input100'}
     )
     usertype = StringField(
         label='Usertype',
         validators=[InputRequired()],
-        render_kw={'placeholder': 'User Type'}
+        render_kw={'placeholder': 'User Type', 'class': 'input100'}
     )
     contact = StringField(
         label='Contact',
         validators=[InputRequired(), is_valid_contact],
-        render_kw={'placeholder': 'Contact'}
+        render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
     password = PasswordField(
         label='Password',
         validators=[InputRequired()],
-        render_kw={'placeholder': 'Password'}
+        render_kw={'placeholder': 'Password', 'class': 'input100'}
     )
     confirm_password = PasswordField(
         label='Confirm Password',
         validators=[InputRequired(), EqualTo('password')],
-        render_kw={'placeholder': 'Confirmed Password'}
+        render_kw={'placeholder': 'Confirmed Password', 'class': 'input100'}
     )
     credit_card = StringField(
         label='Credit Card',
-        render_kw={'placeholder': 'Credit Card'}
+        render_kw={'placeholder': 'Credit Card', 'class': 'input100'}
     )
     is_part_time = BooleanField(
         label='Is Part Time',
-        render_kw={'placeholder': 'Is Part Time'}
+        render_kw={'placeholder': 'Is Part Time','class': 'input100'}
     )
     # submit = SubmitField('Sign Up')
 

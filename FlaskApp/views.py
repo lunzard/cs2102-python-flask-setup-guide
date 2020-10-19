@@ -82,3 +82,8 @@ def logout():
 @login_required
 def render_privileged_page():
     return "<h1>Hello, {}!</h1>".format(current_user.preferred_name or current_user.username)
+
+@view.route("/profile")
+@login_required
+def render_profile_page():
+    return render_template("profile.html")
