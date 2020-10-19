@@ -6,36 +6,50 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="/FlaskApp/static/images/icons/favicon.ico"/>
+	<link rel="icon" type="image/png" href="../static/images/icons/favicon.ico"/>
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/FlaskApp/static/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/FlaskApp/static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/FlaskApp/static/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/FlaskApp/static/vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="../static/vendor/animate/animate.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/FlaskApp/static/vendor/css-hamburgers/hamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/vendor/css-hamburgers/hamburgers.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/FlaskApp/static/vendor/animsition/css/animsition.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/vendor/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/FlaskApp/static/vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/vendor/select2/select2.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/FlaskApp/static/vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="../static/vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/FlaskApp/static/css/util.css">
-	<link rel="stylesheet" type="text/css" href="/FlaskApp/static/css/main.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/util.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
 <!--===============================================================================================-->
+
+    <style>
+        .container{
+            width: 390px;
+        }
+        .buttonWrapper{
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+        #partTimeOption{
+            padding-left: 40px;
+        }
+    </style>
 </head>
 
 <body>
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('static/images/bg-01.jpg');">
-            <form class="registrationForm">
+		<div class="container-login100 container" style="background-image: url('../static/images/bg-01.jpg');">
+            <form class="registrationForm login100-form">
                 {{ form.hidden_tag() }}
 
-                <div class="formField">
+                <div class="formField wrap-input100 validate-input">
                     {{ form.username }} {% if form.username.errors %}
                     <div class="errorMessage">
                         {% for error in form.username.errors %}
@@ -45,7 +59,7 @@
                     {% endif %}
                 </div>
 
-                <div class="formField">
+                <div class="formField wrap-input100 validate-input">
                     {{ form.usertype }} {% if form.usertype.errors %}
                     <div class="errorMessage">
                         {% for error in form.usertype.errors %}
@@ -55,7 +69,7 @@
                     {% endif %}
                 </div>
 
-                <div class="formField">
+                <div class="formField wrap-input100 validate-input">
                     {{ form.contact }} {% if form.contact.errors %}
                     <div class="errorMessage">
                         {% for error in form.contact.errors %}
@@ -65,7 +79,7 @@
                     {% endif %}
                 </div>
 
-                <div class="formField">
+                <div class="formField wrap-input100 validate-input">
                     {{ form.password }} {% if form.password.errors %}
                     <div class="errorMessage">
                         {% for error in form.password.errors %}
@@ -75,7 +89,7 @@
                     {% endif %}
                 </div>
 
-                <div class="formField">
+                <div class="formField wrap-input100 validate-input">
                     {{ form.confirm_password }} {% if form.confirm_password.errors %}
                     <div class="errorMessage">
                         {% for error in form.confirm_password.errors %}
@@ -85,7 +99,7 @@
                     {% endif %}
                 </div>
 
-                <div class="formField">
+                <div class="formField" class="wrap-input100 validate-input">
                     {{ form.credit_card }}
                     <!-- {% if form.credit_card.errors %}
                         <div class="errorMessage">
@@ -97,7 +111,7 @@
                 </div>
 
                 <div class="formField">
-                    <p>Are you a part-time caretaker? </p>
+                    <p id="partTimeOption">Are you a part-time caretaker? </p>
                     {{ form.is_part_time }}
                     <!-- {% if form.is_part_time.errors %}
                         <div class="errorMessage">
@@ -107,8 +121,9 @@
                         </div>
                     {% endif %} -->
                 </div>
-
-                <button id="registerButton" class="login100-form-btn" formmethod="post">register</button>
+                <div class="buttonWrapper m-t-32">
+                    <button id="registerButton" class="login100-form-btn" formmethod="post">register</button>
+                </div>
             </form>
         </div>
     </div>
