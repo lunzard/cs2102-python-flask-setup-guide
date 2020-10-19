@@ -33,25 +33,28 @@
             width: 390px;
         }
         .buttonWrapper{
-            display: flex;
-            flex-wrap: wrap;
             padding-bottom: 32px;
+            padding-top: 30px;
         }
         #registerButton{
             display: block;
             margin: 0 auto;
         }
         #partTimeOption{
-            display: inline-block;
-            padding-right: 20px;
+            display: inline;
+            float: left;
+            padding-left: 60px;
+            padding-right: 40px;
+
         }
         #is_part_time{
-            display: inline-block;
+            float: left;
             height: 20px;
             width: 20px;
         }
         .partTimeWrapper{
             padding-top: 10px;
+            border-top: 1px solid #e6e6e6;
         }
         .formField{
             padding: 10px 0;
@@ -141,7 +144,7 @@
                         </div>
                     {% endif %} -->
                 </div>
-                <div class="buttonWrapper m-t-32">
+                <div class="buttonWrapper">
                     <button id="registerButton" class="login100-form-btn" formmethod="post">register</button>
                 </div>
             </form>
