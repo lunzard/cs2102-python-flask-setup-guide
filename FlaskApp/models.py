@@ -3,7 +3,7 @@ from flask_login import UserMixin
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Admins.query.get(int(user_id)) or Petowners.query.get(int(user_id)) or Caretakers.query.get(int(user_id)) 
+    return Admins.query.get(user_id) or Petowners.query.get(user_id) or Caretakers.query.get(user_id) 
 
 
 class Admins(db.Model, UserMixin):
