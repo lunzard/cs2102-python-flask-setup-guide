@@ -109,9 +109,9 @@ def render_admin_page():
 @login_required
 def render_owner_page():
     return render_template('profile.html', username=current_user.username)
-    query = "SELECT * FROM caretakers"
-    result = db.session.execute(query)
-    return "<h1>Hello, {}! You are a pet owner. </h1>".format(current_user.username)
+    # query = "SELECT * FROM caretakers"
+    # result = db.session.execute(query)
+    # return "<h1>Hello, {}! You are a pet owner. </h1>".format(current_user.username)
 
 @view.route("/caretaker", methods=["GET"])
 @login_required
