@@ -9,12 +9,12 @@ from urllib import request
 view = Blueprint("view", __name__)
 
 
-@login_manager.user_loader
-def load_user(contact):
-    contact = ((Admins.query.filter_by(contact=contact.data).first()) or
-                (Petowners.query.filter_by(contact=contact.data).first()) or
-                (Caretakers.query.filter_by(contact=contact.data).first()))
-    return current_user or contact
+# @login_manager.user_loader
+# def load_user(contact):
+#     contact = ((Admins.query.filter_by(contact=contact.data).first()) or
+#                 (Petowners.query.filter_by(contact=contact.data).first()) or
+#                 (Caretakers.query.filter_by(contact=contact.data).first()))
+#     return current_user or contact
 
 
 @view.route("/", methods=["GET"])
