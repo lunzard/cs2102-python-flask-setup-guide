@@ -1,10 +1,9 @@
-from flask import Blueprint, redirect, flash, url_for, render_template
+from flask import Blueprint, redirect, flash, url_for, render_template, request
 from flask_login import current_user, login_required, login_user, logout_user
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm
 from models import Admins, Petowners, Caretakers
 import sys
-from urllib import request
 
 view = Blueprint("view", __name__)
 
