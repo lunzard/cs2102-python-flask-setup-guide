@@ -31,6 +31,7 @@ CREATE TABLE pets(
     petname VARCHAR NOT NULL,
     pcontact VARCHAR NOT NULL REFERENCES public.petowners(contact),
     category VARCHAR NOT NULL REFERENCES public.categories(category),
+    age INTEGER;
     PRIMARY KEY (petName, pcontact)
 );
 
