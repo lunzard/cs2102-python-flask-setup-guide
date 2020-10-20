@@ -3,6 +3,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm
 from models import Admins, Petowners, Caretakers
+import sys
 
 view = Blueprint("view", __name__)
 
@@ -60,11 +61,14 @@ def render_registration_page():
 def render_login_page():
     form = LoginForm()  
     if form.validate_on_submit():
+        print("submited", flush=True)
+        sys.stdout.flush()
         user = ((Admins.query.filter_by(contact=form.contact.data).first()) or
                 (Petowners.query.filter_by(contact=form.contact.data).first()) or
                 (Caretakers.query.filter_by(contact=form.contact.data).first()))
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             print("found", flush=True)
+            sys.stdout.flush()
             # TODO: You may want to verify if password is correct
             login_user(user)
             return redirect("/")
