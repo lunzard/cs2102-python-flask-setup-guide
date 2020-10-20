@@ -104,15 +104,16 @@ def logout():
 @view.route("/admin", methods=["GET"])
 @login_required
 def render_admin_page():
-    return render_template('profile.html', username=current_user.username + " admin")
+    query = "SELECT * FROM admins"
+    results = db.session.execute(query)
+    return render_template('profile.html', results=results, username=current_user.username + " admin")
 
 @view.route("/owner", methods=["GET"])
 @login_required
 def render_owner_page():
-    return render_template('profile.html', username=current_user.username+ " owner")
-    # query = "SELECT * FROM caretakers"
-    # result = db.session.execute(query)
-    # return "<h1>Hello, {}! You are a pet owner. </h1>".format(current_user.username)
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 @view.route("/caretaker", methods=["GET"])
 @login_required

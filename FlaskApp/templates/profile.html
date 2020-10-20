@@ -7,5 +7,15 @@
 <body>
     <h1> Hi this is {{ username }}</h1>
 
+    <table>
+        % for row in {{ results }}:
+            <tr>
+                % for value in row:
+                    <td>${value}</td>
+                % endfor
+            </tr>
+        % endfor
+    </table>
+
 </body>
 </html>
