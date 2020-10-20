@@ -3,7 +3,8 @@ CREATE TABLE petowners(
     username VARCHAR NOT NULL,
     contact VARCHAR PRIMARY KEY NOT NULL,
     card VARCHAR,
-    password VARCHAR NOT NULL
+    password VARCHAR NOT NULL,
+    usertype VARCHAR NOT NULL
 );
 
 DROP TABLE admins;
@@ -11,7 +12,8 @@ CREATE TABLE admins(
     username VARCHAR NOT NULL,
     contact VARCHAR PRIMARY KEY NOT NULL,
     Card VARCHAR NOT NULL,
-    password VARCHAR NOT NULL
+    password VARCHAR NOT NULL,
+    usertype VARCHAR NOT NULL
 );
 
 CREATE TABLE categories (
@@ -23,7 +25,8 @@ CREATE TABLE caretakers(
     username VARCHAR NOT NULL,
     contact VARCHAR PRIMARY KEY NOT NULL,
     isPartTime BOOLEAN,
-    password VARCHAR NOT NULL
+    password VARCHAR NOT NULL,
+    usertype VARCHAR NOT NULL
 );
 
 DROP TABLE pets;
