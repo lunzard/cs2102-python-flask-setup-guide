@@ -38,7 +38,7 @@ def render_registration_page():
             db.session.execute(query)
             db.session.commit()
         elif user_type == "petowner":
-            query = "INSERT INTO petowners(username, contact, usertype, card, password) VALUES ('{}', '{}', '{}', {}', '{}')"\
+            query = "INSERT INTO petowners(username, contact, usertype, card, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
                 .format(username, contact, user_type, credit_card, hashed_password)
             db.session.execute(query)
             db.session.commit()
@@ -125,3 +125,18 @@ def render_caretaker_page():
 @login_required
 def render_profile_page():
     return render_template('profile.html', username=current_user.username + "profile")
+
+@view.route('/update/<String:username>', methods=['POST', 'GET'])
+@login_required
+def update(contact):
+    user_to_update = Admins.query.get_or_404(contact)
+    if request.method == "POST":
+        user_to_update.username = request.form['username']
+        try:
+            db.session.commit()
+            return redirect('/profile')
+        except: 
+            return "There is a problem updating user"
+    else:
+        return render_template('update.html', user_to_update=user_to_update)
+            

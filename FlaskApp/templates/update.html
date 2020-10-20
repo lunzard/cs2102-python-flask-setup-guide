@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% block title %}Update User{% endblock %} {% block content %}
+<div>
+    <form action="/update/{{user_to_update.contact}}" METHOD="POST">
+        <input type="text" placeholder="Username" username="username" value="{{user_to_update.username}}">
+        <input type="submit" value="Update Name" class="btn btn_secondary">
+    </form>
+</div>
+{% end block %}
+
+</html>

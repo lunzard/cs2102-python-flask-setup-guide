@@ -145,6 +145,9 @@ class biddingForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Deliverymode', 'class': 'input100'}
     )
+    status = StringField(
+        default="pending"
+    )
     def validate_on_submit(self):
             result = super(biddingForm, self).validate()
             if (self.startdate.data>self.enddate.data):
