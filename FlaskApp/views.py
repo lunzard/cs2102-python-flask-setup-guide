@@ -54,6 +54,7 @@ def render_registration_page():
 
 @view.route("/login", methods=["GET", "POST"])
 def render_login_page():
+    next_page = request.args.get('next')
     if current_user.is_authenticated:
         if next_page:
             return redirect(next_page)
