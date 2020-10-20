@@ -90,7 +90,7 @@ def render_login_page():
                 redirect("/caretaker")
             else:
                 print("nothing mtaches", flush=True)
-                return render_template('profile.html', username=current_user.username)
+                return redirect("/profile")
         else:
             print("not found", flush=False)
             flash('Login unsuccessful. Please check your contact and password', 'danger')
@@ -123,5 +123,4 @@ def render_caretaker_page():
 @view.route("/profile")
 @login_required
 def render_profile_page():
-    return render_template('profile.html', username=current_user.username)
-    return render_template("profile.html")
+    return render_template('profile.html', username=current_user.username + "profile")
