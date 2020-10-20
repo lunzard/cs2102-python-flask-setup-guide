@@ -55,7 +55,16 @@ def render_registration_page():
 @view.route("/login", methods=["GET", "POST"])
 def render_login_page():
     if current_user.is_authenticated:
-        return redirect("/")
+        if next_page:
+            return redirect(next_page)
+        elif current_user.user_type == "admin": 
+            redirect("/admin")
+        elif current_user.user_type == "owner": 
+            redirect("/owner")
+        elif current_user.user_type == "caretaker": 
+            redirect("/caretaker")
+        else:
+            redirect("/profile")
     form = LoginForm()
     if form.validate_on_submit():
         print("submited", flush=True)
