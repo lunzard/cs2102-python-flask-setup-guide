@@ -9,12 +9,12 @@ from urllib import request
 view = Blueprint("view", __name__)
 
 
-# @login_manager.user_loader
-# def load_user(contact):
-#     contact = ((Admins.query.filter_by(contact=contact.data).first()) or
-#                 (Petowners.query.filter_by(contact=contact.data).first()) or
-#                 (Caretakers.query.filter_by(contact=contact.data).first()))
-#     return contact or current_user
+@login_manager.user_loader
+def load_user(contact):
+    contact = ((Admins.query.filter_by(contact=contact.data).first()) or
+                (Petowners.query.filter_by(contact=contact.data).first()) or
+                (Caretakers.query.filter_by(contact=contact.data).first()))
+    return current_user or contact
 
 
 @view.route("/", methods=["GET"])
@@ -60,6 +60,8 @@ def render_registration_page():
 
 @view.route("/login", methods=["GET", "POST"])
 def render_login_page():
+    if current_user.is_authenticated:
+        return redirect("/")
     form = LoginForm()
     if form.validate_on_submit():
         print("submited", flush=True)
@@ -72,7 +74,8 @@ def render_login_page():
             sys.stdout.flush()
             # TODO: You may want to verify if password is correct
             login_user(user)
-            return redirect("/privileged-page")
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect("/")
         else:
             print("not found", flush=False)
             flash('Login unsuccessful. Please check your contact and password', 'danger')
