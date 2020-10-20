@@ -2,8 +2,8 @@ from __init__ import db, login_manager
 from flask_login import UserMixin
 
 @login_manager.user_loader
-def load_user(username):
-    return User.query.get(int(user_id))
+def load_user(user_id):
+    return Admins.query.get(int(user_id)) or Petowners.query.get(int(user_id)) or Caretakers.query.get(int(user_id)) 
 
 
 class Admins(db.Model, UserMixin):
@@ -23,7 +23,7 @@ class Admins(db.Model, UserMixin):
     def get_id(self):
         return self.username
 
-class Petowners(db.Model):
+class Petowners(db.Model, UserMixin):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     contact = db.Column(db.String, primary_key=True)
@@ -40,7 +40,7 @@ class Petowners(db.Model):
     def get_id(self):
         return self.username
     
-class Caretakers(db.Model):
+class Caretakers(db.Model, UserMixin):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     contact = db.Column(db.String, primary_key=True)
