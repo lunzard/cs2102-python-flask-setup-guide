@@ -126,7 +126,7 @@ def render_caretaker_page():
 def render_profile_page():
     return render_template('profile.html', username=current_user.username + "profile")
 
-@view.route('/update/<String:username>', methods=['POST', 'GET'])
+@view.route('/update/username', methods=['POST', 'GET'])
 @login_required
 def update(contact):
     user_to_update = Admins.query.get_or_404(contact)
