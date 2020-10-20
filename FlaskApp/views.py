@@ -81,13 +81,13 @@ def render_login_page():
                 return redirect(next_page)
             elif current_user.usertype == "admin": 
                 print("admin", flush=True)
-                redirect("/admin")
+                return redirect("/admin")
             elif current_user.usertype == "pet owner": 
                 print("current", flush=True)
-                redirect("/owner")
+                return redirect("/owner")
             elif current_user.usertype == "caretaker": 
                 print("caret", flush=True)
-                redirect("/caretaker")
+                return redirect("/caretaker")
             else:
                 print("nothing mtaches", flush=True)
                 return redirect("/profile")
