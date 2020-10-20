@@ -33,18 +33,18 @@ def render_registration_page():
         is_part_time = form.is_part_time.data
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         if user_type == "admin":
-            query = "INSERT INTO admins(username, contact, card, password) VALUES ('{}', '{}', '{}', '{}')"\
-                .format(username, contact, credit_card, hashed_password)
+            query = "INSERT INTO admins(username, contact, usertype, card, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
+                .format(username, contact, user_type, credit_card, hashed_password)
             db.session.execute(query)
             db.session.commit()
         elif user_type == "petowner":
-            query = "INSERT INTO petowners(username, contact, card, password) VALUES ('{}', '{}', '{}', '{}')"\
-                .format(username, contact, credit_card, hashed_password)
+            query = "INSERT INTO petowners(username, contact, usertype, card, password) VALUES ('{}', '{}', '{}', {}', '{}')"\
+                .format(username, contact, user_type, credit_card, hashed_password)
             db.session.execute(query)
             db.session.commit()
         elif user_type == "caretaker":
-            query = "INSERT INTO caretakers(username, contact, isPartTime, password) VALUES ('{}', '{}', '{}', '{}')"\
-                .format(username, contact, is_part_time, hashed_password)
+            query = "INSERT INTO caretakers(username, contact, usertype, isPartTime, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
+                .format(username, contact, user_type, is_part_time, hashed_password)
             db.session.execute(query)
             db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
@@ -79,13 +79,13 @@ def render_login_page():
             if next_page:
                 print("nextpage", flush=True)
                 return redirect(next_page)
-            elif isinstance(current_user, Admins): 
+            elif current_user.usertype == "admin": 
                 print("admin", flush=True)
                 redirect("/admin")
-            elif isinstance(current_user, Petowners): 
+            elif current_user.usertype == "pet owner": 
                 print("current", flush=True)
                 redirect("/owner")
-            elif isinstance(current_user, Caretakers): 
+            elif current_user.usertype == "caretaker": 
                 print("caret", flush=True)
                 redirect("/caretaker")
             else:
