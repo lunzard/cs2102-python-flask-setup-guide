@@ -55,11 +55,14 @@ def render_registration_page():
 @view.route("/login", methods=["GET", "POST"])
 def render_login_page():
     if current_user.is_authenticated:
-        if current_user.user_type == "admin": 
+        next_page = request.args.get('next')
+        if next_page:
+            return redirect(next_page)
+        elif isinstance(current_user, Admins): 
             redirect("/admin")
-        elif current_user.user_type == "owner": 
+        elif isinstance(current_user, Petowners): 
             redirect("/owner")
-        elif current_user.user_type == "caretaker": 
+        elif isinstance(current_user, Caretakers): 
             redirect("/caretaker")
         else:
             redirect("/profile")
@@ -75,11 +78,11 @@ def render_login_page():
             next_page = request.args.get('next')
             if next_page:
                 return redirect(next_page)
-            elif current_user.user_type == "admin": 
+            elif isinstance(current_user, Admins): 
                 redirect("/admin")
-            elif current_user.user_type == "owner": 
+            elif isinstance(current_user, Petowners): 
                 redirect("/owner")
-            elif current_user.user_type == "caretaker": 
+            elif isinstance(current_user, Caretakers): 
                 redirect("/caretaker")
             else:
                 redirect("/profile")
