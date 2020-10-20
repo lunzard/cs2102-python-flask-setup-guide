@@ -35,7 +35,7 @@ class Petowners(db.Model, UserMixin):
     contact = db.Column(db.String, primary_key=True)
     card = db.Column(db.String, nullable=True)
     usertype = db.Column(db.String, nullable=True)
-    pet = db.relationship('Pets', backref='pcontact')
+    pet = db.relationship('Pets', backref='owner')
     
     def is_authenticated(self):
         return True
