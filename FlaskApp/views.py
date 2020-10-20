@@ -88,7 +88,7 @@ def logout():
 @view.route("/privileged-page", methods=["GET"])
 @login_required
 def render_privileged_page():
-    return "<h1>Hello, {}!</h1>".format(current_user.preferred_name or current_user.username)
+    return "<h1>Hello, {}!</h1>".format(current_user.username)
 
 @view.route("/profile")
 @login_required
