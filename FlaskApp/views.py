@@ -32,11 +32,6 @@ def render_registration_page():
         credit_card = form.credit_card.data
         is_part_time = form.is_part_time.data
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-        #query = "SELECT * FROM admins, petowners, caretakers WHERE contact = '{}'".format(contact)
-        # exists_user = db.session.execute(query).fetchone()
-        # if exists_user:
-        #     form.username.errors.append("{} is already in use.".format(username))
-        # else:
         if user_type == "admin":
             query = "INSERT INTO admins(username, contact, card, password) VALUES ('{}', '{}', '{}', '{}')"\
                 .format(username, contact, credit_card, hashed_password)
@@ -64,17 +59,23 @@ def render_login_page():
     form = LoginForm()
     if form.validate_on_submit():
         print("submited", flush=True)
-        sys.stdout.flush()
         user = ((Admins.query.filter_by(contact=form.contact.data).first()) or
                 (Petowners.query.filter_by(contact=form.contact.data).first()) or
                 (Caretakers.query.filter_by(contact=form.contact.data).first()))
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             print("found", flush=True)
-            sys.stdout.flush()
-            # TODO: You may want to verify if password is correct
             login_user(user)
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect("/")
+            if next_page:
+                return redirect(next_page)
+            elif current_user.user_type == "admin": 
+                redirect("/admin")
+            elif current_user.user_type == "owner": 
+                redirect("/owner")
+            elif current_user.user_type == "caretaker": 
+                redirect("/caretaker")
+            else:
+                redirect("/profile")
         else:
             print("not found", flush=False)
             flash('Login unsuccessful. Please check your contact and password', 'danger')
@@ -83,12 +84,24 @@ def render_login_page():
 @view.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('registration.html'))
+    return redirect("/")
 
-@view.route("/privileged-page", methods=["GET"])
+@view.route("/admin", methods=["GET"])
 @login_required
-def render_privileged_page():
-    return "<h1>Hello, {}!</h1>".format(current_user.username)
+def render_admin_page():
+    return "<h1>Hello, {}! You are an admin. </h1>".format(current_user.username)
+
+@view.route("/owner", methods=["GET"])
+@login_required
+def render_owner_page():
+    return "<h1>Hello, {}! You are a pet owner. </h1>".format(current_user.username)
+
+@view.route("/caretaker", methods=["GET"])
+@login_required
+def render_caretaker_page():
+    return "<h1>Hello, {}! You are a caretaker.</h1>".format(current_user.username)
+
+
 
 @view.route("/profile")
 @login_required
