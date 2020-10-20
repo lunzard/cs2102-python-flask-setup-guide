@@ -77,12 +77,16 @@ def render_login_page():
             login_user(user)
             next_page = request.args.get('next')
             if next_page:
+                print("nextpage", flush=True)
                 return redirect(next_page)
             elif isinstance(current_user, Admins): 
+                print("admin", flush=True)
                 redirect("/admin")
             elif isinstance(current_user, Petowners): 
+                print("current", flush=True)
                 redirect("/owner")
             elif isinstance(current_user, Caretakers): 
+                print("caret", flush=True)
                 redirect("/caretaker")
             else:
                 redirect("/profile")
@@ -104,16 +108,19 @@ def render_admin_page():
 @view.route("/owner", methods=["GET"])
 @login_required
 def render_owner_page():
+    return render_template('profile.html', username=current_user.username)
+    query = "SELECT * FROM caretakers"
+    result = db.session.execute(query)
     return "<h1>Hello, {}! You are a pet owner. </h1>".format(current_user.username)
 
 @view.route("/caretaker", methods=["GET"])
 @login_required
 def render_caretaker_page():
-    return "<h1>Hello, {}! You are a caretaker.</h1>".format(current_user.username)
-
+    return render_template('profile.html', username=current_user.username)
 
 
 @view.route("/profile")
 @login_required
 def render_profile_page():
+    return render_template('profile.html', username=current_user.username)
     return render_template("profile.html")
