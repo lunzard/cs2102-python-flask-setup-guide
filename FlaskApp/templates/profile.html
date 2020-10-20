@@ -8,14 +8,19 @@
     <h1> Hi this is {{ username }}</h1>
 
     <table>
-        % for row in {{ results }}:
+        <th>Username</th>
+        <th>Contact</th>
+        <th>Usertype</th>
+        <th>Card</th>
+        {% for item in results %}
             <tr>
-                % for value in row:
-                    <td>${value}</td>
-                % endfor
+                <td>{{item.username}}</td>
+                <td>{{item.contact}}</td>
+                <td>{{item.usertype}}</td>
+                <td>{{item.card}}</td>
             </tr>
-        % endfor
-    </table>
+        {% endfor %}
+        </table>
 
 </body>
 </html>
