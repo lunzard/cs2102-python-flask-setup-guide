@@ -89,7 +89,8 @@ def render_login_page():
                 print("caret", flush=True)
                 redirect("/caretaker")
             else:
-                redirect("/profile")
+                print("nothing mtaches", flush=True)
+                return render_template('profile.html', username=current_user.username)
         else:
             print("not found", flush=False)
             flash('Login unsuccessful. Please check your contact and password', 'danger')
@@ -103,12 +104,12 @@ def logout():
 @view.route("/admin", methods=["GET"])
 @login_required
 def render_admin_page():
-    return "<h1>Hello, {}! You are an admin. </h1>".format(current_user.username)
+    return render_template('profile.html', username=current_user.username + " admin")
 
 @view.route("/owner", methods=["GET"])
 @login_required
 def render_owner_page():
-    return render_template('profile.html', username=current_user.username)
+    return render_template('profile.html', username=current_user.username+ " owner")
     # query = "SELECT * FROM caretakers"
     # result = db.session.execute(query)
     # return "<h1>Hello, {}! You are a pet owner. </h1>".format(current_user.username)
@@ -116,7 +117,7 @@ def render_owner_page():
 @view.route("/caretaker", methods=["GET"])
 @login_required
 def render_caretaker_page():
-    return render_template('profile.html', username=current_user.username)
+    return render_template('profile.html', username=current_user.username + " caretaker")
 
 
 @view.route("/profile")
