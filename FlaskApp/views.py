@@ -4,6 +4,7 @@ from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm
 from models import Admins, Petowners, Caretakers
 import sys
+from urllib import request
 
 view = Blueprint("view", __name__)
 
@@ -59,23 +60,25 @@ def render_registration_page():
 
 @view.route("/login", methods=["GET", "POST"])
 def render_login_page():
-    form = LoginForm()  
-    if form.validate_on_submit():
-        print("submited", flush=True)
-        sys.stdout.flush()
-        user = ((Admins.query.filter_by(contact=form.contact.data).first()) or
-                (Petowners.query.filter_by(contact=form.contact.data).first()) or
-                (Caretakers.query.filter_by(contact=form.contact.data).first()))
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
-            print("found", flush=True)
+    form = LoginForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            print("submited", flush=True)
             sys.stdout.flush()
-            # TODO: You may want to verify if password is correct
-            login_user(user)
-            return redirect("/")
-        else:
-            print("not found", flush=False)
-            flash('Login unsuccessful. Please check your contact and password', 'danger')
-    return render_template("realLogin.html", form=form)
+            user = ((Admins.query.filter_by(contact=form.contact.data).first()) or
+                    (Petowners.query.filter_by(contact=form.contact.data).first()) or
+                    (Caretakers.query.filter_by(contact=form.contact.data).first()))
+            if user and bcrypt.check_password_hash(user.password, form.password.data):
+                print("found", flush=True)
+                sys.stdout.flush()
+                # TODO: You may want to verify if password is correct
+                login_user(user)
+                return redirect("/privileged-page")
+            else:
+                print("not found", flush=False)
+                flash('Login unsuccessful. Please check your contact and password', 'danger')
+    if request.method == 'GET':
+        return render_template("realLogin.html", form=form)
 
 @view.route("/logout")
 def logout():
