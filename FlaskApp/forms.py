@@ -146,7 +146,7 @@ class biddingForm(FlaskForm):
         render_kw={'placeholder': 'Deliverymode', 'class': 'input100'}
     )
     def validate_on_submit(self):
-            result = super(petForm, self).validate()
+            result = super(biddingForm, self).validate()
             if (self.startdate.data>self.enddate.data):
                 return False
             else:

@@ -33,18 +33,18 @@ def render_registration_page():
         is_part_time = form.is_part_time.data
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         if user_type == "admin":
-            query = "INSERT INTO admins(username, contact, card, password) VALUES ('{}', '{}', '{}', '{}')"\
-                .format(username, contact, credit_card, hashed_password)
+            query = "INSERT INTO admins(username, contact, usertype, card, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
+                .format(username, contact, user_type, credit_card, hashed_password)
             db.session.execute(query)
             db.session.commit()
         elif user_type == "petowner":
-            query = "INSERT INTO petowners(username, contact, card, password) VALUES ('{}', '{}', '{}', '{}')"\
-                .format(username, contact, credit_card, hashed_password)
+            query = "INSERT INTO petowners(username, contact, usertype, card, password) VALUES ('{}', '{}', '{}', {}', '{}')"\
+                .format(username, contact, user_type, credit_card, hashed_password)
             db.session.execute(query)
             db.session.commit()
         elif user_type == "caretaker":
-            query = "INSERT INTO caretakers(username, contact, isPartTime, password) VALUES ('{}', '{}', '{}', '{}')"\
-                .format(username, contact, is_part_time, hashed_password)
+            query = "INSERT INTO caretakers(username, contact, usertype, isPartTime, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
+                .format(username, contact, user_type, is_part_time, hashed_password)
             db.session.execute(query)
             db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
@@ -77,15 +77,20 @@ def render_login_page():
             login_user(user)
             next_page = request.args.get('next')
             if next_page:
+                print("nextpage", flush=True)
                 return redirect(next_page)
-            elif isinstance(current_user, Admins): 
-                redirect("/admin")
-            elif isinstance(current_user, Petowners): 
-                redirect("/owner")
-            elif isinstance(current_user, Caretakers): 
-                redirect("/caretaker")
+            elif current_user.usertype == "admin": 
+                print("admin", flush=True)
+                return redirect("/admin")
+            elif current_user.usertype == "pet owner": 
+                print("current", flush=True)
+                return redirect("/owner")
+            elif current_user.usertype == "caretaker": 
+                print("caret", flush=True)
+                return redirect("/caretaker")
             else:
-                redirect("/profile")
+                print("nothing mtaches", flush=True)
+                return redirect("/profile")
         else:
             print("not found", flush=False)
             flash('Login unsuccessful. Please check your contact and password', 'danger')
@@ -99,21 +104,24 @@ def logout():
 @view.route("/admin", methods=["GET"])
 @login_required
 def render_admin_page():
-    return "<h1>Hello, {}! You are an admin. </h1>".format(current_user.username)
+    query = "SELECT * FROM admins"
+    results = db.session.execute(query)
+    return render_template('profile.html', results=results, username=current_user.username + " admin")
 
 @view.route("/owner", methods=["GET"])
 @login_required
 def render_owner_page():
-    return "<h1>Hello, {}! You are a pet owner. </h1>".format(current_user.username)
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 @view.route("/caretaker", methods=["GET"])
 @login_required
 def render_caretaker_page():
-    return "<h1>Hello, {}! You are a caretaker.</h1>".format(current_user.username)
-
+    return render_template('profile.html', username=current_user.username + " caretaker")
 
 
 @view.route("/profile")
 @login_required
 def render_profile_page():
-    return render_template("profile.html")
+    return render_template('profile.html', username=current_user.username + "profile")
