@@ -18,7 +18,7 @@ app.config["SECRET_KEY"] = "A random key to use flask extensions that require en
 # Initialize other components
 db.init_app(app)
 login_manager.init_app(app)
-login_manager.login_view = 'render_login_page'
+login_manager.login_view = 'view.render_login_page'
 
 
 bcrypt.init_app(app)
