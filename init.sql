@@ -63,13 +63,20 @@ CREATE TABLE biddings(
   /* delivermode is either 'pet owner deliver' or 'pick up' or 'transfer through PCS' */
   deliverymode VARCHAR NOT NULL,
 
-  rating INT,
-  review VARCHAR,
-
   /* status can be pending, success, fail or end */
   status VARCHAR NOT NULL,
 
   PRIMARY KEY (pcontact, ccontact, petname, startday, endday),
   FOREIGN KEY (pcontact, petname) REFERENCES public.pets(pcontact, petname)
+);
+
+CREATE TABLE reviews(
+    pcontact VARCHAR NOT NULL,
+    ccontact VARCHAR NOT NULL,
+    petname VARCHAR NOT NULL,
+    rating INTEGER NOT NULL CHECK(rating <= 5 AND rating >= 0),
+    review VARCHAR NOT NULL
+    PRIMARY KEY (pcontact, ccontact, petname, rating, review),
+    FOREIGN KEY (pcontact, ccontact, petname) REFERENCES public.biddings(pcontact, ccontact, petname)
 );
  
