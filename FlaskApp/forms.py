@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, DateField
 from wtforms.validators import InputRequired, ValidationError, EqualTo
 from models import Admins, Petowners, Caretakers
+from datetime import date
 
 def is_valid_name(form, field):
     if not all(map(lambda char: char.isalpha(), field.data)):
@@ -13,7 +14,7 @@ def is_valid_contact(self, contact):
                    (Caretakers.query.filter_by(contact=contact.data).first()))
         if contact:
             raise ValidationError('That contact is already being registered. Please choose a different one.')
-
+            
 # def is_valid_number(form, field):
 #     if not all(map(lambda char: char.isnumber(), field.data)):
 #         raise ValidationError('This field should only contain numbers')
@@ -74,11 +75,33 @@ class LoginForm(FlaskForm):
         render_kw={'placeholder': 'Password', 'class': 'input100'}
     )
     
-class LoginForm(FlaskForm):
+class petForm(FlaskForm):
     pcontact = StringField(
-    label='Contact',
+    label='Pcontact',
     validators=[InputRequired()],
-    render_kw={'placeholder': 'Contact', 'class': 'input100'}
+    render_kw={'placeholder': 'Pcontact', 'class': 'input100'}
+    )
+    petname = StringField(
+        label='Petname',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Petname', 'class': 'input100'}
+    )
+    category = StringField(
+        label='Category',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Category', 'class': 'input100'}
+    )
+    age = IntegerField(
+        label='Age',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Age', 'class': 'input100'}
+    )
+    
+    class LoginForm(FlaskForm):
+        contact = StringField(
+        label='Contact',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
     password = PasswordField(
         label='Password',
@@ -86,4 +109,98 @@ class LoginForm(FlaskForm):
         render_kw={'placeholder': 'Password', 'class': 'input100'}
     )
     
+class biddingForm(FlaskForm):
+    pcontact = StringField(
+    label='Pcontact',
+    validators=[InputRequired()],
+    render_kw={'placeholder': 'Pcontact', 'class': 'input100'}
+    )
+    ccontact = StringField(
+        label='Ccontact',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
+    )
+    petname = StringField(
+        label='Petname',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Petname', 'class': 'input100'}
+    )
+    startdate = DateField(
+        label='Startdate',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Startdate', 'class': 'input100'}
+    )
+    enddate = DateField(
+        label='Enddate',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Enddate', 'class': 'input100'}
+    )
+    paymentmode = StringField(
+        label='Paymentmode',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Paymentmode', 'class': 'input100'}
+    )
+    deliverymode = StringField(
+        label='Deliverymode',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Deliverymode', 'class': 'input100'}
+    )
+    def validate_on_submit(self):
+            result = super(petForm, self).validate()
+            if (self.startdate.data>self.enddate.data):
+                return False
+            else:
+                return result
+   
+class reviewForm(FlaskForm):
+    pcontact = StringField(
+    label='Pcontact',
+    validators=[InputRequired()],
+    render_kw={'placeholder': 'Pcontact', 'class': 'input100'}
+    )
+    ccontact = StringField(
+        label='Ccontact',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
+    )
+    petname = StringField(
+        label='Petname',
+        validator=[(InputRequired())],
+        render_kw={'placeholder': 'Petname', 'class': 'input100'}
+    )
+    rating = IntegerField(
+        label='Petname',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'rating'}
+    )
+    review = StringField(
+        label='Review',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Review', 'class': 'input200'}
+    )
+    
+class availableForm(FlaskForm):
+    startdate = DateField(
+        label='Startdate',
+        validators=[InputRequired()],
+        default=date.today(), 
+        format='%d/%m/%Y',
+        render_kw={'placeholder': 'Startdate', 'class': 'input100'}
+    )
+    enddate = DateField(
+        label='Enddate',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Enddate', 'class': 'input100'}
+    )
+    ccontact = StringField(
+        label='Ccontact',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
+    )
+    def validate_on_submit(self):
+            result = super(availableForm, self).validate()
+            if (self.startdate.data>self.enddate.data):
+                return False
+            else:
+                return result
     
