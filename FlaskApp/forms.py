@@ -109,7 +109,7 @@ class petForm(FlaskForm):
         render_kw={'placeholder': 'Password', 'class': 'input100'}
     )
 
-  class caretakerForm(FlaskForm):
+    class caretakerForm(FlaskForm):
         username = StringField(
         label='Username',
         validators=[InputRequired()],
