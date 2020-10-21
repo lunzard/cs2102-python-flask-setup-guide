@@ -73,8 +73,8 @@ class Pets(db.Model, UserMixin):
     pcontact = db.Column(db.String, db.ForeignKey('petowners.contact'), primary_key=True, nullable=False)
     category = db.Column(db.String, db.ForeignKey('categories.category'), nullable=False)
     age = db.Column(db.Integer, nullable=False)
-    biddingpetname = db.relationship('Biddings', backref='pet')
-    biddingpcontact = db.relationship('Biddings', backref='contact', primaryjoin="Pets.pcontact==Biddings.pcontact")
+    # biddingpetname = db.relationship('Biddings', backref='pet')
+    # biddingpcontact = db.relationship('Biddings', primaryjoin="Pets.pcontact==Biddings.pcontact")
     def is_active(self):
         return True
 
@@ -101,6 +101,9 @@ class Biddings(db.Model, UserMixin):
     paymentmode = db.Column(db.String, nullable=False)
     deliverymode = db.Column(db.String, nullable=False)
     status = db.Column(db.String, nullable=False)
+    
+    pcontactrel = db.relationship("Pets", foreign_keys=[pcontact])
+    petnamerel = db.relationship("Pets", foreign_keys=[petname])
     
     reviewpetname = db.relationship('Reviews', backref='pet')
     reviewpcontact = db.relationship('Reviews', backref='petonwercontact')
