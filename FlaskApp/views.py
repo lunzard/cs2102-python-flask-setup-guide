@@ -112,7 +112,7 @@ def render_admin_page():
 @login_required
 def render_owner_page():
     query = "SELECT * FROM caretakers"
-    results = db.session.execute(query)
+    results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 @view.route("/caretaker", methods=["GET"])
