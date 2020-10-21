@@ -36,6 +36,7 @@ class Petowners(db.Model, UserMixin):
     card = db.Column(db.String, nullable=True)
     usertype = db.Column(db.String, nullable=True)
     pet = db.relationship('Pets', backref='owner')
+    postalcode = db.Column(db.Integer)
     
     def is_authenticated(self):
         return True
@@ -56,6 +57,8 @@ class Caretakers(db.Model, UserMixin):
     usertype = db.Column(db.String, nullable=True)
     isparttime = db.Column(db.Boolean, nullable=False)
     biddingccontact = db.relationship('Biddings', backref='contact')
+    postalcode = db.Column(db.Integer)
+    
     def is_authenticated(self):
         return True
 

@@ -62,6 +62,10 @@ class RegistrationForm(FlaskForm):
         label='Is Part Time',
         render_kw={'placeholder': 'Is Part Time', 'class': 'input100'}
     )
+    postalcode = IntegerField(
+        label='Address',
+        render_kw={'placeholder': 'Postal Code'}
+    )
 
 class LoginForm(FlaskForm):
     contact = StringField(
