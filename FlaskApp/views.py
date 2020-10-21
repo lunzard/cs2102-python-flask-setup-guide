@@ -33,7 +33,7 @@ def render_registration_page():
         is_part_time = form.is_part_time.data
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         if user_type == "admin":
-            query = "INSERT INTO admins(username, contact, usertype, card, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
+            query = "INSERT INTO admins(username, contact, usertype, card, password) VALUES ('{}', '{}', '{}', '{}', '{}')" \
                 .format(username, contact, user_type, credit_card, hashed_password)
             db.session.execute(query)
             db.session.commit()
@@ -58,11 +58,11 @@ def render_login_page():
         next_page = request.args.get('next')
         if next_page:
             return redirect(next_page)
-        elif isinstance(current_user, Admins): 
+        elif isinstance(current_user, Admins):
             redirect("/admin")
-        elif isinstance(current_user, Petowners): 
+        elif isinstance(current_user, Petowners):
             redirect("/owner")
-        elif isinstance(current_user, Caretakers): 
+        elif isinstance(current_user, Caretakers):
             redirect("/caretaker")
         else:
             redirect("/profile")
@@ -79,13 +79,13 @@ def render_login_page():
             if next_page:
                 print("nextpage", flush=True)
                 return redirect(next_page)
-            elif current_user.usertype == "admin": 
+            elif current_user.usertype == "admin":
                 print("admin", flush=True)
                 return redirect("/admin")
-            elif current_user.usertype == "pet owner": 
+            elif current_user.usertype == "pet owner":
                 print("current", flush=True)
                 return redirect("/owner")
-            elif current_user.usertype == "caretaker": 
+            elif current_user.usertype == "caretaker":
                 print("caret", flush=True)
                 return redirect("/caretaker")
             else:
@@ -96,10 +96,15 @@ def render_login_page():
             flash('Login unsuccessful. Please check your contact and password', 'danger')
     return render_template("realLogin.html", form=form)
 
+
 @view.route("/logout")
 def logout():
     logout_user()
     return redirect("/")
+
+
+# ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN ADMIN
+
 
 @view.route("/admin", methods=["GET"])
 @login_required
@@ -108,12 +113,19 @@ def render_admin_page():
     results = db.session.execute(query)
     return render_template('profile.html', results=results, username=current_user.username + " admin")
 
-@view.route("/owner", methods=["GET"])
+
+@view.route("/admin/summary", methods=["GET"])
 @login_required
-def render_owner_page():
-    query = "SELECT * FROM caretakers"
+def render_admin_summary():
+    query = "SELECT * FROM admins"
     results = db.session.execute(query)
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
+    return render_template('profile.html', results=results, username=current_user.username + " admin")
+
+
+# END OF ADMIN END OF ADMIN END OF ADMIN END OF ADMIN END OF ADMIN END OF ADMIN END OF ADMIN END OF ADMIN
+
+# CARETAKER CARETAKER CARETAKER CARETAKER CARETAKER CARETAKER CARETAKER CARETAKER CARETAKER CARETAKER CARETAKER
+
 
 @view.route("/caretaker", methods=["GET"])
 @login_required
@@ -121,10 +133,163 @@ def render_caretaker_page():
     return render_template('profile.html', username=current_user.username + " caretaker")
 
 
+@view.route("/caretaker/biddings", methods=["GET", "POST"])
+@login_required
+def render_caretaker_biddings():
+    return render_template('profile.html', username=current_user.username + " caretaker")
+
+
+@view.route("/caretaker/profile", methods=["GET"])
+@login_required
+def render_caretaker_profile():
+    return render_template('profile.html', username=current_user.username + " caretaker")
+
+
+@view.route("/caretaker/update-profile", methods=["GET"])
+@login_required
+def render_caretaker_update_profile():
+    return render_template('profile.html', username=current_user.username + " caretaker")
+
+
+@view.route("/caretaker/available", methods=["GET", "POST"])
+@login_required
+def render_caretaker_available():
+    return render_template('profile.html', username=current_user.username + " caretaker")
+
+
+@view.route("/caretaker/available/edit", methods=["GET", "POST"])
+@login_required
+def render_caretaker_available_edit():
+    return render_template('profile.html', username=current_user.username + " caretaker")
+
+
+@view.route("/caretaker/available/delete", methods=["GET", "POST"])
+@login_required
+def render_caretaker_available_delete():
+    return render_template('profile.html', username=current_user.username + " caretaker")
+
+
+@view.route("/caretaker/available/new", methods=["GET", "POST"])
+@login_required
+def render_caretaker_available_new():
+    return render_template('profile.html', username=current_user.username + " caretaker")
+
+
+@view.route("/caretaker/update-cantakecare", methods=["GET", "POST"])
+@login_required
+def render_caretaker_update_cantakecare():
+    return render_template('profile.html', username=current_user.username + " caretaker")
+
+
+# END OF CARETAKER END OF CARETAKER END OF CARETAKER END OF CARETAKER END OF CARETAKER END OF CARETAKER
+
+# PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER
+
+
+@view.route("/owner", methods=["GET", "POST"])
+@login_required
+def render_owner_page():
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
+
+
+@view.route("/owner/summary", methods=["GET", "POST"])
+@login_required
+def render_owner_summary():
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
+
+
+@view.route("/owner/profile", methods=["GET", "POST"])
+@login_required
+def render_owner_profile():
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
+
+
+@view.route("/owner/profile/update", methods=["GET", "POST"])
+@login_required
+def render_owner_profile_update():
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
+
+
+@view.route("/owner/pet", methods=["GET", "POST"])
+@login_required
+def render_owner_pet():
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
+
+
+@view.route("/owner/pet/new", methods=["GET", "POST"])
+@login_required
+def render_owner_pet_new():
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
+
+
+@view.route("/owner/pet/update", methods=["GET", "POST"])
+@login_required
+def render_owner_pet_update():
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
+
+
+@view.route("/owner/pet/delete", methods=["GET", "POST"])
+@login_required
+def render_owner_pet_delete():
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
+
+
+@view.route("/owner/bid", methods=["GET", "POST"])
+@login_required
+def render_owner_bid():
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
+
+
+@view.route("/owner/bid/new", methods=["GET", "POST"])
+@login_required
+def render_owner_bid_new():
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
+
+
+@view.route("/owner/bid/update", methods=["GET", "POST"])
+@login_required
+def render_owner_bid_update():
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
+
+
+@view.route("/owner/bid/delete", methods=["GET", "POST"])
+@login_required
+def render_owner_bid_delete():
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
+
+
+# END OF PETOWNER END OF PETOWNER END OF PETOWNER END OF PETOWNER END OF PETOWNER END OF PETOWNER END OF PETOWNER
+
+
 @view.route("/profile")
 @login_required
 def render_profile_page():
     return render_template('profile.html', username=current_user.username + "profile")
+
 
 @view.route('/update/username', methods=['POST', 'GET'])
 @login_required
@@ -135,8 +300,7 @@ def update(contact):
         try:
             db.session.commit()
             return redirect('/profile')
-        except: 
+        except:
             return "There is a problem updating user"
     else:
         return render_template('update.html', user_to_update=user_to_update)
-            
