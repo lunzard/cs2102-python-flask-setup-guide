@@ -74,7 +74,7 @@ class Pets(db.Model, UserMixin):
     category = db.Column(db.String, db.ForeignKey('categories.category'), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     biddingpetname = db.relationship('Biddings', backref='pet')
-    biddingpcontact = db.relationship('Biddings', backref='contact')
+    biddingpcontact = db.relationship('Biddings', backref='contact', primaryjoin="Pets.pcontact==Biddings.pcontact")
     def is_active(self):
         return True
 
