@@ -108,7 +108,25 @@ class petForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Password', 'class': 'input100'}
     )
-    
+
+  class caretakerForm(FlaskForm):
+        username = StringField(
+        label='Username',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Username', 'class': 'input100'}
+        )
+        password = PasswordField(
+        label='Password',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Password', 'class': 'input100'}
+        )
+        postalcode = StringField(
+        label='PostalCode',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'PostalCode', 'class': 'input100'}
+        )
+        
+        
 class biddingForm(FlaskForm):
     pcontact = StringField(
     label='Pcontact',
@@ -144,9 +162,6 @@ class biddingForm(FlaskForm):
         label='Deliverymode',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Deliverymode', 'class': 'input100'}
-    )
-    status = StringField(
-        default="pending"
     )
     def validate_on_submit(self):
             result = super(biddingForm, self).validate()
