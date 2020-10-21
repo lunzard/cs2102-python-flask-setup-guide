@@ -105,11 +105,11 @@ class Biddings(db.Model, UserMixin):
     pcontactrel = db.relationship("Pets", foreign_keys=[pcontact])
     petnamerel = db.relationship("Pets", foreign_keys=[petname])
     
-    reviewpetname = db.relationship('Reviews', backref='pet')
-    reviewpcontact = db.relationship('Reviews', backref='petonwercontact')
-    reviewccontact = db.relationship('Reviews', backref='caretakercontact')
-    reviewstartdate = db.relationship('Reviews', backref='start')
-    reviewenddate = db.relationship('Reviews', backref='end')
+    # reviewpetname = db.relationship('Reviews', backref='pet')
+    # reviewpcontact = db.relationship('Reviews', backref='petonwercontact')
+    # reviewccontact = db.relationship('Reviews', backref='caretakercontact')
+    # reviewstartdate = db.relationship('Reviews', backref='start')
+    # reviewenddate = db.relationship('Reviews', backref='end')
     
     def get_status(self):
         return self.status
@@ -126,6 +126,11 @@ class Reviews(db.Model, UserMixin):
     rating = db.Column(db.Integer, primary_key=True, nullable=False)
     review = db.Column(db.String, primary_key=True, nullable=False)
     
+    reviewpetname = db.relationship('Biddings', foreign_keys=[petname])
+    reviewpcontact = db.relationship('Biddings', foreign_keys=[pcontact])
+    reviewccontact = db.relationship('Biddings', foreign_keys=[ccontact])
+    reviewstartdate = db.relationship('Biddings', foreign_keys=[startdate])
+    reviewenddate = db.relationship('Biddings', foreign_keys=[enddate])
     def get_rating(self):
         return self.rating
  
