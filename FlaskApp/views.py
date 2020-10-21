@@ -38,12 +38,12 @@ def render_registration_page():
             db.session.execute(query)
             db.session.commit()
         elif user_type == "petowner":
-            query = "INSERT INTO petowners(username, contact, usertype, card, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
+            query = "INSERT INTO petowners(username, contact, usertype, card, password, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')"\
                 .format(username, contact, user_type, credit_card, hashed_password)
             db.session.execute(query)
             db.session.commit()
         elif user_type == "caretaker":
-            query = "INSERT INTO caretakers(username, contact, usertype, isPartTime, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
+            query = "INSERT INTO caretakers(username, contact, usertype, isPartTime, password, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')"\
                 .format(username, contact, user_type, is_part_time, hashed_password)
             db.session.execute(query)
             db.session.commit()

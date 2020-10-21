@@ -6,7 +6,8 @@ CREATE TABLE petowners(
     contact VARCHAR PRIMARY KEY NOT NULL,
     card VARCHAR,
     password VARCHAR NOT NULL,
-    usertype VARCHAR NOT NULL
+    usertype VARCHAR NOT NULL,
+    postalcode INTEGER
 );
 
 CREATE TABLE admins(
@@ -26,7 +27,8 @@ CREATE TABLE caretakers(
     contact VARCHAR PRIMARY KEY NOT NULL,
     isPartTime BOOLEAN,
     password VARCHAR NOT NULL,
-    usertype VARCHAR NOT NULL
+    usertype VARCHAR NOT NULL,
+    postalcode INTEGER
 );
 
 CREATE TABLE pets(
