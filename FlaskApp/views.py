@@ -116,7 +116,7 @@ def render_admin_page():
 
 @view.route("/admin/summary", methods=["GET"])
 @login_required
-def render_owner_page():
+def render_admin_summary_page():
     query = "SELECT * FROM caretakers"
     results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
@@ -184,7 +184,7 @@ def render_caretaker_update_cantakecare():
 @login_required
 def render_owner_page():
     query = "SELECT * FROM caretakers"
-    results = db.session.execute(query)
+    results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 
@@ -192,7 +192,7 @@ def render_owner_page():
 @login_required
 def render_owner_summary():
     query = "SELECT * FROM caretakers"
-    results = db.session.execute(query)
+    results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 
@@ -200,7 +200,7 @@ def render_owner_summary():
 @login_required
 def render_owner_profile():
     query = "SELECT * FROM caretakers"
-    results = db.session.execute(query)
+    results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 
@@ -208,7 +208,7 @@ def render_owner_profile():
 @login_required
 def render_owner_profile_update():
     query = "SELECT * FROM caretakers"
-    results = db.session.execute(query)
+    results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 
@@ -216,7 +216,7 @@ def render_owner_profile_update():
 @login_required
 def render_owner_pet():
     query = "SELECT * FROM caretakers"
-    results = db.session.execute(query)
+    results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 
@@ -232,7 +232,7 @@ def render_owner_pet_new():
 @login_required
 def render_owner_pet_update():
     query = "SELECT * FROM caretakers"
-    results = db.session.execute(query)
+    results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 
