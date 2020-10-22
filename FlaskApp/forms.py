@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, DateField
 from wtforms.validators import InputRequired, ValidationError, EqualTo
-from models import Admins, Petowners, Caretakers
+from models import Users
 from datetime import date
 
 def is_valid_name(form, field):
@@ -9,12 +9,11 @@ def is_valid_name(form, field):
         raise ValidationError('This field should only contain alphabets')
 
 def is_valid_contact(self, contact):
-        contact = ((Admins.query.filter_by(contact=contact.data).first()) or
-                   (Petowners.query.filter_by(contact=contact.data).first()) or
-                   (Caretakers.query.filter_by(contact=contact.data).first()))
-        if contact:
-            raise ValidationError('That contact is already being registered. Please choose a different one.')
-            
+    contact = (Users.query.filter_by(contact=contact.data).first())
+    if contact:
+        raise ValidationError('That contact is already being registered. Please choose a different one.')
+        
+
 # def is_valid_number(form, field):
 #     if not all(map(lambda char: char.isnumber(), field.data)):
 #         raise ValidationError('This field should only contain numbers')
@@ -60,7 +59,11 @@ class RegistrationForm(FlaskForm):
     )
     is_part_time = BooleanField(
         label='Is Part Time',
-        render_kw={'placeholder': 'Is Part Time', 'class': 'input100'}
+        render_kw={'placeholder': 'Is Part Time'}
+    )
+    postal_code = IntegerField(
+        label='Postal Code',
+        render_kw={'placeholder': 'Postal Code', 'class': 'input100'}
     )
     
 class PetForm(FlaskForm):
