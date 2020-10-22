@@ -98,14 +98,15 @@ class Users(db.Model, UserMixin):
         return self.contact
     
 class Role(db.Model):
-    usertype = db.Column(db.String, primary_key=True, nullable=False)
+    
+    name = db.Column(db.String, primary_key=True, nullable=False)
     #userrole = db.relationship('UserRoles', backref='userroletype')
     
     
 class UserRoles(db.Model):
     __tablename__ = 'user_roles'
     contact = db.Column(db.String, db.ForeignKey('users.contact', ondelete='CASCADE'), primary_key=True, nullable=False)
-    usertype = db.Column(db.Integer, db.ForeignKey('role.usertype', ondelete='CASCADE'), nullable=False)
+    usertype = db.Column(db.Integer, db.ForeignKey('role.name', ondelete='CASCADE'), nullable=False)
     
     userrolecontact = db.relationship('Users', foreign_keys=[contact])
     userrolerole = db.relationship('Role', foreign_keys=[usertype])
