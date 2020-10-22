@@ -38,12 +38,12 @@ def render_registration_page():
             db.session.execute(query)
             db.session.commit()
         elif user_type == "petowner":
-            query = "INSERT INTO petowners(username, contact, usertype, card, password, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')"\
+            query = "INSERT INTO petowners(username, contact, usertype, card, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
                 .format(username, contact, user_type, credit_card, hashed_password)
             db.session.execute(query)
             db.session.commit()
         elif user_type == "caretaker":
-            query = "INSERT INTO caretakers(username, contact, usertype, isPartTime, password, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')"\
+            query = "INSERT INTO caretakers(username, contact, usertype, isPartTime, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
                 .format(username, contact, user_type, is_part_time, hashed_password)
             db.session.execute(query)
             db.session.commit()
@@ -74,7 +74,7 @@ def render_login_page():
                 (Caretakers.query.filter_by(contact=form.contact.data).first()))
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             print("found", flush=True)
-            login_user(user)
+            login_user(user, remember=True)
             next_page = request.args.get('next')
             if next_page:
                 print("nextpage", flush=True)
@@ -82,7 +82,7 @@ def render_login_page():
             elif current_user.usertype == "admin":
                 print("admin", flush=True)
                 return redirect("/admin")
-            elif current_user.usertype == "pet owner":
+            elif current_user.usertype == "petowner":
                 print("current", flush=True)
                 return redirect("/owner")
             elif current_user.usertype == "caretaker":
@@ -109,8 +109,10 @@ def logout():
 @view.route("/admin", methods=["GET"])
 @login_required
 def render_admin_page():
-    query = "SELECT * FROM admins"
-    results = db.session.execute(query)
+    print(current_user, flush=True)
+    contact = current_user.contact
+    query = "SELECT * FROM admins WHERE contact = '{}'".format(contact)
+    results = db.session.execute(query).fetchall()
     return render_template('profile.html', results=results, username=current_user.username + " admin")
 
 
