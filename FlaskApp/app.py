@@ -1,27 +1,14 @@
-import os
-from flask import Flask
-from __init__ import db, login_manager, bcrypt
+from __init__ import app, db, login_manager
+from flask_user import SQLAlchemyAdapter, UserManager
 from views import view
+from models import Users
 
-app = Flask(__name__)
+#db_adapter = SQLAlchemyAdapter(db,  Users)
+#user_manager = UserManager(db_adapter, app, login_manager=login_manager)
 
 # Routing
 app.register_blueprint(view)
 
-
-# Config
-DATABASE_URL = os.environ['DATABASE_URL']
-
-app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL+"?sslmode=require"
-app.config["SECRET_KEY"] = "A random key to use flask extensions that require encryption"
-
-# Initialize other components
-db.init_app(app)
-login_manager.init_app(app)
-login_manager.login_view = 'view.render_login_page'
-
-
-bcrypt.init_app(app)
 
 
 if __name__ == "__main__":

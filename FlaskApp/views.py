@@ -8,7 +8,6 @@ import sys
 
 view = Blueprint("view", __name__)
 
-
 # @login_manager.user_loader
 # def load_user(contact):
 #     contact = ((Admins.query.filter_by(contact=contact.data).first()) or
