@@ -76,7 +76,7 @@ class Users(db.Model, UserMixin):
     usertype = db.Column(db.String, nullable=True)
     card = db.Column(db.String)
     isparttime = db.Column(db.Boolean)
-    postalcode = db.Column(db.Integer)
+    postalcode = db.Column(db.String)
     
     biddingccontact = db.relationship('Biddings', backref='contact')
     pet = db.relationship('Pets', backref='owner')
