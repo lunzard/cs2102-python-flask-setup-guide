@@ -62,20 +62,8 @@ class RegistrationForm(FlaskForm):
         label='Is Part Time',
         render_kw={'placeholder': 'Is Part Time', 'class': 'input100'}
     )
-
-class LoginForm(FlaskForm):
-    contact = StringField(
-        label='Contact',
-        validators=[InputRequired()],
-        render_kw={'placeholder': 'Contact', 'class': 'input100'}
-    )
-    password = PasswordField(
-        label='Password',
-        validators=[InputRequired()],
-        render_kw={'placeholder': 'Password', 'class': 'input100'}
-    )
     
-class petForm(FlaskForm):
+class PetForm(FlaskForm):
     pcontact = StringField(
     label='Pcontact',
     validators=[InputRequired()],
@@ -98,12 +86,12 @@ class petForm(FlaskForm):
     )
     
 class LoginForm(FlaskForm):
-        contact = StringField(
+    contact = StringField(
         label='Contact',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
-        password = PasswordField(
+    password = PasswordField(
         label='Password',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Password', 'class': 'input100'}
