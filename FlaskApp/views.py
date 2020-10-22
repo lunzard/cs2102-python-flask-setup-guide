@@ -234,7 +234,7 @@ def render_owner_pet():
     contact = current_user.contact
     query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
     pets = db.session.execute(query).fetchall()
-    return render_template(".html", pets=pets    , username=current_user.username + " owner")
+    return render_template("owner.html", pets=pets, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/new", methods=["GET", "POST"])
