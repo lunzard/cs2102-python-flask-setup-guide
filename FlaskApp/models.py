@@ -82,7 +82,7 @@ class Users(db.Model, UserMixin):
     pet = db.relationship('Pets', backref='owner')
     
     # Relationships
-    roles = db.relationship('Role', secondary='user_roles',
+    roles = db.relationship('Role', secondary='userroles',
     backref=db.backref('users', lazy='dynamic'))
     
     def is_authenticated(self):
@@ -102,7 +102,7 @@ class Role(db.Model):
     #userrole = db.relationship('UserRoles', backref='userroletype')
     
 class UserRoles(db.Model):
-    __tablename__ = 'user_roles'
+    __tablename__ = 'userroles'
     contact = db.Column(db.String, db.ForeignKey('users.contact', ondelete='CASCADE'), primary_key=True, nullable=False)
     usertype = db.Column(db.Integer, db.ForeignKey('role.usertype', ondelete='CASCADE'), nullable=False)
     
