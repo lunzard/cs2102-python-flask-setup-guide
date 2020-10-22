@@ -81,13 +81,12 @@
                 </div>
 
                 <div class="formField wrap-input100 validate-input">
-                    {{ form.usertype }} {% if form.usertype.errors %}
-                    <div class="errorMessage">
-                        {% for error in form.usertype.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
+                    {{ form.usertype }}
+                    <select name="type" id="mySelect">
+                    <option value="petowner">Pet Owner</option>
+                    <option value="caretaker">Caretaker</option>
+                    <option value="admin">Admin</option>
+                    </select>
                 </div>
 
                 <div class="formField wrap-input100 validate-input">
@@ -154,3 +153,14 @@
 </body>
 
 </html>
+
+<script>
+function yesnoCheck(that) {
+    if (that.value == "other") {
+  alert("check");
+        document.getElementById("ifYes").style.display = "block";
+    } else {
+        document.getElementById("ifYes").style.display = "none";
+    }
+}
+</script>
