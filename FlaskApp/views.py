@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, flash, url_for, render_template, request
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from __init__ import db, login_manager, bcrypt
-from forms import LoginForm, RegistrationForm, BiddingForm, PetForm
+from forms import LoginForm, RegistrationForm, BiddingForm
 from models import Admins, Petowners, Caretakers
 import sys
 
@@ -212,24 +212,35 @@ def render_owner_summary():
 @view.route("/owner/profile", methods=["GET", "POST"])
 @login_required
 def render_owner_profile():
-    query = "SELECT * FROM caretakers"
-    results = db.session.execute(query).fetchall()
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
+    form = ProfileForm()
+    contact = current_user.contact
+    query = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
+    profile = db.session.execute(query).fetchone()
+    return render_template("profile.html", profile=profile, form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/profile/update", methods=["GET", "POST"])
 @login_required
 def render_owner_profile_update():
-    query = "SELECT * FROM caretakers"
-    results = db.session.execute(query).fetchall()
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
+    form = ProfileForm()
+    contact = current_user.contact
+    query = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
+    profile = db.session.execute(query).fetchone()
+    if form.validate_on_submit():
+        profile.username = form.username.data
+        profile.password = form.password.data
+        profile.card = form.card.data
+        profile.postalcode = form.postalcode.data
+        db.session.commit()
+        print("Owner profile has been updated", flush=True)
+        return redirect(url_for('/owner/profile'))
+    return render_template("profile.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet", methods=["GET", "POST"])
 @login_required
 def render_owner_pet():
-    contact = current_user.contact
-    query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
+    query = "SELECT * FROM caretakers"
     results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
@@ -237,45 +248,42 @@ def render_owner_pet():
 @view.route("/owner/pet/new", methods=["GET", "POST"])
 @login_required
 def render_owner_pet_new():
-    form = PetForm()
-    if request.method == 'POST' and form.validate_on_submit():
-        return redirect(url_for(render_owner_pet))
-    contact = current_user.contact
-    return render_template("profile.html", form=form, username=current_user.username + " owner")
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 
-@view.route("/owner/pet/update", methods=["POST"])
+@view.route("/owner/pet/update", methods=["GET", "POST"])
 @login_required
 def render_owner_pet_update():
-    return redirect(url_for(render_owner_pet))
+    query = "SELECT * FROM caretakers"
+    results = db.session.execute(query).fetchall()
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 
-@view.route("/owner/pet/delete", methods=["POST"])
+@view.route("/owner/pet/delete", methods=["GET", "POST"])
 @login_required
 def render_owner_pet_delete():
     query = "SELECT * FROM caretakers"
     results = db.session.execute(query)
-    return redirect(url_for(render_owner_pet))
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 
 @view.route("/owner/bid", methods=["GET", "POST"])
 @login_required
 def render_owner_bid():
-    form = BiddingForm()
-    
     contact = current_user.contact
-    query = "SELECT * FROM biddings WHERE pcontact = '{}'".format(contact)
-    results = db.session.execute(query)
-    return render_template("profile.html", form=form, results=results, username=current_user.username + " owner")
+    query = "SELECT * FROM biddings WHERE status = 'end' AND pcontact= '{}'".format(contact)
+    bidding = db.session.execute(query).fetchall()
+    return render_template("profile.html", bidding=bidding, username=current_user.username + " owner")
 
 
 @view.route("/owner/bid/new", methods=["GET", "POST"])
 @login_required
 def render_owner_bid_new():
-    form = BiddingForm()
-    if request.method == 'POST' and form.validate_on_submit():
-        redirect(url_for(render_owner_bid))
-    return render_template("profile.html", form=form, username=current_user.username + " owner")
+    query = "SELECT * FROM biddings"
+    results = db.session.execute(query)
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 
 @view.route("/owner/bid/update", methods=["GET", "POST"])
@@ -307,7 +315,7 @@ def render_profile_page():
 @login_required
 def update(contact):
     user_to_update = Admins.query.get_or_404(contact)
-    if request.method == "POST" and form.validate_on_submit():
+    if request.method == "POST":
         user_to_update.username = request.form['username']
         try:
             db.session.commit()
