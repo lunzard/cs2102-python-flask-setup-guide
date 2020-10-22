@@ -4,8 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 @login_manager.user_loader
 def load_user(contact):
-    contact = Users.query.filter_by(contact=str(contact)).first()
-    return contact
+    user = Users.query.filter_by(str(contact)=str(contact)).first()
+    return user
 
 
 # class Admins(db.Model, UserMixin):
