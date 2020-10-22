@@ -75,7 +75,7 @@ class LoginForm(FlaskForm):
         render_kw={'placeholder': 'Password', 'class': 'input100'}
     )
     
-class petForm(FlaskForm):
+class PetForm(FlaskForm):
     pcontact = StringField(
     label='Pcontact',
     validators=[InputRequired()],
