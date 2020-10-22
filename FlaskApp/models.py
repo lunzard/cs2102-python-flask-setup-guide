@@ -97,7 +97,7 @@ class Users(db.Model, UserMixin):
     
 class Role(db.Model):
     usertype = db.Column(db.String, primary_key=True, nullable=False)
-    userrole = db.relationship('UserRoles', backref='userroletype')
+    #userrole = db.relationship('UserRoles', backref='userroletype')
     
 class UserRoles(db.Model):
     contact = db.Column(db.String, db.ForeignKey('users.contact'), primary_key=True, nullable=False)
