@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, DateField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, DateField, SelectField
 from wtforms.validators import InputRequired, ValidationError, EqualTo
 from models import Users
 from datetime import date
@@ -33,8 +33,9 @@ class RegistrationForm(FlaskForm):
         validators=[InputRequired(), is_valid_name],
         render_kw={'placeholder': 'Name', 'class': 'input100'}
     )
-    usertype = StringField(
-        label='Usertype',
+    usertype = SelectField(
+        u'User Type',
+        choices=[('petowner', 'Pet Owner'), ('caretaker', 'Caretaker'), ('admin', 'Administrator')],
         validators=[InputRequired()],
         render_kw={'placeholder': 'User Type', 'class': 'input100'}
     )
