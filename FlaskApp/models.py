@@ -96,15 +96,19 @@ class Users(db.Model, UserMixin):
         return self.contact
     
 class Role(db.Model):
-    usertype = db.Column(db.String, primary_key=True)
+    usertype = db.Column(db.String, primary_key=True, nullable=False)
     userrole = db.relationship('UserRoles', backref='userroletype')
     
 class UserRoles(db.Model):
-    contact = db.Column(db.String, db.ForeignKey('users.contact', ondelete='CASCADE'), primary_key=True)
-    usertype = db.Column(db.Integer, db.ForeignKey('roles.usertype', ondelete='CASCADE'))
+    contact = db.Column(db.String, db.ForeignKey('users.contact'), primary_key=True, nullable=False)
+    usertype = db.Column(db.Integer, db.ForeignKey('roles.usertype'), nullable=False)
     
     userrolecontact = db.relationship('Users', foreign_keys=[contact])
     userrolerole = db.relationship('Role', foreign_keys=[usertype])
+
+class categories(db.Model, UserMixin):
+    category = db.Column(db.String, primary_key=True, nullable=False)
+    petcat = db.relationship('Pets', backref='type')
     
 class Pets(db.Model, UserMixin):
     petname = db.Column(db.String, primary_key=True, nullable=False)

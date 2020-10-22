@@ -39,7 +39,16 @@ CREATE TABLE users (
     usertype VARCHAR NOT NULL,
     isPartTime BOOLEAN,
     postalcode INTEGER
-)
+);
+
+CREATE TABLE role (
+    usertype VARCHAR PRIMARY KEY NOT NULL 
+);
+
+CREATE TABLE userroles (
+    contact VARCHAR PRIMARY KEY NOT NULL REFERENCES public.users(contact),
+    usertype VARCHAR NOT NULL REFERENCES public.role(usertype)
+);
 
 CREATE TABLE pets(
     petname VARCHAR NOT NULL,
@@ -57,7 +66,7 @@ CREATE TABLE available (
 );
 
 CREATE TABLE cantakecare (
-    ccontact VARCHAR NOT NULL REFERENCES public.careuserstakers(contact),
+    ccontact VARCHAR NOT NULL REFERENCES public.users(contact),
     category VARCHAR REFERENCES public.categories(category),
     dailyprice INT NOT NULL,
     PRIMARY KEY (ccontact, category)
