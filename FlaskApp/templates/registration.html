@@ -68,18 +68,15 @@
             <div class="container">
             <form class="registrationForm login100-form">
                 {{ form.hidden_tag() }}
-
                 <div class="formField wrap-input100 validate-input">
-                    {{ form.username }} {% if form.username.errors %}
-                    <span class="focus-input100" data-placeholder="&#xe82a;"></span>
-                    <div class="errorMessage">
-                        {% for error in form.username.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
+                    var type=document.getElementById('mySelect');
+                    <select name="type" id="mySelect">
+                        <option value="petowner">Pet Owner</option>
+                        <option value="caretaker">Caretaker</option>
+                        <option value="admin">Admin</option>
+                      </select>
+                    form.usertype = type;
                 </div>
-
                 <div class="formField wrap-input100 validate-input">
                     {{ form.usertype }} {% if form.usertype.errors %}
                     <div class="errorMessage">
@@ -154,3 +151,14 @@
 </body>
 
 </html>
+
+<script>
+function yesnoCheck(that) {
+    if (that.value == "other") {
+  alert("check");
+        document.getElementById("ifYes").style.display = "block";
+    } else {
+        document.getElementById("ifYes").style.display = "none";
+    }
+}
+</script>
