@@ -2,8 +2,8 @@ from flask import Blueprint, redirect, flash, url_for, render_template, request
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from __init__ import db, login_manager, bcrypt
-from forms import LoginForm, RegistrationForm, BiddingForm
-from models import Admins, Petowners, Caretakers
+from forms import LoginForm, RegistrationForm, BiddingForm, PetForm
+from models import Users, Role
 import sys
 
 view = Blueprint("view", __name__)
@@ -26,6 +26,7 @@ def render_dummy_page():
 def render_registration_page():
     form = RegistrationForm()
     if form.validate_on_submit():
+        print("sumitted", flush=True)
         username = form.username.data
         password = form.password.data
         user_type = form.usertype.data
@@ -35,12 +36,27 @@ def render_registration_page():
         postal_code = form.postal_code.data
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         
+        
+        user1 = Users(username=username, usertype=user_type, contact=contact, card=credit_card, isparttime=is_part_time, postalcode=postal_code, password=hashed_password)
+        if user_type == 'admin':
+            user1.roles.append(Role(usertype='admin'))
+        elif user_type == 'petowner':
+            user1.roles.append(Role(usertype='petowner'))
+        elif user_type == 'caretaker':
+            user1.roles.append(Role(usertype='caretaker'))
+        db.session.add(user1)
+        db.session.commit()
+        
         query = "INSERT INTO users(username, contact, card, password, usertype, isPartTime, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
             .format(username, contact, credit_card, hashed_password, user_type, is_part_time, postal_code)
+        print(query, flush=True)
         db.session.execute(query)
+        print("done", flush=True)
         db.session.commit()
+        print("commited", flush=True)
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect("/login")
+    print("rendered", flush=True)
     return render_template("registration.html", title='Registration', form=form)
 
 
@@ -102,7 +118,8 @@ def logout():
 
 
 @view.route("/admin", methods=["GET"])
-@login_required
+#@login_required
+@roles_required('admin')
 def render_admin_page():
     print(current_user, flush=True)
     contact = current_user.contact
@@ -119,7 +136,8 @@ def render_admin_summary_page():
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 @view.route("/caretaker", methods=["GET"])
-@login_required
+#@login_required
+@roles_required('caretaker')
 def render_caretaker_page():
     print(current_user, flush=True)
     contact = current_user.contact
@@ -187,7 +205,8 @@ def render_caretaker_update_cantakecare():
 
 
 @view.route("/owner", methods=["GET", "POST"])
-@login_required
+#@login_required
+@roles_required('petowner')
 def render_owner_page():
     caretakersquery = "SELECT * FROM users WHERE usertype = 'caretaker'"
     caretakers = db.session.execute(caretakersquery).fetchall()
@@ -241,11 +260,11 @@ def render_owner_pet():
     contact = current_user.contact
     query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
     pets = db.session.execute(query).fetchall()
-    return render_template(".html", pets=pets    , username=current_user.username + " owner")
+    return render_template("owner.html", pets=pets, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/new", methods=["GET", "POST"])
-@login_required
+#@login_required
 def render_owner_pet_new():
     form = PetForm()
     contact = current_user.contact
@@ -253,23 +272,18 @@ def render_owner_pet_new():
         petname = form.petname.data
         category = form.category.data
         age = form.age.data
-        pcontact = form.pcontact.data
-
-        if(pcontact == contact):
-            query = "INSERT INTO users(petname, pcontact, age, category) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
-            .format(petname, pcontact, age, category)
-            db.session.execute(query)
-            db.session.commit()
-        return redirect(url_for(render_owner_pet))
-    return render_template("profile.html", form=form, username=current_user.username + " owner")
+        query = "INSERT INTO pets(petname, pcontact, age, category) VALUES ('{}', '{}', '{}', '{}')" \
+        .format(petname, contact, age, category)
+        db.session.execute(query)
+        db.session.commit()
+        return redirect(url_for('view.render_owner_pet'))
+    return render_template("test.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/update", methods=["GET", "POST"])
 @login_required
 def render_owner_pet_update():
-    query = "SELECT * FROM caretakers"
-    results = db.session.execute(query).fetchall()
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
+    return redirect(url_for('view.render_owner_pet'))
 
 
 @view.route("/owner/pet/delete", methods=["GET", "POST"])

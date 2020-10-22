@@ -81,6 +81,10 @@ class Users(db.Model, UserMixin):
     biddingccontact = db.relationship('Biddings', backref='contact')
     pet = db.relationship('Pets', backref='owner')
     
+    # Relationships
+    roles = db.relationship('Role', secondary='user_roles',
+    backref=db.backref('users', lazy='dynamic'))
+    
     def is_authenticated(self):
         return True
 
