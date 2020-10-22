@@ -81,17 +81,13 @@
                 </div>
 
                 <div class="formField wrap-input100 validate-input">
-                    <script>
-                        function dropdown() {
-                        var type=document.getElementById('mySelect');
-                        <select name="type" id="mySelect">
-                            <option value="petowner">Pet Owner</option>
-                            <option value="caretaker">Caretaker</option>
-                            <option value="admin">Admin</option>
-                          </select>
-                        form.usertype = type;
-                        }
-                    </script>
+                    {{ form.usertype }} {% if form.usertype.errors %}
+                    <div class="errorMessage">
+                        {% for error in form.usertype.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
 
                 <div class="formField wrap-input100 validate-input">
@@ -169,4 +165,3 @@ function yesnoCheck(that) {
     }
 }
 </script>
-
