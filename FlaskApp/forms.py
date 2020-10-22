@@ -28,6 +28,7 @@ def agrees_terms_and_conditions(form, field):
 
 
 class RegistrationForm(FlaskForm):
+    roles = [('petowner', 'Pet Owner'), ('admin', 'Admin'), ('caretaker', 'Caretaker')]
     username = StringField(
         label='Name',
         validators=[InputRequired(), is_valid_name],
