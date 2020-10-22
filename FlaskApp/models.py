@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 @login_manager.user_loader
 def load_user(contact):
-    contact = Users.query.filter_by(contact=contact).first()
+    contact = Users.query.filter_by(contact=str(contact)).first()
     return contact
 
 
