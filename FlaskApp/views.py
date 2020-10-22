@@ -233,7 +233,7 @@ def render_owner_pet():
 
 
 @view.route("/owner/pet/new", methods=["GET", "POST"])
-@login_required
+#@login_required
 def render_owner_pet_new():
     form = PetForm()
     contact = current_user.contact
@@ -241,15 +241,12 @@ def render_owner_pet_new():
         petname = form.petname.data
         category = form.category.data
         age = form.age.data
-        pcontact = form.pcontact.data
-
-        if(pcontact == contact):
-            query = "INSERT INTO users(petname, pcontact, age, category) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
-            .format(petname, pcontact, age, category)
-            db.session.execute(query)
-            db.session.commit()
-        return redirect(url_for(render_owner_pet))
-    return render_template("profile.html", form=form, username=current_user.username + " owner")
+        query = "INSERT INTO users(petname, pcontact, age, category) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
+        .format(petname, contact, age, category)
+        db.session.execute(query)
+        db.session.commit()
+    return redirect(url_for(render_owner_pet))
+    return render_template("test.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/update", methods=["POST"])
