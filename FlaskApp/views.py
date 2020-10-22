@@ -3,7 +3,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm
-from models import Admins, Petowners, Caretakers
+from models import Users
 import sys
 
 view = Blueprint("view", __name__)
@@ -66,9 +66,7 @@ def render_login_page():
     form = LoginForm()
     if form.validate_on_submit():
         print("submited", flush=True)
-        user = ((Admins.query.filter_by(contact=form.contact.data).first()) or
-                (Petowners.query.filter_by(contact=form.contact.data).first()) or
-                (Caretakers.query.filter_by(contact=form.contact.data).first()))
+        user = Users.query.filter_by(contact=form.contact.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             print("found", flush=True)
             login_user(user, remember=True)
@@ -108,7 +106,7 @@ def logout():
 def render_admin_page():
     print(current_user, flush=True)
     contact = current_user.contact
-    query = "SELECT * FROM admins WHERE contact = '{}'".format(contact)
+    query = "SELECT * FROM users WHERE contact = '{}' AND usertype = 'admin'".format(contact)
     results = db.session.execute(query).fetchall()
     return render_template('admin.html', results=results, username=current_user.username + " admin")
 
@@ -116,7 +114,7 @@ def render_admin_page():
 @view.route("/admin/summary", methods=["GET"])
 @login_required
 def render_admin_summary_page():
-    query = "SELECT * FROM caretakers"
+    query = "SELECT * FROM users WHERE usertype = 'caretaker'"
     results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
@@ -186,7 +184,7 @@ def render_caretaker_update_cantakecare():
 @view.route("/owner", methods=["GET", "POST"])
 @login_required
 def render_owner_page():
-    query = "SELECT * FROM caretakers"
+    query = "SELECT * FROM users WHERE usertype = 'caretaker'"
     results = db.session.execute(query).fetchall()
     return render_template("owner.html", results=results, username=current_user.username + " owner")
 
@@ -195,7 +193,7 @@ def render_owner_page():
 @login_required
 def render_owner_summary():
     contact = current_user.contact
-    query = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
+    query = "SELECT * FROM users WHERE contact = '{}' AND usertype = 'pet owner'".format(contact)
     results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
@@ -203,7 +201,7 @@ def render_owner_summary():
 @view.route("/owner/profile", methods=["GET", "POST"])
 @login_required
 def render_owner_profile():
-    query = "SELECT * FROM caretakers"
+    query = "SELECT * FROM users WHERE usertype = 'caretaker'"
     results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
@@ -211,7 +209,7 @@ def render_owner_profile():
 @view.route("/owner/profile/update", methods=["GET", "POST"])
 @login_required
 def render_owner_profile_update():
-    query = "SELECT * FROM caretakers"
+    query = "SELECT * FROM users WHERE usertype = 'caretaker'"
     results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
@@ -244,7 +242,7 @@ def render_owner_pet_update():
 @view.route("/owner/pet/delete", methods=["POST"])
 @login_required
 def render_owner_pet_delete():
-    query = "SELECT * FROM caretakers"
+    query = "SELECT * FROM users WHERE usertype = 'caretaker'"
     results = db.session.execute(query)
     return redirect(url_for(render_owner_pet))
 
@@ -272,7 +270,7 @@ def render_owner_bid_new():
 @view.route("/owner/bid/update", methods=["GET", "POST"])
 @login_required
 def render_owner_bid_update():
-    query = "SELECT * FROM caretakers"
+    query = "SELECT * FROM users WHERE usertype = 'caretaker'"
     results = db.session.execute(query)
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
@@ -280,7 +278,7 @@ def render_owner_bid_update():
 @view.route("/owner/bid/delete", methods=["GET", "POST"])
 @login_required
 def render_owner_bid_delete():
-    query = "SELECT * FROM caretakers"
+    query = "SELECT * FROM users WHERE usertype = 'caretaker'"
     results = db.session.execute(query)
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
@@ -297,7 +295,7 @@ def render_profile_page():
 @view.route('/update/username', methods=['POST', 'GET'])
 @login_required
 def update(contact):
-    user_to_update = Admins.query.get_or_404(contact)
+    user_to_update = Users.query.get_or_404(contact)
     if request.method == "POST" and form.validate_on_submit():
         user_to_update.username = request.form['username']
         try:
