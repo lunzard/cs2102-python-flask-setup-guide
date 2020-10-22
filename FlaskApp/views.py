@@ -142,7 +142,7 @@ def render_caretaker_page():
     print(current_user, flush=True)
     contact = current_user.contact
     #insert query to show this caretaker's working hours and this month's pay.
-    query = "SELECT * FROM admins WHERE contact = '{}'".format(contact)
+    query = "SELECT * FROM users WHERE contact = '{}' and usertype = 'admin'".format(contact)
     results = db.session.execute(query).fetchall()
     return render_template('caretaker.html', results=results, username=current_user.username + " caretaker")
 

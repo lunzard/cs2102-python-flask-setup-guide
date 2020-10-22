@@ -102,8 +102,9 @@ class Role(db.Model):
     #userrole = db.relationship('UserRoles', backref='userroletype')
     
 class UserRoles(db.Model):
-    contact = db.Column(db.String, db.ForeignKey('users.contact'), primary_key=True, nullable=False)
-    usertype = db.Column(db.Integer, db.ForeignKey('role.usertype'), nullable=False)
+    __tablename__ = 'user_roles'
+    contact = db.Column(db.String, db.ForeignKey('users.contact', ondelete='CASCADE'), primary_key=True, nullable=False)
+    usertype = db.Column(db.Integer, db.ForeignKey('role.usertype', ondelete='CASCADE'), nullable=False)
     
     userrolecontact = db.relationship('Users', foreign_keys=[contact])
     userrolerole = db.relationship('Role', foreign_keys=[usertype])
