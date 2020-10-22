@@ -21,6 +21,11 @@ view = Blueprint("view", __name__)
 def render_dummy_page():
     return render_template("welcome.html", title='Welcome')
 
+@view.route("/test", methods=["GET"])
+def render_test_page():
+    return render_template("test.html", title='Welcome')
+
+
 
 @view.route("/registration", methods=["GET", "POST"])
 def render_registration_page():
@@ -195,9 +200,13 @@ def render_caretaker_update_cantakecare():
 @view.route("/owner", methods=["GET", "POST"])
 @login_required
 def render_owner_page():
-    query = "SELECT * FROM caretakers"
-    results = db.session.execute(query).fetchall()
-    return render_template("owner.html", results=results, username=current_user.username + " owner")
+    caretakerquery = "SELECT * FROM caretakers"
+    caretakers = db.session.execute(caretakerquery).fetchall()
+    contact = current_user.contact
+    profilequery = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
+    profile = db.session.execute(caretakerquery).fetchone()
+
+    return render_template("owner.html", profile=profile, caretakers=caretakers, username=current_user.username + " owner")
 
 
 @view.route("/owner/summary", methods=["GET", "POST"])
@@ -230,17 +239,26 @@ def render_owner_profile_update():
 def render_owner_pet():
     contact = current_user.contact
     query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
-    results = db.session.execute(query).fetchall()
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
+    pets = db.session.execute(query).fetchall()
+    return render_template("profile.html", pets=pets, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/new", methods=["GET", "POST"])
 @login_required
 def render_owner_pet_new():
     form = PetForm()
-    if request.method == 'POST' and form.validate_on_submit():
-        return redirect(url_for(render_owner_pet))
     contact = current_user.contact
+    if request.method == 'POST' and form.validate_on_submit():
+        petname = form.petname.data
+        category = form.category.data
+        age = form.age.data
+        pcontact = form.pcontact.data
+        if pcontact == contact:
+            query = "INSERT INTO pets(petname, pcontact, category, age) VALUES ('{}', '{}', '{}', '{}')" \
+                .format(petname, pcontact, category, age)
+            db.session.execute(query)
+            db.session.commit()
+        return redirect(url_for(render_owner_pet))
     return render_template("profile.html", form=form, username=current_user.username + " owner")
 
 
