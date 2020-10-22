@@ -260,18 +260,18 @@ def render_owner_pet_new():
         petname = form.petname.data
         category = form.category.data
         age = form.age.data
-        query = "INSERT INTO users(petname, pcontact, age, category) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
+        query = "INSERT INTO pets(petname, pcontact, age, category) VALUES ('{}', '{}', '{}', '{}')" \
         .format(petname, contact, age, category)
         db.session.execute(query)
         db.session.commit()
-    return redirect(url_for(render_owner_pet))
+        return redirect(url_for('view.render_owner_pet'))
     return render_template("test.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/update", methods=["POST"])
 @login_required
 def render_owner_pet_update():
-    return redirect(url_for(render_owner_pet))
+    return redirect(url_for('view.render_owner_pet'))
 
 
 @view.route("/owner/pet/delete", methods=["POST"])
