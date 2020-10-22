@@ -63,7 +63,7 @@ class RegistrationForm(FlaskForm):
         label='Is Part Time',
         render_kw={'placeholder': 'Is Part Time'}
     )
-    postal_code = IntegerField(
+    postal_code = StringField(
         label='Postal Code',
         render_kw={'placeholder': 'Postal Code', 'class': 'input100'}
     )

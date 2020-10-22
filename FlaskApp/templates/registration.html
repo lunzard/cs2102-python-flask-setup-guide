@@ -85,11 +85,7 @@
                     </div>
 
                     <div class="formField wrap-input100 validate-input">
-                        <select name="type" id="mySelect">
-                        <option value="petowner">Pet Owner</option>
-                        <option value="caretaker">Caretaker</option>
-                        <option value="admin">Admin</option>
-                        </select>
+                        {{ form.usertype }}
                     </div>
 
                     <div class="formField wrap-input100 validate-input">
@@ -144,18 +140,11 @@
                     {% endif %} -->
                     </div>
 
-                    <div class="formField">
+                    <div class="formField" id="parttime_checkbox">
                         <div class="partTimeWrapper">
                             <p id="partTimeOption">Are you a part-time caretaker? </p>
                             <div class="checkbox"> {{ form.is_part_time }} </div>
                         </div>
-                        <!-- {% if form.is_part_time.errors %}
-                        <div class="errorMessage">
-                        {% for error in form.is_part_time.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                        </div>
-                    {% endif %} -->
                     </div>
                     <div class="buttonWrapper">
                         <button id="registerButton" class="login100-form-btn" formmethod="post">register</button>
@@ -169,12 +158,12 @@
 </html>
 
 <script>
-    function yesnoCheck(that) {
-        if (that.value == "other") {
-            alert("check");
-            document.getElementById("ifYes").style.display = "block";
-        } else {
-            document.getElementById("ifYes").style.display = "none";
-        }
-    }
+    $("#usertype").change(function() {
+      if ($(this).val() == "caretaker") {
+        $('#parttime_checkbox').show();
+      } else {
+        $('#parttime_checkbox').hide();
+      }
+});
+    $("#usertype").trigger("change");
 </script>
