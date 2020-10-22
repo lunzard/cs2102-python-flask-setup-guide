@@ -184,6 +184,14 @@ class ReviewForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Review', 'class': 'input200'}
     )
+
+class ProfileForm(FlaskForm):
+    username = StringField(
+        label='Name',
+        validators=[InputRequired(), is_valid_name],
+        render_kw={'placeholder': 'Name', 'class': 'input100'}
+    )
+
     
 class AvailableForm(FlaskForm):
     startdate = DateField(
