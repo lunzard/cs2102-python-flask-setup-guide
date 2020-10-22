@@ -121,7 +121,12 @@ def render_admin_summary_page():
 @view.route("/caretaker", methods=["GET"])
 @login_required
 def render_caretaker_page():
-    return render_template('profile.html', username=current_user.username + " caretaker")
+    print(current_user, flush=True)
+    contact = current_user.contact
+    #insert query to show this caretaker's working hours and this month's pay.
+    query = "SELECT * FROM admins WHERE contact = '{}'".format(contact)
+    results = db.session.execute(query).fetchall()
+    return render_template('caretaker.html', results=results, username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/biddings", methods=["GET", "POST"])
