@@ -82,89 +82,91 @@
                             <li>{{ error }}</li>
                             {% endfor %}
                         </div>
+                        {% endif %}
+                    </div>
 
-                        <div class="formField wrap-input100 validate-input">
-                            {{ form.usertype }} {% if form.usertype.errors %}
-                            <div class="errorMessage">
-                                {% for error in form.usertype.errors %}
-                                <li>{{ error }}</li>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
+                    <div class="formField wrap-input100 validate-input">
+                        {{ form.usertype }} {% if form.usertype.errors %}
+                        <div class="errorMessage">
+                            {% for error in form.usertype.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
                         </div>
+                        {% endif %}
+                    </div>
 
-                        <div class="formField wrap-input100 validate-input">
-                            {{ form.contact }} {% if form.contact.errors %}
-                            <div class="errorMessage">
-                                {% for error in form.contact.errors %}
-                                <li>{{ error }}</li>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
+                    <div class="formField wrap-input100 validate-input">
+                        {{ form.contact }} {% if form.contact.errors %}
+                        <div class="errorMessage">
+                            {% for error in form.contact.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
                         </div>
+                        {% endif %}
+                    </div>
 
-                        <div class="formField wrap-input100 validate-input">
-                            {{ form.password }} {% if form.password.errors %}
-                            <div class="errorMessage">
-                                {% for error in form.password.errors %}
-                                <li>{{ error }}</li>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
+                    <div class="formField wrap-input100 validate-input">
+                        {{ form.password }} {% if form.password.errors %}
+                        <div class="errorMessage">
+                            {% for error in form.password.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
                         </div>
+                        {% endif %}
+                    </div>
 
-                        <div class="formField wrap-input100 validate-input">
-                            {{ form.confirm_password }} {% if form.confirm_password.errors %}
-                            <div class="errorMessage">
-                                {% for error in form.confirm_password.errors %}
-                                <li>{{ error }}</li>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
+                    <div class="formField wrap-input100 validate-input">
+                        {{ form.confirm_password }} {% if form.confirm_password.errors %}
+                        <div class="errorMessage">
+                            {% for error in form.confirm_password.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
                         </div>
+                        {% endif %}
+                    </div>
 
-                        <div class="formField" class="wrap-input100 validate-input">
-                            {{ form.credit_card }}
-                            <!-- {% if form.credit_card.errors %}
+                    <div class="formField" class="wrap-input100 validate-input">
+                        {{ form.credit_card }}
+                        <!-- {% if form.credit_card.errors %}
                         <div class="errorMessage">
                         {% for error in form.credit_card.errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
                         </div>
                     {% endif %} -->
-                        </div>
+                    </div>
 
-                        <div class="formField" class="wrap-input100 validate-input">
-                            {{ form.postal_code }}
-                            <!-- {% if form.postal_code.errors %}
+                    <div class="formField" class="wrap-input100 validate-input">
+                        {{ form.postal_code }}
+                        <!-- {% if form.postal_code.errors %}
                         <div class="errorMessage">
                         {% for error in form.credit_card.errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
                         </div>
                     {% endif %} -->
-                        </div>
+                    </div>
 
-                        <div class="formField">
-                            <div class="partTimeWrapper">
-                                <p id="partTimeOption">Are you a part-time caretaker? </p>
-                                <div class="checkbox"> {{ form.is_part_time }} </div>
-                            </div>
-                            <!-- {% if form.is_part_time.errors %}
+                    <div class="formField">
+                        <div class="partTimeWrapper">
+                            <p id="partTimeOption">Are you a part-time caretaker? </p>
+                            <div class="checkbox"> {{ form.is_part_time }} </div>
+                        </div>
+                        <!-- {% if form.is_part_time.errors %}
                         <div class="errorMessage">
                         {% for error in form.is_part_time.errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
                         </div>
                     {% endif %} -->
-                        </div>
-                        <div class="buttonWrapper">
-                            <button id="registerButton" class="login100-form-btn" formmethod="post">register</button>
-                        </div>
+                    </div>
+                    <div class="buttonWrapper">
+                        <button id="registerButton" class="login100-form-btn" formmethod="post">register</button>
+                    </div>
                 </form>
-                </div>
             </div>
         </div>
+    </div>
 </body>
 
 </html>
