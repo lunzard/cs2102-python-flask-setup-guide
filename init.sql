@@ -39,7 +39,7 @@ CREATE TABLE users (
     usertype VARCHAR NOT NULL,
     isPartTime BOOLEAN,
     postalcode INTEGER
-)
+);
 
 CREATE TABLE pets(
     petname VARCHAR NOT NULL,
