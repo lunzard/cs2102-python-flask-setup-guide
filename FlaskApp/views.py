@@ -231,7 +231,7 @@ def render_owner_profile_update():
         profile.postalcode = form.postalcode.data
         db.session.commit()
         print("Owner profile has been updated", flush=True)
-        return redirect(url_for('/owner/profile'))
+        return redirect(url_for(render_owner_profile))
     return render_template("profile.html", form=form, username=current_user.username + " owner")
 
 
@@ -292,9 +292,24 @@ def render_owner_bid():
 @view.route("/owner/bid/new", methods=["GET", "POST"])
 @login_required
 def render_owner_bid_new():
-    query = "SELECT * FROM biddings"
-    results = db.session.execute(query)
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
+    form = BiddingForm()
+    contact = current_user.contact
+    if request.method == 'POST' and form.validate_on_submit():
+        pcontact = contact
+        ccontact = form.ccontact.data
+        petname = form.petname.data
+        startdate = form.startdate.data
+        enddate = form.enddate.data
+        paymentmode = form.paymentmode.data
+        deliverymode = form.deliverymode.data
+
+        if(enddate - startdate >= 0):
+            query = "INSERT INTO biddings(pcontact, ccontact, petname, startday, endday, paymentmode, deliverymode, status) VALUES ('{}', '{}', '{}', '{}','{}', '{}', '{}', '{}')" \
+            .format(pcontact, ccontact, petname, startdate, enddate, paymentmode, deliverymode, "pending")
+            db.session.execute(query)
+            db.session.commit()
+        return redirect(url_for('view.render_owner_bid'))
+    return render_template("profile.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/bid/update", methods=["GET", "POST"])
