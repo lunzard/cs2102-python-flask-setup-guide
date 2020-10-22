@@ -47,12 +47,12 @@ def render_registration_page():
         db.session.add(user1)
         db.session.commit()
         
-        query = "INSERT INTO users(username, contact, card, password, usertype, isPartTime, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
-            .format(username, contact, credit_card, hashed_password, user_type, is_part_time, postal_code)
-        print(query, flush=True)
-        db.session.execute(query)
-        print("done", flush=True)
-        db.session.commit()
+        # query = "INSERT INTO users(username, contact, card, password, usertype, isPartTime, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
+        #     .format(username, contact, credit_card, hashed_password, user_type, is_part_time, postal_code)
+        # print(query, flush=True)
+        # db.session.execute(query)
+        # print("done", flush=True)
+        # db.session.commit()
         print("commited", flush=True)
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect("/login")
