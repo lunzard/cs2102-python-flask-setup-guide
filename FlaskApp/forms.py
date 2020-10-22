@@ -97,37 +97,37 @@ class petForm(FlaskForm):
         render_kw={'placeholder': 'Age', 'class': 'input100'}
     )
     
-    class LoginForm(FlaskForm):
+class LoginForm(FlaskForm):
         contact = StringField(
         label='Contact',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
-    password = PasswordField(
+        password = PasswordField(
         label='Password',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Password', 'class': 'input100'}
     )
 
-    class caretakerForm(FlaskForm):
+class CaretakerForm(FlaskForm):
         username = StringField(
         label='Username',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Username', 'class': 'input100'}
-        )
+    )
         password = PasswordField(
         label='Password',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Password', 'class': 'input100'}
-        )
+    )
         postalcode = StringField(
         label='PostalCode',
         validators=[InputRequired()],
         render_kw={'placeholder': 'PostalCode', 'class': 'input100'}
-        )
+    )
         
         
-class biddingForm(FlaskForm):
+class BiddingForm(FlaskForm):
     pcontact = StringField(
     label='Pcontact',
     validators=[InputRequired()],
@@ -164,13 +164,13 @@ class biddingForm(FlaskForm):
         render_kw={'placeholder': 'Deliverymode', 'class': 'input100'}
     )
     def validate_on_submit(self):
-            result = super(biddingForm, self).validate()
+            result = super(BiddingForm, self).validate()
             if (self.startdate.data>self.enddate.data):
                 return False
             else:
                 return result
    
-class reviewForm(FlaskForm):
+class ReviewForm(FlaskForm):
     pcontact = StringField(
     label='Pcontact',
     validators=[InputRequired()],
@@ -197,7 +197,7 @@ class reviewForm(FlaskForm):
         render_kw={'placeholder': 'Review', 'class': 'input200'}
     )
     
-class availableForm(FlaskForm):
+class AvailableForm(FlaskForm):
     startdate = DateField(
         label='Startdate',
         validators=[InputRequired()],
@@ -216,7 +216,7 @@ class availableForm(FlaskForm):
         render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
     )
     def validate_on_submit(self):
-            result = super(availableForm, self).validate()
+            result = super(AvailableForm, self).validate()
             if (self.startdate.data>self.enddate.data):
                 return False
             else:

@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, flash, url_for, render_template, request
 from flask_login import current_user, login_required, login_user, logout_user
 from __init__ import db, login_manager, bcrypt
-from forms import LoginForm, RegistrationForm
+from forms import LoginForm, RegistrationForm, BiddingForm
 from models import Admins, Petowners, Caretakers
 import sys
 
@@ -57,15 +57,20 @@ def render_login_page():
     if current_user.is_authenticated:
         next_page = request.args.get('next')
         if next_page:
+            print("nextpage", flush=True)
             return redirect(next_page)
-        elif isinstance(current_user, Admins):
-            redirect("/admin")
-        elif isinstance(current_user, Petowners):
-            redirect("/owner")
-        elif isinstance(current_user, Caretakers):
-            redirect("/caretaker")
+        elif current_user.usertype == "admin":
+            print("admin", flush=True)
+            return redirect("/admin")
+        elif current_user.usertype == "petowner":
+            print("current", flush=True)
+            return redirect("/owner")
+        elif current_user.usertype == "caretaker":
+            print("caret", flush=True)
+            return redirect("/caretaker")
         else:
-            redirect("/profile")
+            print("nothing mtaches", flush=True)
+            return redirect("/profile")
     form = LoginForm()
     if form.validate_on_submit():
         print("submited", flush=True)
@@ -132,7 +137,11 @@ def render_caretaker_page():
 @view.route("/caretaker/biddings", methods=["GET", "POST"])
 @login_required
 def render_caretaker_biddings():
-    return render_template('profile.html', username=current_user.username + " caretaker")
+    form = BiddingForm()
+    contact = current_user.contact
+    query = "SELECT * FROM biddings WHERE contact = '{}'".format(contact)
+    results = db.session.execute(query).fetchall()
+    return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 
 @view.route("/caretaker/profile", methods=["GET"])
@@ -193,7 +202,8 @@ def render_owner_page():
 @view.route("/owner/summary", methods=["GET", "POST"])
 @login_required
 def render_owner_summary():
-    query = "SELECT * FROM caretakers"
+    contact = current_user.contact
+    query = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
     results = db.session.execute(query).fetchall()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
