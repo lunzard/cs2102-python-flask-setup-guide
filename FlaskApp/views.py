@@ -2,13 +2,8 @@ from flask import Blueprint, redirect, flash, url_for, render_template, request
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from __init__ import db, login_manager, bcrypt
-<<<<<<< HEAD
 from forms import LoginForm, RegistrationForm, BiddingForm
 from models import Admins, Petowners, Caretakers
-=======
-from forms import LoginForm, RegistrationForm, BiddingForm, PetForm
-from models import Users
->>>>>>> ec3938a4779eef9573ca3c9b3e45dd5cf7c479f8
 import sys
 
 view = Blueprint("view", __name__)
@@ -215,23 +210,16 @@ def render_owner_summary():
 @view.route("/owner/profile", methods=["GET", "POST"])
 @login_required
 def render_owner_profile():
-<<<<<<< HEAD
     form = ProfileForm()
     contact = current_user.contact
     query = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
     profile = db.session.execute(query).fetchone()
     return render_template("profile.html", profile=profile, form=form, username=current_user.username + " owner")
-=======
-    query = "SELECT * FROM users WHERE usertype = 'caretaker'"
-    results = db.session.execute(query).fetchall()
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
->>>>>>> ec3938a4779eef9573ca3c9b3e45dd5cf7c479f8
 
 
 @view.route("/owner/profile/update", methods=["GET", "POST"])
 @login_required
 def render_owner_profile_update():
-<<<<<<< HEAD
     form = ProfileForm()
     contact = current_user.contact
     query = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
@@ -245,36 +233,20 @@ def render_owner_profile_update():
         print("Owner profile has been updated", flush=True)
         return redirect(url_for('/owner/profile'))
     return render_template("profile.html", form=form, username=current_user.username + " owner")
-=======
-    query = "SELECT * FROM users WHERE usertype = 'caretaker'"
-    results = db.session.execute(query).fetchall()
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
->>>>>>> ec3938a4779eef9573ca3c9b3e45dd5cf7c479f8
 
 
 @view.route("/owner/pet", methods=["GET", "POST"])
 @login_required
 def render_owner_pet():
-<<<<<<< HEAD
-    query = "SELECT * FROM caretakers"
-    results = db.session.execute(query).fetchall()
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
-=======
     contact = current_user.contact
     query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
     pets = db.session.execute(query).fetchall()
     return render_template(".html", pets=pets    , username=current_user.username + " owner")
->>>>>>> ec3938a4779eef9573ca3c9b3e45dd5cf7c479f8
 
 
 @view.route("/owner/pet/new", methods=["GET", "POST"])
 @login_required
 def render_owner_pet_new():
-<<<<<<< HEAD
-    query = "SELECT * FROM caretakers"
-    results = db.session.execute(query)
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
-=======
     form = PetForm()
     contact = current_user.contact
     if request.method == 'POST' and form.validate_on_submit():
@@ -290,7 +262,6 @@ def render_owner_pet_new():
             db.session.commit()
         return redirect(url_for(render_owner_pet))
     return render_template("profile.html", form=form, username=current_user.username + " owner")
->>>>>>> ec3938a4779eef9573ca3c9b3e45dd5cf7c479f8
 
 
 @view.route("/owner/pet/update", methods=["GET", "POST"])
@@ -354,13 +325,8 @@ def render_profile_page():
 @view.route('/update/username', methods=['POST', 'GET'])
 @login_required
 def update(contact):
-<<<<<<< HEAD
-    user_to_update = Admins.query.get_or_404(contact)
-    if request.method == "POST":
-=======
     user_to_update = Users.query.get_or_404(contact)
     if request.method == "POST" and form.validate_on_submit():
->>>>>>> ec3938a4779eef9573ca3c9b3e45dd5cf7c479f8
         user_to_update.username = request.form['username']
         try:
             db.session.commit()
