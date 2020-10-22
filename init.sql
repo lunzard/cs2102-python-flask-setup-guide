@@ -38,7 +38,7 @@ CREATE TABLE users (
     password VARCHAR NOT NULL,
     usertype VARCHAR NOT NULL,
     isPartTime BOOLEAN,
-    postalcode INTEGER
+    postalcode VARCHAR
 );
 
 CREATE TABLE role (

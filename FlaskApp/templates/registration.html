@@ -140,7 +140,7 @@
                     {% endif %} -->
                     </div>
 
-                    <div class="formField" id="parttime_checkbox">
+                    <div class="formField" id="parttime_checkbox" style="display: none;">
                         <div class="partTimeWrapper">
                             <p id="partTimeOption">Are you a part-time caretaker? </p>
                             <div class="checkbox"> {{ form.is_part_time }} </div>
@@ -156,6 +156,8 @@
 </body>
 
 </html>
+
+<script src="static/vendor/jquery/jquery.min.js"></script>
 
 <script>
     $("#usertype").change(function() {
