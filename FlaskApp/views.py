@@ -26,6 +26,7 @@ def render_dummy_page():
 def render_registration_page():
     form = RegistrationForm()
     if form.validate_on_submit():
+        print("sumitted", flush=True)
         username = form.username.data
         password = form.password.data
         user_type = form.usertype.data
@@ -37,10 +38,14 @@ def render_registration_page():
         
         query = "INSERT INTO users(username, contact, card, password, usertype, isPartTime, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
             .format(username, contact, credit_card, hashed_password, user_type, is_part_time, postal_code)
+        print(query, flush=True)
         db.session.execute(query)
+        print("done", flush=True)
         db.session.commit()
+        print("commited", flush=True)
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect("/login")
+    print("rendered", flush=True)
     return render_template("registration.html", title='Registration', form=form)
 
 
