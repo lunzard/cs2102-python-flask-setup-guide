@@ -42,12 +42,12 @@ CREATE TABLE users (
 );
 
 CREATE TABLE role (
-    usertype VARCHAR PRIMARY KEY NOT NULL 
+    name VARCHAR PRIMARY KEY NOT NULL 
 );
 
-CREATE TABLE userroles (
+CREATE TABLE user_roles (
     contact VARCHAR PRIMARY KEY NOT NULL REFERENCES public.users(contact),
-    usertype VARCHAR NOT NULL REFERENCES public.role(usertype)
+    usertype VARCHAR NOT NULL REFERENCES public.role(name)
 );
 
 CREATE TABLE pets(
