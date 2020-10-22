@@ -189,9 +189,13 @@ def render_caretaker_update_cantakecare():
 @view.route("/owner", methods=["GET", "POST"])
 @login_required
 def render_owner_page():
-    query = "SELECT * FROM users WHERE usertype = 'caretaker'"
-    results = db.session.execute(query).fetchall()
-    return render_template("owner.html", results=results, username=current_user.username + " owner")
+    caretakersquery = "SELECT * FROM users WHERE usertype = 'caretaker'"
+    caretakers = db.session.execute(caretakersquery).fetchall()
+    
+    profilequery = "SELECT * FROM users WHERE usertype = 'caretaker'"
+    profile = db.session.execute(profilequery).fetchone()
+
+    return render_template("owner.html", profile=profile, caretakers=caretakers, username=current_user.username + " owner")
 
 
 @view.route("/owner/summary", methods=["GET", "POST"])
@@ -224,17 +228,27 @@ def render_owner_profile_update():
 def render_owner_pet():
     contact = current_user.contact
     query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
-    results = db.session.execute(query).fetchall()
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
+    pets = db.session.execute(query).fetchall()
+    return render_template(".html", pets=pets    , username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/new", methods=["GET", "POST"])
 @login_required
 def render_owner_pet_new():
     form = PetForm()
-    if request.method == 'POST' and form.validate_on_submit():
-        return redirect(url_for(render_owner_pet))
     contact = current_user.contact
+    if request.method == 'POST' and form.validate_on_submit():
+        petname = form.petname.data
+        category = form.category.data
+        age = form.age.data
+        pcontact = form.pcontact.data
+
+        if(pcontact == contact):
+            query = "INSERT INTO users(petname, pcontact, age, category) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
+            .format(petname, pcontact, age, category)
+            db.session.execute(query)
+            db.session.commit()
+        return redirect(url_for(render_owner_pet))
     return render_template("profile.html", form=form, username=current_user.username + " owner")
 
 
