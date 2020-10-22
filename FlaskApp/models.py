@@ -82,7 +82,6 @@ class Users(db.Model, UserMixin):
     
     biddingccontact = db.relationship('Biddings', backref='contact')
     pet = db.relationship('Pets', backref='owner')
-    biddingccontact = db.relationship('Biddings', backref='contact')
     
     def is_authenticated(self):
         return True
@@ -98,6 +97,7 @@ class Users(db.Model, UserMixin):
     
 class Role(db.Model):
     usertype = db.Column(db.String, primary_key=True)
+    userrole = db.relationship('UserRoles', backref='userroletype')
     
 class UserRoles(db.Model):
     contact = db.Column(db.String, db.ForeignKey('users.contact', ondelete='CASCADE'), primary_key=True)
