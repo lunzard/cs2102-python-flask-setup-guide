@@ -3,7 +3,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm
-from models import Users
+from models import Users, Role
 import sys
 
 view = Blueprint("view", __name__)
@@ -35,6 +35,17 @@ def render_registration_page():
         is_part_time = form.is_part_time.data
         postal_code = form.postal_code.data
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        
+        
+        user1 = Users(username=username, usertype=user_type, contact=contact, card=credit_card, isparttime=is_part_time, postalcode=postal_code, password=hashed_password)
+        if user_type == 'admin':
+            user1.roles.append(Role(usertype='admin'))
+        elif user_type == 'petowner':
+            user1.roles.append(Role(usertype='petowner'))
+        elif user_type == 'caretaker':
+            user1.roles.append(Role(usertype='caretaker'))
+        db.session.add(user1)
+        db.session.commit()
         
         query = "INSERT INTO users(username, contact, card, password, usertype, isPartTime, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
             .format(username, contact, credit_card, hashed_password, user_type, is_part_time, postal_code)
@@ -107,7 +118,8 @@ def logout():
 
 
 @view.route("/admin", methods=["GET"])
-@login_required
+#@login_required
+@roles_required('admin')
 def render_admin_page():
     print(current_user, flush=True)
     contact = current_user.contact
@@ -124,7 +136,8 @@ def render_admin_summary_page():
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 @view.route("/caretaker", methods=["GET"])
-@login_required
+#@login_required
+@roles_required('caretaker')
 def render_caretaker_page():
     print(current_user, flush=True)
     contact = current_user.contact
@@ -192,7 +205,8 @@ def render_caretaker_update_cantakecare():
 
 
 @view.route("/owner", methods=["GET", "POST"])
-@login_required
+#@login_required
+@roles_required('petowner')
 def render_owner_page():
     caretakersquery = "SELECT * FROM users WHERE usertype = 'caretaker'"
     caretakers = db.session.execute(caretakersquery).fetchall()
