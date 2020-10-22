@@ -42,7 +42,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE role (
-    usertype VARCHAR PRIMARY KEY NOT NULL 
+    usertype VARCHAR NOT NULL 
 );
 
 CREATE TABLE userroles (
