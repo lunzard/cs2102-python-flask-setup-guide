@@ -4,30 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <title>User Profile</title>
+    <link href="css/topbar.css" rel="stylesheet" media="all">
 </head>
 
 <body>
-    <h1>
-        Hi this is {{ username }} <a href="/update/" class="btn btn-outline-secondary btn-sm">Update</a>
-    </h1>
-    <h1><a href="/update/" class="btn btn-outline-secondary btn-sm">logout</a></h1>
+    <div class="topbar">
+      <a href="https://cs2102project.herokuapp.com/owner">Home</a>
+      <a href="https://cs2102project.herokuapp.com/owner/pet">Pets</a>
+      <a href="https://cs2102project.herokuapp.com/owner/bid">Bid</a>
+      <a href="https://cs2102project.herokuapp.com/logout">Logout</a>
+    </div>
+    <div>
+        <h1>
+            Hi this is {{ username }} <a href="admin/update/" class="btn btn-outline-secondary btn-sm">Update</a>
+        </h1>
+        <h1><a href="/logout/" class="btn btn-outline-secondary btn-sm">logout</a></h1>
 
-    <table>
-        <th>Username</th>
-        <th>Contact</th>
-        <th>Usertype</th>
-        <th>Card</th>
-        <th>postalcode</th>
-        {% for item in results %}
-        <tr>
-            <td>{{item.username}}</td>
-            <td>{{item.contact}}</td>
-            <td>{{item.usertype}}</td>
-            <td>{{item.card}}</td>
-            <td>{{item.postalcode}}</td>
-        </tr>
-        {% endfor %}
-    </table>
+        <table>
+            <th>Username</th>
+            <th>Contact</th>
+            <th>Usertype</th>
+            <th>Card</th>
+            <th>postalcode</th>
+            {% for item in results %}
+            <tr>
+                <td>{{item.username}}</td>
+                <td>{{item.contact}}</td>
+                <td>{{item.usertype}}</td>
+                <td>{{item.card}}</td>
+                <td>{{item.postalcode}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 
 </body>
 

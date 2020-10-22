@@ -89,7 +89,7 @@ def render_login_page():
                 print("caret", flush=True)
                 return redirect("/caretaker")
             else:
-                print("nothing mtaches", flush=True)
+                print("nothing matches", flush=True)
                 return redirect("/profile")
         else:
             print("not found", flush=False)
