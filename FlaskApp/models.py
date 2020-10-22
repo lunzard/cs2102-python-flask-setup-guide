@@ -4,9 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 @login_manager.user_loader
 def load_user(contact):
-    contact = ((Admins.query.filter_by(contact=contact).first()) or
-                (Petowners.query.filter_by(contact=contact).first()) or
-                (Caretakers.query.filter_by(contact=contact).first()))
+    contact = Users.query.filter_by(contact=contact).first()
     return contact
 
 
@@ -97,7 +95,7 @@ class Users(db.Model, UserMixin):
     
 class Role(db.Model):
     usertype = db.Column(db.String, primary_key=True, nullable=False)
-    userrole = db.relationship('UserRoles', backref='userroletype')
+    #userrole = db.relationship('UserRoles', backref='userroletype')
     
 class UserRoles(db.Model):
     contact = db.Column(db.String, db.ForeignKey('users.contact'), primary_key=True, nullable=False)
