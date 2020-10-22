@@ -119,7 +119,7 @@ def render_admin_page():
     contact = current_user.contact
     query = "SELECT * FROM admins WHERE contact = '{}'".format(contact)
     results = db.session.execute(query).fetchall()
-    return render_template('profile.html', results=results, username=current_user.username + " admin")
+    return render_template('admin.html', results=results, username=current_user.username + " admin")
 
 
 @view.route("/admin/summary", methods=["GET"])
