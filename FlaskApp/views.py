@@ -39,11 +39,11 @@ def render_registration_page():
         
         user1 = Users(username=username, usertype=user_type, contact=contact, card=credit_card, isparttime=is_part_time, postalcode=postal_code, password=hashed_password)
         if user_type == 'admin':
-            user1.roles.append(Role(name='admin'))
+            user1.roles.append(Role(usertype='admin'))
         elif user_type == 'petowner':
-            user1.roles.append(Role(name='petowner'))
+            user1.roles.append(Role(usertype='petowner'))
         elif user_type == 'caretaker':
-            user1.roles.append(Role(name='caretaker'))
+            user1.roles.append(Role(usertype='caretaker'))
         db.session.add(user1)
         db.session.commit()
         
