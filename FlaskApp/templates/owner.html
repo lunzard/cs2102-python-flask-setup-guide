@@ -4,19 +4,33 @@
     <meta charset="UTF-8">
     <title>Owner</title>
 
-    <link href="static/css/topbar.css" rel="stylesheet" media="all">
+	<link rel="stylesheet" type="text/css" href="../static/css/topbar.css">
 </head>
+
 <body>
-<div class="topbar">
-  <a href="https://cs2102project.herokuapp.com/owner">Home</a>
-  <a href="https://cs2102project.herokuapp.com/owner/pet">Pets</a>
-  <a href="https://cs2102project.herokuapp.com/owner/bid">Bid</a>
-  <a href="https://cs2102project.herokuapp.com/logout">Logout</a>
-</div>
+    <div class="topbar">
+      <a href="https://cs2102project.herokuapp.com/owner">Home</a>
+      <a href="https://cs2102project.herokuapp.com/owner/pet">Pets</a>
+      <a href="https://cs2102project.herokuapp.com/owner/bid">Bid</a>
+      <a href="https://cs2102project.herokuapp.com/logout">Logout</a>
+    </div>
 
-<div>
+    <div>
+        <p>Here are the list of caretakers:</p>
+        <table>
 
-</div>
+            <th>Username</th>
+            <th>Contact</th>
+            <th>postalcode</th>
+            {% for item in results %}
+            <tr>
+                <td>{{item.username}}</td>
+                <td>{{item.contact}}</td>
+                <td>{{item.postalcode}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 
 </body>
 </html>

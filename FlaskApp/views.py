@@ -196,7 +196,7 @@ def render_caretaker_update_cantakecare():
 def render_owner_page():
     query = "SELECT * FROM caretakers"
     results = db.session.execute(query).fetchall()
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
+    return render_template("owner.html", results=results, username=current_user.username + " owner")
 
 
 @view.route("/owner/summary", methods=["GET", "POST"])
