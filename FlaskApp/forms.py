@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, DateField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, DateField, SelectField
 from wtforms.validators import InputRequired, ValidationError, EqualTo
 from models import Admins, Petowners, Caretakers
 from datetime import date
@@ -29,11 +29,13 @@ def agrees_terms_and_conditions(form, field):
 
 
 class RegistrationForm(FlaskForm):
+    roles = [('petowner', 'Pet Owner'), ('admin', 'Admin'), ('caretaker', 'Caretaker')]
     username = StringField(
         label='Name',
         validators=[InputRequired(), is_valid_name],
         render_kw={'placeholder': 'Name', 'class': 'input100'}
     )
+    usertype = SelectField('User type', choice = roles)
     usertype = StringField(
         label='Usertype',
         validators=[InputRequired()],
