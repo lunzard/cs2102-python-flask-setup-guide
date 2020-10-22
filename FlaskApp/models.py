@@ -99,7 +99,7 @@ class Users(db.Model, UserMixin):
     
 class Role(db.Model):
     
-    name = db.Column(db.String, primary_key=True, nullable=False)
+    name = db.Column(db.String, primary_key=True, nullable=False, unique=True)
     #userrole = db.relationship('UserRoles', backref='userroletype')
     
     
