@@ -140,7 +140,7 @@
                     {% endif %} -->
                     </div>
 
-                    <div class="formField">
+                    <div class="formField" id="parttime_checkbox">
                         <div class="partTimeWrapper">
                             <p id="partTimeOption">Are you a part-time caretaker? </p>
                             <div class="checkbox"> {{ form.is_part_time }} </div>
@@ -158,16 +158,14 @@
 </html>
 
 <script>
-    $("#seeAnotherField").change(function() {
-  if ($(this).val() == "yes") {
-    $('#otherFieldDiv').show();
-    $('#otherField').attr('required', '');
-    $('#otherField').attr('data-error', 'This field is required.');
-  } else {
-    $('#otherFieldDiv').hide();
-    $('#otherField').removeAttr('required');
-    $('#otherField').removeAttr('data-error');
-  }
+    $("#usertype").change(function() {
+      if ($(this).val() == "caretaker") {
+        $('#parttime_checkbox').show();
+      } else {
+        $('#parttime_checkbox').hide();
+      }
 });
-    $("#seeAnotherField").trigger("change");
+    $("#usertype").trigger("change");
 </script>
+
+<script src="vendor/jquery/jquery.min.js"></script>
