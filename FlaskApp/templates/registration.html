@@ -81,12 +81,15 @@
                 </div>
 
                 <div class="formField wrap-input100 validate-input">
-                    {{ form.usertype }}
-                    <select name="type" id="mySelect">
-                    <option value="petowner">Pet Owner</option>
-                    <option value="caretaker">Caretaker</option>
-                    <option value="admin">Admin</option>
-                    </select>
+                    <script>
+                        var type=document.getElementById('mySelect');
+                        <select name="type" id="mySelect">
+                            <option value="petowner">Pet Owner</option>
+                            <option value="caretaker">Caretaker</option>
+                            <option value="admin">Admin</option>
+                          </select>
+                        form.usertype = type;
+                    </script>
                 </div>
 
                 <div class="formField wrap-input100 validate-input">
@@ -164,3 +167,4 @@ function yesnoCheck(that) {
     }
 }
 </script>
+
