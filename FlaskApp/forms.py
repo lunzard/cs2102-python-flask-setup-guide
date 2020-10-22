@@ -69,11 +69,6 @@ class RegistrationForm(FlaskForm):
     )
     
 class PetForm(FlaskForm):
-    pcontact = StringField(
-    label='Pcontact',
-    validators=[InputRequired()],
-    render_kw={'placeholder': 'Pcontact', 'class': 'input100'}
-    )
     petname = StringField(
         label='Petname',
         validators=[InputRequired()],

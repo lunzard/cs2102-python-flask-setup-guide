@@ -26,6 +26,7 @@ def render_dummy_page():
 def render_registration_page():
     form = RegistrationForm()
     if form.validate_on_submit():
+        print("sumitted", flush=True)
         username = form.username.data
         password = form.password.data
         user_type = form.usertype.data
@@ -37,10 +38,14 @@ def render_registration_page():
         
         query = "INSERT INTO users(username, contact, card, password, usertype, isPartTime, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
             .format(username, contact, credit_card, hashed_password, user_type, is_part_time, postal_code)
+        print(query, flush=True)
         db.session.execute(query)
+        print("done", flush=True)
         db.session.commit()
+        print("commited", flush=True)
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect("/login")
+    print("rendered", flush=True)
     return render_template("registration.html", title='Registration', form=form)
 
 
@@ -233,7 +238,7 @@ def render_owner_pet():
 
 
 @view.route("/owner/pet/new", methods=["GET", "POST"])
-@login_required
+#@login_required
 def render_owner_pet_new():
     form = PetForm()
     contact = current_user.contact
@@ -241,15 +246,12 @@ def render_owner_pet_new():
         petname = form.petname.data
         category = form.category.data
         age = form.age.data
-        pcontact = form.pcontact.data
-
-        if(pcontact == contact):
-            query = "INSERT INTO users(petname, pcontact, age, category) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
-            .format(petname, pcontact, age, category)
-            db.session.execute(query)
-            db.session.commit()
-        return redirect(url_for(render_owner_pet))
-    return render_template("profile.html", form=form, username=current_user.username + " owner")
+        query = "INSERT INTO users(petname, pcontact, age, category) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
+        .format(petname, contact, age, category)
+        db.session.execute(query)
+        db.session.commit()
+    return redirect(url_for(render_owner_pet))
+    return render_template("test.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/update", methods=["POST"])
