@@ -43,7 +43,7 @@ def render_registration_page():
         # user1 = Users(username=username, usertype=user_type, contact=contact, card=credit_card, isparttime=is_part_time, postalcode=postal_code, password=hashed_password)
         query = "SELECT * FROM role WHERE name = '{}'".format(user_type)
         givenRole = db.session.execute(query).fetchone()
-        query = "INSERT INTO user_roles(username, contact) VALUES ('{}', '{}')".format(contact, user_type)
+        query = "INSERT INTO user_roles(contact, usertype) VALUES ('{}', '{}')".format(contact, user_type)
         db.session.execute(query)
         db.session.commit()
         
