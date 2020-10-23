@@ -54,16 +54,6 @@
                 {{ form.hidden_tag() }}
 
                 <div class="formField wrap-input100 validate-input">
-                    {{ form.pcontact }} {% if form.pcontact.errors %}
-                    <div class="errorMessage">
-                        {% for error in form.pcontact.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                </div>
-
-                <div class="formField wrap-input100 validate-input">
                     {{ form.petname }} {% if form.petname.errors %}
                     <span class="focus-input100" data-placeholder="&#xe82a;"></span>
                     <div class="errorMessage">
