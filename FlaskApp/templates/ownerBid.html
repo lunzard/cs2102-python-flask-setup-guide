@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bid</title>
+
+	<link rel="stylesheet" type="text/css" href="../static/css/topbar.css">
+</head>
+
+<body>
+    <div class="topbar">
+      <a href="https://cs2102project.herokuapp.com/owner">Home</a>
+      <a href="https://cs2102project.herokuapp.com/owner/pet">Pets</a>
+      <a href="https://cs2102project.herokuapp.com/owner/bid">Bid</a>
+      <a href="https://cs2102project.herokuapp.com/logout">Logout</a>
+    </div>
+
+    <div>
+        <p>Here are the list of all your bids:</p>
+        <table>
+
+            <th>Owner Contact</th>
+            <th>Caretaker Contact</th>
+            <th>Pet Name</th>
+            <th>Start Day</th>
+            <th>End Day</th>
+            <th>Payment Mode</th>
+            <th>Delivery Mode</th>
+            <th>Status</th>
+            {% for item in bidding %}
+            <tr>
+                <td>{{item.pcontact}}</td>
+                <td>{{item.ccontact}}</td>
+                <td>{{item.petname}}</td>
+                <td>{{item.startday}}</td>
+                <td>{{item.endday}}</td>
+                <td>{{item.paymentmode}}</td>
+                <td>{{item.deliverymode}}</td>
+                <td>{{item.status}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>

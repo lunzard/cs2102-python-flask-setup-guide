@@ -317,7 +317,7 @@ def render_owner_bid():
     contact = current_user.contact
     query = "SELECT * FROM biddings WHERE status = 'end' AND pcontact= '{}'".format(contact)
     bidding = db.session.execute(query).fetchall()
-    return render_template("profile.html", bidding=bidding, username=current_user.username + " owner")
+    return render_template("ownerBid.html", bidding=bidding, username=current_user.username + " owner")
 
 
 @view.route("/owner/bid/new", methods=["GET", "POST"])
@@ -340,7 +340,7 @@ def render_owner_bid_new():
             db.session.execute(query)
             db.session.commit()
         return redirect(url_for('view.render_owner_bid'))
-    return render_template("profile.html", form=form, username=current_user.username + " owner")
+    return render_template("ownerBidNew.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/bid/update", methods=["GET", "POST"])
