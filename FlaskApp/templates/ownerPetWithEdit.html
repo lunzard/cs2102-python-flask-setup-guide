@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Owner</title>
+
+	<link rel="stylesheet" type="text/css" href="../static/css/topbar.css">
+</head>
+
+<body>
+    <div class="topbar">
+      <a href="https://cs2102project.herokuapp.com/owner">Home</a>
+      <a href="https://cs2102project.herokuapp.com/owner/pet">Pets</a>
+      <a href="https://cs2102project.herokuapp.com/owner/bid">Bid</a>
+      <a href="https://cs2102project.herokuapp.com/logout">Logout</a>
+    </div>
+
+    <div>
+        <p>Add a pet</p><a href="https://cs2102project.herokuapp.com/owner/pet/new">here</a>
+        <p>Here are the list of your pets:</p>
+        <table>
+
+            <th>Pet Name</th>
+            <th>Pet Owner Contact</th>
+            <th>Category</th>
+            <th>Age</th>
+            {% for item in pets %}
+            <tr>
+                <td>{{item.petname}}</td>
+                <td>{{item.pcontact}}</td>
+                <td>{{item.category}}</td>
+                <td>{{item.age}}</td>
+                <td>
+                <form action="{{ url_for('render_owner_pet_update') }}" method="GET">
+                    <input id="petname" name="petname" type="hidden" value="{{item.petname}}">
+                    <button type="submit"> Edit </button>
+                </form>
+                </td>>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>

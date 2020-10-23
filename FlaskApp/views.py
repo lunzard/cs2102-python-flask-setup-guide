@@ -275,7 +275,7 @@ def render_owner_pet():
     query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
     pets = db.session.execute(query).fetchall()
     print(pets, flush=True)
-    return render_template("ownerPet.html", pets=pets, username=current_user.username + " owner")
+    return render_template("ownerPetWithEdit.html", pets=pets, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/new", methods=["GET", "POST"])
@@ -298,19 +298,23 @@ def render_owner_pet_new():
 @view.route("/owner/pet/update", methods=["GET", "POST"])
 @roles_required('petowner')
 def render_owner_pet_update():
-    
-    pet = Pets()
-
-    form = PetForm(obj=pet)
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'GET':
+        if request.form.get("petname"):
+            pn = request.form.get('petname')
+        pc = current_user.contact
+        pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
+        form = PetForm(obj=pet)
+    elif request.method == 'POST' and form.validate_on_submit():
         petname = form.petname.data
         category = form.category.data
         age = form.age.data
         contact = current_user.contact
         thispet = Pets.query.filter_by(petname=petname, pcontact=contact).first()
+        thispet.petname = form.petname
+        thispet.category = form.category
+        thispet.age = form.age
         db.session.commit()
         return redirect(url_for('view.render_owner_pet'))
-    
     return render_template("pet.html", form=form, username=current_user.username + " owner")
 
 
