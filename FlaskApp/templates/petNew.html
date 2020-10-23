@@ -85,9 +85,9 @@
                     </div>
 
                     <div class="formField wrap-input100 validate-input">
-                        {{ form.age }} {% if form.contact.errors %}
+                        {{ form.age }} {% if form.age.errors %}
                         <div class="errorMessage">
-                            {% for error in form.contact.errors %}
+                            {% for error in form.age.errors %}
                             <li>{{ error }}</li>
                             {% endfor %}
                         </div>
