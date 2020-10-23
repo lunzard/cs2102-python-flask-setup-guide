@@ -193,6 +193,17 @@ def render_caretaker_available_delete():
 @view.route("/caretaker/available/new", methods=["GET", "POST"])
 @roles_required('caretaker')
 def render_caretaker_available_new():
+    form = AvailableForm()
+    contact = current_user.contact
+    if request.method == 'POST' and form.validate_on_submit():
+        startdate = form.startdate.data
+        enddate = form.enddate.data
+        ccontact = form.ccontact.data
+        query = "INSERT INTO available(startday, endday, contact) VALUES ('{}', '{}', '{}')" \
+        .format(startdate, enddate, ccontact)
+        db.session.execute(query)
+        db.session.commit()
+        return redirect(url_for('view.render_caretaker_available'))
     return render_template('profile.html', username=current_user.username + " caretaker")
 
 
