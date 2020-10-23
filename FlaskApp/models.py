@@ -106,7 +106,7 @@ class Role(db.Model):
 class UserRoles(db.Model):
     __tablename__ = 'user_roles'
     contact = db.Column(db.String, db.ForeignKey('users.contact', ondelete='CASCADE'), primary_key=True, nullable=False)
-    usertype = db.Column(db.Integer, db.ForeignKey('role.name', ondelete='CASCADE'), nullable=False)
+    usertype = db.Column(db.String, db.ForeignKey('role.name', ondelete='CASCADE'), nullable=False)
     
     userrolecontact = db.relationship('Users', foreign_keys=[contact])
     userrolerole = db.relationship('Role', foreign_keys=[usertype])
