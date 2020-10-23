@@ -300,9 +300,10 @@ def render_owner_pet_new():
 def render_owner_pet_update():
     if request.method == 'GET':
         pc = current_user.contact
+        pn = request.form.get("petname")
         pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
         form = PetForm(obj=pet)
-        form.petname = request.form.get("petname")
+        form.petname = pn
         form.category = request.form.get("category")
         form.age = request.form.get("age")
     elif request.method == 'POST' and form.validate_on_submit():
