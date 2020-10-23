@@ -17,8 +17,11 @@ CREATE TABLE users (
 );
 
 CREATE TABLE role (
-    name VARCHAR PRIMARY KEY NOT NULL UNIQUE
+    name VARCHAR NOT NULL UNIQUE
 );
+INSERT INTO role VALUES ('admin');
+INSERT INTO role VALUES ('petowner');
+INSERT INTO role VALUES ('caretaker');
 
 CREATE TABLE user_roles (
     contact BIGINT PRIMARY KEY NOT NULL REFERENCES public.users(contact),

@@ -35,16 +35,20 @@ def render_registration_page():
         postal_code = form.postal_code.data
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         
-        
-        user1 = Users(username=username, usertype=user_type, contact=contact, card=credit_card, isparttime=is_part_time, postalcode=postal_code, password=hashed_password)
+        query = "INSERT INTO users(username, contact, card, password, usertype, isPartTime, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
+            .format(username, contact, credit_card, hashed_password, user_type, is_part_time, postal_code)
+        db.session.execute(query)
+        db.session.commit()
+
+        # user1 = Users(username=username, usertype=user_type, contact=contact, card=credit_card, isparttime=is_part_time, postalcode=postal_code, password=hashed_password)
         query = "SELECT * FROM role WHERE name = '{}'".format(user_type)
         givenRole = db.session.execute(query).fetchone()
-        user1.roles.append(givenRole)
-        db.session.add(user1)
+        query = "INSERT INTO user_roles(username, contact) VALUE ('{}', '{}')".format(contact, user_type)
+        db.session.execute(query)
         db.session.commit()
         
-        # query = "INSERT INTO users(username, contact, card, password, usertype, isPartTime, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
-        #     .format(username, contact, credit_card, hashed_password, user_type, is_part_time, postal_code)
+        #query = "INSERT INTO users(username, contact, card, password, usertype, isPartTime, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
+        #    .format(username, contact, credit_card, hashed_password, user_type, is_part_time, postal_code)
         # print(query, flush=True)
         # db.session.execute(query)
         # print("done", flush=True)
