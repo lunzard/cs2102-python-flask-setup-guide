@@ -302,7 +302,7 @@ def render_owner_pet_update():
         pc = current_user.contact
         pn = request.form.get("petname")
         pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
-        form = PetForm(obj=pet)
+        form = PetForm()
         form.petname = pn
         form.category = request.form.get("category")
         form.age = request.form.get("age")
