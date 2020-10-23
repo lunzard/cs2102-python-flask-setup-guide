@@ -12,7 +12,6 @@ def is_valid_contact(self, contact):
     contact = (Users.query.filter_by(contact=contact.data).first())
     if contact:
         raise ValidationError('That contact is already being registered. Please choose a different one.')
-        
 
 # def is_valid_number(form, field):
 #     if not all(map(lambda char: char.isnumber(), field.data)):
@@ -69,6 +68,50 @@ class RegistrationForm(FlaskForm):
     )
 
 class PetForm(FlaskForm):
+    petname = StringField(
+        label='Petname',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Petname', 'class': 'input100'}
+    )
+    category = StringField(
+        label='Credit Card',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Crredit Card', 'class': 'input100'}
+    )
+    age = IntegerField(
+        label='Age',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Age', 'class': 'input100'}
+    )
+    
+class UserUpdateForm(FlaskForm):
+    username = StringField(
+        label='Username',
+        render_kw={'placeholder': 'Username', 'class': 'input100'}
+    )
+    credit_card = StringField(
+        label='Category',
+        render_kw={'placeholder': 'Credit Card', 'class': 'input100'}
+    )
+    is_part_time = BooleanField(
+        label='Is Part Time',
+        render_kw={'placeholder': 'Is Part Time'}
+    )
+    postal_code = StringField(
+        label='Postal Code',
+        render_kw={'placeholder': 'Postal Code', 'class': 'input100'}
+    )
+    password = PasswordField(
+        label='New Password',
+        render_kw={'placeholder': 'New Password', 'class': 'input100'}
+    )
+    confirm_password = PasswordField(
+        label='Confirm New Password',
+        validators=[EqualTo('password')],
+        render_kw={'placeholder': 'Confirmed New Password', 'class': 'input100'}
+    )
+    
+class PetUpdateForm(FlaskForm):
     petname = StringField(
         label='Petname',
         validators=[InputRequired()],
