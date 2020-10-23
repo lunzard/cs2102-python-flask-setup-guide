@@ -40,11 +40,15 @@ def render_registration_page():
         db.session.execute(query)
         db.session.commit()
 
-        # user1 = Users(username=username, usertype=user_type, contact=contact, card=credit_card, isparttime=is_part_time, postalcode=postal_code, password=hashed_password)
-        query = "SELECT * FROM role WHERE name = '{}'".format(user_type)
-        givenRole = db.session.execute(query).fetchone()
-        query = "INSERT INTO user_roles(contact, usertype) VALUES ('{}', '{}')".format(contact, user_type)
-        db.session.execute(query)
+        user1 = Users(username=username, usertype=user_type, contact=contact, card=credit_card, isparttime=is_part_time, postalcode=postal_code, password=hashed_password)
+        role = Role.query.filter_by(name=user_type).first()
+        user1.roles.append(role)
+        db.session.add(user1)
+        
+        #query = "SELECT * FROM role WHERE name = '{}'".format(user_type)
+        #givenRole = db.session.execute(query).fetchone()
+        #query = "INSERT INTO user_roles(contact, usertype) VALUES ('{}', '{}')".format(contact, user_type)
+        #db.session.execute(query)
         db.session.commit()
         
         #query = "INSERT INTO users(username, contact, card, password, usertype, isPartTime, postalcode) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}')" \
