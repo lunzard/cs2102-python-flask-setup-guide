@@ -281,7 +281,7 @@ def render_owner_pet_new():
         db.session.execute(query)
         db.session.commit()
         return redirect(url_for('view.render_owner_pet'))
-    return render_template("pet.html", form=form, username=current_user.username + " owner")
+    return render_template("petNew.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/update", methods=["GET", "POST"])
