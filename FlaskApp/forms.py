@@ -40,7 +40,7 @@ class RegistrationForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'User Type', 'class': 'input100'}
     )
-    contact = StringField(
+    contact = IntegerField(
         label='Contact',
         validators=[InputRequired(), is_valid_contact],
         render_kw={'placeholder': 'Contact', 'class': 'input100'}

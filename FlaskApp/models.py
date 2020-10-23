@@ -1,10 +1,10 @@
 from __init__ import db, login_manager
-from flask_login import UserMixin
+from flask_user import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 
 @login_manager.user_loader
 def load_user(contact):
-    us = Users.query.filter_by(contact=str(contact)).first()
+    us = Users.query.filter_by(contact=contact).first()
     return us
 
 
@@ -72,7 +72,7 @@ def load_user(contact):
 class Users(db.Model, UserMixin):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
-    contact = db.Column(db.String, primary_key=True)
+    contact = db.Column(db.Integer, primary_key=True)
     usertype = db.Column(db.String, nullable=True)
     card = db.Column(db.String)
     isparttime = db.Column(db.Boolean)
