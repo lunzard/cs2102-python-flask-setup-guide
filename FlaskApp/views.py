@@ -3,7 +3,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm
-from models import Users, Role
+from models import Users, Role, Pets
 import sys
 
 view = Blueprint("view", __name__)
@@ -117,7 +117,6 @@ def logout():
 
 
 @view.route("/admin", methods=["GET"])
-#@login_required
 @roles_required('admin')
 def render_admin_page():
     print(current_user, flush=True)
@@ -277,13 +276,28 @@ def render_owner_pet_new():
         db.session.execute(query)
         db.session.commit()
         return redirect(url_for('view.render_owner_pet'))
-    return render_template("test.html", form=form, username=current_user.username + " owner")
+    return render_template("pet.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/update", methods=["GET", "POST"])
 @roles_required('petowner')
 def render_owner_pet_update():
-    return redirect(url_for('view.render_owner_pet'))
+    
+    pet = Pets()
+
+    form = PetForm(obj=pet)
+    if request.method == 'POST' and form.validate_on_submit():
+        petname = form.petname.data
+        category = form.category.data
+        age = form.age.data
+        contact = current_user.contact
+        thispet = Pets.query.filter_by(petname=petname, pcontact=contact).first()
+        book.title = newtitle
+        db.session.commit()
+    return redirect("/")
+        return redirect(url_for('view.render_owner_pet'))
+    
+    return render_template("pet.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/delete", methods=["GET", "POST"])

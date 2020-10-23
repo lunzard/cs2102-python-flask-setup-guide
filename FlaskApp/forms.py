@@ -68,7 +68,29 @@ class RegistrationForm(FlaskForm):
         render_kw={'placeholder': 'Postal Code', 'class': 'input100'}
     )
     
+class OriginalPet(object) :
+    petname = ""
+    category = ""
+    age = 1
+
 class PetForm(FlaskForm):
+    petname = StringField(
+        label='Petname',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Petname', 'class': 'input100'}
+    )
+    category = StringField(
+        label='Category',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Category', 'class': 'input100'}
+    )
+    age = IntegerField(
+        label='Age',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Age', 'class': 'input100'}
+    )
+
+class PetUpdateForm(FlaskForm):
     petname = StringField(
         label='Petname',
         validators=[InputRequired()],
