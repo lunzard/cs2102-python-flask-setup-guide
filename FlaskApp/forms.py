@@ -67,11 +67,6 @@ class RegistrationForm(FlaskForm):
         label='Postal Code',
         render_kw={'placeholder': 'Postal Code', 'class': 'input100'}
     )
-    
-class OriginalPet(object) :
-    petname = ""
-    category = ""
-    age = 1
 
 class PetForm(FlaskForm):
     petname = StringField(

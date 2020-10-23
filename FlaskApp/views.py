@@ -37,12 +37,9 @@ def render_registration_page():
         
         
         user1 = Users(username=username, usertype=user_type, contact=contact, card=credit_card, isparttime=is_part_time, postalcode=postal_code, password=hashed_password)
-        if user_type == 'admin':
-            user1.roles.append(Role(name='admin'))
-        elif user_type == 'petowner':
-            user1.roles.append(Role(name='petowner'))
-        elif user_type == 'caretaker':
-            user1.roles.append(Role(name='caretaker'))
+        query = "SELECT * FROM role WHERE name = '{}'".format(user_type)
+        givenRole = db.session.execute(query).fetchone()
+        user1.roles.append(givenRole)
         db.session.add(user1)
         db.session.commit()
         
@@ -292,9 +289,7 @@ def render_owner_pet_update():
         age = form.age.data
         contact = current_user.contact
         thispet = Pets.query.filter_by(petname=petname, pcontact=contact).first()
-        book.title = newtitle
         db.session.commit()
-    return redirect("/")
         return redirect(url_for('view.render_owner_pet'))
     
     return render_template("pet.html", form=form, username=current_user.username + " owner")
