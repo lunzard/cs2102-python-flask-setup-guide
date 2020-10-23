@@ -128,7 +128,7 @@ def render_admin_page():
 
 
 @view.route("/admin/summary", methods=["GET"])
-@login_required
+@roles_required('admin')
 def render_admin_summary_page():
     query = "SELECT * FROM users WHERE usertype = 'caretaker'"
     results = db.session.execute(query).fetchall()
@@ -147,7 +147,7 @@ def render_caretaker_page():
 
 
 @view.route("/caretaker/biddings", methods=["GET", "POST"])
-@login_required
+@roles_required('caretaker')
 def render_caretaker_biddings():
     form = BiddingForm()
     contact = current_user.contact
@@ -157,43 +157,43 @@ def render_caretaker_biddings():
 
 
 @view.route("/caretaker/profile", methods=["GET"])
-@login_required
+@roles_required('caretaker')
 def render_caretaker_profile():
     return render_template('profile.html', username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/update-profile", methods=["GET"])
-@login_required
+@roles_required('caretaker')
 def render_caretaker_update_profile():
     return render_template('profile.html', username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/available", methods=["GET", "POST"])
-@login_required
+@roles_required('caretaker')
 def render_caretaker_available():
     return render_template('profile.html', username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/available/edit", methods=["GET", "POST"])
-@login_required
+@roles_required('caretaker')
 def render_caretaker_available_edit():
     return render_template('profile.html', username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/available/delete", methods=["GET", "POST"])
-@login_required
+@roles_required('caretaker')
 def render_caretaker_available_delete():
     return render_template('profile.html', username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/available/new", methods=["GET", "POST"])
-@login_required
+@roles_required('caretaker')
 def render_caretaker_available_new():
     return render_template('profile.html', username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/update-cantakecare", methods=["GET", "POST"])
-@login_required
+@roles_required('caretaker')
 def render_caretaker_update_cantakecare():
     return render_template('profile.html', username=current_user.username + " caretaker")
 
@@ -217,7 +217,7 @@ def render_owner_page():
 
 
 @view.route("/owner/summary", methods=["GET", "POST"])
-@login_required
+@roles_required('petowner')
 def render_owner_summary():
     contact = current_user.contact
     query = "SELECT * FROM users WHERE contact = '{}' AND usertype = 'pet owner'".format(contact)
@@ -226,7 +226,7 @@ def render_owner_summary():
 
 
 @view.route("/owner/profile", methods=["GET", "POST"])
-@login_required
+@roles_required('petowner')
 def render_owner_profile():
     form = ProfileForm()
     contact = current_user.contact
@@ -236,7 +236,7 @@ def render_owner_profile():
 
 
 @view.route("/owner/profile/update", methods=["GET", "POST"])
-@login_required
+@roles_required('petowner')
 def render_owner_profile_update():
     form = ProfileForm()
     contact = current_user.contact
@@ -254,7 +254,7 @@ def render_owner_profile_update():
 
 
 @view.route("/owner/pet", methods=["GET", "POST"])
-@login_required
+@roles_required('petowner')
 def render_owner_pet():
     contact = current_user.contact
     query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
@@ -264,7 +264,7 @@ def render_owner_pet():
 
 
 @view.route("/owner/pet/new", methods=["GET", "POST"])
-#@login_required
+@roles_required('petowner')
 def render_owner_pet_new():
     form = PetForm()
     contact = current_user.contact
@@ -281,13 +281,13 @@ def render_owner_pet_new():
 
 
 @view.route("/owner/pet/update", methods=["GET", "POST"])
-@login_required
+@roles_required('petowner')
 def render_owner_pet_update():
     return redirect(url_for('view.render_owner_pet'))
 
 
 @view.route("/owner/pet/delete", methods=["GET", "POST"])
-@login_required
+@roles_required('petowner')
 def render_owner_pet_delete():
     query = "SELECT * FROM users WHERE usertype = 'caretaker'"
     results = db.session.execute(query)
@@ -295,7 +295,7 @@ def render_owner_pet_delete():
 
 
 @view.route("/owner/bid", methods=["GET", "POST"])
-@login_required
+@roles_required('petowner')
 def render_owner_bid():
     contact = current_user.contact
     query = "SELECT * FROM biddings WHERE status = 'end' AND pcontact= '{}'".format(contact)
@@ -304,7 +304,7 @@ def render_owner_bid():
 
 
 @view.route("/owner/bid/new", methods=["GET", "POST"])
-@login_required
+@roles_required('petowner')
 def render_owner_bid_new():
     form = BiddingForm()
     contact = current_user.contact
@@ -327,7 +327,7 @@ def render_owner_bid_new():
 
 
 @view.route("/owner/bid/update", methods=["GET", "POST"])
-@login_required
+@roles_required('petowner')
 def render_owner_bid_update():
     query = "SELECT * FROM users WHERE usertype = 'caretaker'"
     results = db.session.execute(query)
@@ -335,7 +335,7 @@ def render_owner_bid_update():
 
 
 @view.route("/owner/bid/delete", methods=["GET", "POST"])
-@login_required
+@roles_required('petowner')
 def render_owner_bid_delete():
     query = "SELECT * FROM users WHERE usertype = 'caretaker'"
     results = db.session.execute(query)
