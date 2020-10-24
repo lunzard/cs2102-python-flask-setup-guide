@@ -312,7 +312,7 @@ def render_owner_pet_update():
             thispet.age = int(form.age.data)
             db.session.commit()
             return redirect(url_for('view.render_owner_pet'))
-        return render_template("pet.html", form=form, username=current_user.username + " owner")
+        return redirect(url_for('view.render_owner_pet'))
 
 
 @view.route("/owner/pet/delete", methods=["POST"])
