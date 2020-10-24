@@ -303,7 +303,7 @@ def render_owner_pet_update():
         pn = request.form.get("petname")
         pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
         newpet = PetUpdate(pet.petname, pet.category, pet.age)
-        form = PetForm(obj=newpet)
+        form = PetUpdateForm(obj=pet)
         return render_template("pet.html", form=form, username=current_user.username + " owner")
     elif request.method == 'POST' and form.validate_on_submit():
         petname = form.petname.data
