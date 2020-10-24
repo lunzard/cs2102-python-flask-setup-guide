@@ -85,6 +85,12 @@ class PetForm(FlaskForm):
         render_kw={'placeholder': 'Age', 'class': 'input100'}
     )
 
+class PetUpdate: 
+    def __init__(self, petname, category, age):
+        self.petname = petname
+        self.category = category
+        self.age = age
+
 class PetUpdateForm(FlaskForm):
     petname = StringField(
         label='Petname',
