@@ -306,6 +306,7 @@ def render_owner_pet_update():
         form.petname = pn
         form.category = request.form.get("category")
         form.age = request.form.get("age")
+        return render_template("pet.html", form=form, username=current_user.username + " owner")
     elif request.method == 'POST' and form.validate_on_submit():
         petname = form.petname.data
         category = form.category.data
@@ -317,7 +318,6 @@ def render_owner_pet_update():
         thispet.age = form.age
         db.session.commit()
         return redirect(url_for('view.render_owner_pet'))
-    return render_template("pet.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/delete", methods=["GET", "POST"])
