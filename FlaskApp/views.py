@@ -4,7 +4,6 @@ from flask_user import roles_required
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, PetUpdateForm, PetUpdate
 from models import Users, Role, Pets
-from flask.ext.admin.form.widgets import DatePickerWidget
 import sys
 
 view = Blueprint("view", __name__)
@@ -320,10 +319,17 @@ def render_owner_pet_update():
 @roles_required('petowner')
 def render_owner_pet_delete():
     pc = current_user.contact
-    pn = request.form.get('petname')
-    query = "SELECT * FROM users WHERE usertype = 'caretaker'"
-    results = db.session.execute(query)
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
+    pn = request.args.get('petname')
+    pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
+    if pet:
+        newpet = PetUpdate(pet.petname, pet.category, pet.age)
+        form = PetUpdateForm(obj=pet)
+        if request.method == 'POST' and form.validate_on_submit():
+            db.session.delete(pet)
+            db.session.commit()
+            flash('Deleted successfully')
+            return redirect(url_for('view.render_owner_pet'))
+    return render_template("pet.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/bid", methods=["GET", "POST"])

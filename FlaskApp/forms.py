@@ -269,7 +269,6 @@ class ProfileForm(FlaskForm):
 class AvailableForm(FlaskForm):
     startdate = DateField(
         label='Startdate',
-        widget=DatePickerWidget,
         validators=[InputRequired()],
         default=date.today(), 
         format='%d/%m/%Y',
@@ -277,7 +276,6 @@ class AvailableForm(FlaskForm):
     )
     enddate = DateField(
         label='Enddate',
-        widget=DatePickerWidget,
         validators=[InputRequired()],
         render_kw={'placeholder': 'Enddate', 'class': 'input100'}
     )
