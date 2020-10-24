@@ -4,6 +4,7 @@ from flask_user import roles_required
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, PetUpdateForm, PetUpdate
 from models import Users, Role, Pets
+from flask.ext.admin.form.widgets import DatePickerWidget
 import sys
 
 view = Blueprint("view", __name__)
