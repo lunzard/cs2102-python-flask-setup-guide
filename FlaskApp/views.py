@@ -319,6 +319,8 @@ def render_owner_pet_update():
 @view.route("/owner/pet/delete", methods=["GET", "POST"])
 @roles_required('petowner')
 def render_owner_pet_delete():
+    pc = current_user.contact
+    pn = request.form.get('petname')
     query = "SELECT * FROM users WHERE usertype = 'caretaker'"
     results = db.session.execute(query)
     return render_template("profile.html", results=results, username=current_user.username + " owner")
