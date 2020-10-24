@@ -277,6 +277,8 @@ class AvailableForm(FlaskForm):
     enddate = DateField(
         label='Enddate',
         validators=[InputRequired()],
+        default=date.today(), 
+        format='%d/%m/%Y',
         render_kw={'placeholder': 'Enddate', 'class': 'input100'}
     )
     def validate_on_submit(self):
