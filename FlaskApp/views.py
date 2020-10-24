@@ -199,7 +199,7 @@ def render_caretaker_available_new():
         startdate = form.startdate.data
         enddate = form.enddate.data
         ccontact = contact
-        query = "INSERT INTO available(startday, endday, contact) VALUES ('{}', '{}', '{}')" \
+        query = "INSERT INTO available(startday, endday, ccontact) VALUES ('{}', '{}', '{}')" \
         .format(startdate, enddate, ccontact)
         db.session.execute(query)
         db.session.commit()
@@ -315,20 +315,17 @@ def render_owner_pet_update():
         return render_template("pet.html", form=form, username=current_user.username + " owner")
 
 
-@view.route("/owner/pet/delete", methods=["GET", "POST"])
+@view.route("/owner/pet/delete", methods=["POST"])
 @roles_required('petowner')
 def render_owner_pet_delete():
     pc = current_user.contact
     pn = request.args.get('petname')
     pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
     if pet:
-        newpet = PetUpdate(pet.petname, pet.category, pet.age)
-        form = PetUpdateForm(obj=pet)
-        if request.method == 'POST' and form.validate_on_submit():
-            db.session.delete(pet)
-            db.session.commit()
-            flash('Deleted successfully')
-            return redirect(url_for('view.render_owner_pet'))
+        db.session.delete(pet)
+        db.session.commit()
+        flash('Deleted successfully')
+        return redirect(url_for('view.render_owner_pet'))
     return render_template("pet.html", username=current_user.username + " owner")
 
 
