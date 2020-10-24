@@ -309,7 +309,7 @@ def render_owner_pet_update():
             thispet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
             thispet.petname = form.petname
             thispet.category = form.category
-            thispet.age = form.age
+            thispet.age = int(form.age)
             db.session.commit()
             return redirect(url_for('view.render_owner_pet'))
         return render_template("pet.html", form=form, username=current_user.username + " owner")
