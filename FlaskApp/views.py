@@ -315,19 +315,18 @@ def render_owner_pet_update():
         return redirect(url_for('view.render_owner_pet'))
 
 
-@view.route("/owner/pet/delete", methods=["POST"])
-@roles_required('petowner')
-def render_owner_pet_delete():
-    pc = current_user.contact
-    pn = request.args.get('petname')
-    pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
-    if pet:
-        db.session.delete(pet)
-        db.session.commit()
-        flash('Deleted successfully')
-        return redirect(url_for('view.render_owner_pet'))
-    return redirect(url_for('view.render_owner_pet'))
-
+# @view.route("/owner/pet/delete", methods=["POST"])
+# @roles_required('petowner')
+# def render_owner_pet_delete():
+#     pc = current_user.contact
+#     pn = request.args.get('petname')
+#     pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
+#     if pet:
+#         db.session.delete(pet)
+#         db.session.commit()
+#         flash('Deleted successfully')
+#         return redirect(url_for('view.render_owner_pet'))
+#     return redirect(url_for('view.render_owner_pet'))
 
 @view.route("/owner/bid", methods=["GET", "POST"])
 @roles_required('petowner')
