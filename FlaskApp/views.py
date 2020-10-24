@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, flash, url_for, render_template, request
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from __init__ import db, login_manager, bcrypt
-from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm
+from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, PetUpdateForm
 from models import Users, Role, Pets
 import sys
 
@@ -302,10 +302,7 @@ def render_owner_pet_update():
         pc = current_user.contact
         pn = request.form.get("petname")
         pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
-        form = PetForm()
-        form.petname.data = pn
-        form.category.data = request.form.get("category")
-        form.age.data = request.form.get("age")
+        form = PetUpdateForm(pet)
         return render_template("pet.html", form=form, username=current_user.username + " owner")
     elif request.method == 'POST' and form.validate_on_submit():
         petname = form.petname.data

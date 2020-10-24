@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, DateField, SelectField
 from wtforms.validators import InputRequired, ValidationError, EqualTo
+from wtforms.widgets import HiddenInput
 from models import Users
 from datetime import date
 
@@ -72,6 +73,29 @@ class PetForm(FlaskForm):
         label='Petname',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Petname', 'class': 'input100'}
+    )
+    category = StringField(
+        label='Credit Card',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Crredit Card', 'class': 'input100'}
+    )
+    age = IntegerField(
+        label='Age',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Age', 'class': 'input100'}
+    )
+
+class PetUpdateForm(FlaskForm):
+    petname = StringField(
+        label='Petname',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Petname', 'class': 'input100'}
+    )
+    contact = IntegerField(
+        widget=HiddenInput(),
+        label='Contact',
+        validators=[InputRequired(), is_valid_contact],
+        render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
     category = StringField(
         label='Credit Card',
