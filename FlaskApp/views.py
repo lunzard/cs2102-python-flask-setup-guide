@@ -198,13 +198,13 @@ def render_caretaker_available_new():
     if request.method == 'POST' and form.validate_on_submit():
         startdate = form.startdate.data
         enddate = form.enddate.data
-        ccontact = form.ccontact.data
+        ccontact = contact
         query = "INSERT INTO available(startday, endday, contact) VALUES ('{}', '{}', '{}')" \
         .format(startdate, enddate, ccontact)
         db.session.execute(query)
         db.session.commit()
         return redirect(url_for('view.render_caretaker_available'))
-    return render_template('profile.html', username=current_user.username + " caretaker")
+    return render_template('availableNew.html', form = form, username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/update-cantakecare", methods=["GET", "POST"])
