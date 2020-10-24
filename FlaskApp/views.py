@@ -308,9 +308,9 @@ def render_owner_pet_update():
         form = PetUpdateForm(obj=pet)
         return render_template("pet.html", form=form, username=current_user.username + " owner")
     elif request.method == 'POST' and form.validate_on_submit():
-        petname = form.petname.data
-        category = form.category.data
-        age = form.age.data
+        petname = request.form.petname
+        category = request.form.category
+        age = request.form.age
         contact = current_user.contact
         thispet = Pets.query.filter_by(petname=petname, pcontact=contact).first()
         thispet.petname = form.petname
