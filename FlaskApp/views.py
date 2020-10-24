@@ -301,7 +301,9 @@ def render_owner_pet_update():
     if request.method == 'GET':
         pc = current_user.contact
         pn = request.form.get("petname")
+        print(pn, flush=True)
         pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
+        print(pet, flush=True)
         newpet = PetUpdate(pet.petname, pet.category, pet.age)
         form = PetUpdateForm(obj=pet)
         return render_template("pet.html", form=form, username=current_user.username + " owner")
