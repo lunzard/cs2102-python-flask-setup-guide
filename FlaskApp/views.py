@@ -300,7 +300,7 @@ def render_owner_pet_new():
 def render_owner_pet_update():
     if request.method == 'GET':
         pc = current_user.contact
-        pn = request.form.get("petname")
+        pn = request.args.get('petname')
         print(pn, flush=True)
         pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
         print(pet, flush=True)
