@@ -53,37 +53,21 @@
         }
 
         .div-color {
-            background-color: #fff;
+            background-color: #f3f3f3;
+            opacity: 50%;
         }
         #logout {
             float: right;
         }
 
-        * {
-            box-sizing: border-box;
-        }
-
         :root {
-            --background: #E5FFB3;
-            --background-accent: #DBF8A3;
-            --background-accent-2: #BDE66E;
             --light: #92DE34;
             --dark: #69BC22;
             --text: #025600;
         }
 
-        body {
-            background-color: var(--background);
-            background-image: linear-gradient(var(--background-accent-2) 50%,
-                    var(--background-accent) 50%), linear-gradient(var(--background-accent) 50%,
-                    var(--background-accent-2) 50%);
-            background-repeat: no-repeat;
-            background-size: 100% 30px;
-            background-position: top left, bottom left;
-            min-height: 98vh;
-        }
 
-        div {
+        .button_wrapper div {
             display: block;
             width: 400px;
             margin: 0 auto 0 auto;
@@ -147,11 +131,13 @@
     </div>
     <div class="limiter">
         <div class="container-login100" style="background-image: url('https://cs2102project.herokuapp.com/static/images/bg-01.jpg');">
+            <div class="button_wrapper">
+                <button onclick="location.href='https://cs2102project.herokuapp.com/owner/pet/new'" type="button">
+                    <p>Add a pet</p>
+                </button>
+            </div>
             <div class="container div-color">
                 <div>
-                    <button onclick="location.href='https://cs2102project.herokuapp.com/owner/pet/new'" type="button">
-                        <p>Add a pet</p>
-                    </button>
                     <p>Here are the list of your pets:</p>
                     {{ table }}
                 </div>
