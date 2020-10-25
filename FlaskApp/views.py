@@ -338,7 +338,7 @@ def render_owner_bid():
     contact = current_user.contact
     query = "SELECT * FROM biddings WHERE status = 'end' AND pcontact= '{}'".format(contact)
     bidding = db.session.execute(query).fetchall()
-    return render_template("ownerBid.html", bidding=bidding, username=current_user.username + " owner")
+    return render_template("zeonTest.html", bidding=bidding, username=current_user.username + " owner")
 
 
 @view.route("/owner/bid/new", methods=["GET", "POST"])

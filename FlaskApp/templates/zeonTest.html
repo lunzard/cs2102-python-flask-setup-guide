@@ -38,32 +38,39 @@
       <a href="https://cs2102project.herokuapp.com/logout">Logout</a>
     </div>
 
-    <div>
-        <p>Add a new bid </p><a href="https://cs2102project.herokuapp.com/owner/bid/new">here</a>
-        <p>Here are the list of all your bids:</p>
-        <table>
+    <div class="limiter">
+		<div class="container-login100" style="background-image: url('../static/images/bg-01.jpg');">
+			<div class="wrap-login100 p-t-30 p-b-50">
+				<span class="login100-form-title p-b-41">
+					Account Login
+				</span>
+                <p>Add a new bid </p><a href="https://cs2102project.herokuapp.com/owner/bid/new">here</a>
+                <p>Here are the list of all your bids:</p>
+                <table>
 
-            <th>Owner Contact</th>
-            <th>Caretaker Contact</th>
-            <th>Pet Name</th>
-            <th>Start Day</th>
-            <th>End Day</th>
-            <th>Payment Mode</th>
-            <th>Delivery Mode</th>
-            <th>Status</th>
-            {% for item in bidding %}
-            <tr>
-                <td>{{item.pcontact}}</td>
-                <td>{{item.ccontact}}</td>
-                <td>{{item.petname}}</td>
-                <td>{{item.startday}}</td>
-                <td>{{item.endday}}</td>
-                <td>{{item.paymentmode}}</td>
-                <td>{{item.deliverymode}}</td>
-                <td>{{item.status}}</td>
-            </tr>
-            {% endfor %}
-        </table>
+                    <th>Owner Contact</th>
+                    <th>Caretaker Contact</th>
+                    <th>Pet Name</th>
+                    <th>Start Day</th>
+                    <th>End Day</th>
+                    <th>Payment Mode</th>
+                    <th>Delivery Mode</th>
+                    <th>Status</th>
+                    {% for item in bidding %}
+                    <tr>
+                        <td>{{item.pcontact}}</td>
+                        <td>{{item.ccontact}}</td>
+                        <td>{{item.petname}}</td>
+                        <td>{{item.startday}}</td>
+                        <td>{{item.endday}}</td>
+                        <td>{{item.paymentmode}}</td>
+                        <td>{{item.deliverymode}}</td>
+                        <td>{{item.status}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
     </div>
 
 </body>
