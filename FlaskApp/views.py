@@ -401,7 +401,7 @@ def render_owner_bid_new():
     bid = Bid(contact, cn)
     form = BiddingForm(obj=bid)
 
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         ccontact = form.ccontact.data
         petname = form.petname.data
         startdate = form.startdate.data
