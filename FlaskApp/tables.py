@@ -9,7 +9,7 @@ class userInfoTable(Table):
 
 class editPetTable(Table):
     petname = Col('Pet Name')
-    contact = Col('pcontact')
+    pcontact = Col('Contact')
     category = Col('Pet Name')
     age = Col('Pet Name')
     edit = ButtonCol('Edit', 'view.render_owner_pet_update', url_kwargs=dict(id='id'))

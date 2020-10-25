@@ -338,10 +338,9 @@ def render_owner_pet():
 def render_test():
     contact = current_user.contact
     query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
-    pets = db.session.execute(query).fetchall()
+    pets = db.session.execute(query)
     print(pets, flush=True)
-    profile = db.session.execute(query)
-    table = editPetTable(profile)
+    table = editPetTable(pets)
     return render_template("zeonTest.html", table=table, pets=pets, username=current_user.username + " owner")
 
 
