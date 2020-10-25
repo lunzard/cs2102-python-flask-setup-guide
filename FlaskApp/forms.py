@@ -78,7 +78,7 @@ class PetForm(FlaskForm):
     category = StringField(
         label='Credit Card',
         validators=[InputRequired()],
-        render_kw={'placeholder': 'Crredit Card', 'class': 'input100'}
+        render_kw={'placeholder': 'Credit Card', 'class': 'input100'}
     )
     age = IntegerField(
         label='Age',
