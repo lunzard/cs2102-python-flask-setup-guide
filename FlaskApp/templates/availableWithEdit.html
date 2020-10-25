@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Caretaker</title>
+
+	<link rel="stylesheet" type="text/css" href="../static/css/topbar.css">
+</head>
+
+<body>
+    <div class="topbar">
+      <a href="https://cs2102project.herokuapp.com/owner">Home</a>
+      <a href="https://cs2102project.herokuapp.com/owner/pet">Pets</a>
+      <a href="https://cs2102project.herokuapp.com/owner/bid">Bid</a>
+      <a href="https://cs2102project.herokuapp.com/logout">Logout</a>
+    </div>
+
+    <div>
+        <p>Add a available slot</p><a href="https://cs2102project.herokuapp.com/owner/pet/new">here</a>
+        <p>Here is the list of your available slots:</p>
+        <table>
+
+            <th>Start Date</th>
+            <th>End Date</th>
+            {% for item in available %}
+            <tr>
+                <td>{{item.startday}}</td>
+                <td>{{item.endday}}</td>
+                <td>
+                <form action="{{url_for('view.render_caretaker_available_edit')}}" method="GET">
+                    <input id="startdate"+item.startday name="startdate" type="hidden" value="{{item.startday}}">
+                    <input id="enddate"+item.endday name="enddate" type="hidden" value="{{item.endday}}">
+                    <button id="edit" type="submit" name="edit"> Edit </button>
+                </form>
+                </td>>
+                <td>
+                    <form action="{{url_for('view.render_caretaker_available_delete')}}" method="GET">
+                        <input id="startdate"+item.startday name="startdate" type="hidden" value="{{item.startday}}">
+                        <input id="enddate"+item.endday name="enddate" type="hidden" value="{{item.endday}}">
+                        <button id="delete" type="submit" name="delete"> Delete </button>
+                    </form>
+                </td>>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>
