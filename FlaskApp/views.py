@@ -3,7 +3,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm
-from forms import AvailableUpdateForm, PetUpdateForm, PetUpdate, UserUpdateForm, Bid
+from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
 from models import Users, Role, Pets, Available
 import sys
 
