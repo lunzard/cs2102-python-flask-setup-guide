@@ -142,23 +142,6 @@ class UserUpdateForm(FlaskForm):
         render_kw={'placeholder': 'Confirmed New Password', 'class': 'input100'}
     )
     
-class PetUpdateForm(FlaskForm):
-    petname = StringField(
-        label='Petname',
-        validators=[InputRequired()],
-        render_kw={'placeholder': 'Petname', 'class': 'input100'}
-    )
-    category = StringField(
-        label='Category',
-        validators=[InputRequired()],
-        render_kw={'placeholder': 'Category', 'class': 'input100'}
-    )
-    age = IntegerField(
-        label='Age',
-        validators=[InputRequired()],
-        render_kw={'placeholder': 'Age', 'class': 'input100'}
-    )
-    
 class LoginForm(FlaskForm):
     contact = StringField(
         label='Contact',
@@ -272,14 +255,14 @@ class AvailableForm(FlaskForm):
         label='Startdate',
         validators=[InputRequired()],
         default=date.today(), 
-        format='%Y/%m/%d',
+        format='%Y-%m-%d',
         render_kw={'placeholder': 'Startdate', 'class': 'input100'}
     )
     enddate = DateField(
         label='Enddate',
         validators=[InputRequired()],
         default=date.today(), 
-        format='%Y/%m/%d',
+        format='%Y-%m-%d',
         render_kw={'placeholder': 'Enddate', 'class': 'input100'}
     )
     def validate_on_submit(self):
