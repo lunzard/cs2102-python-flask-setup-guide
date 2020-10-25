@@ -237,8 +237,9 @@ def render_owner_page():
     caretakersquery = "SELECT * FROM users WHERE usertype = 'caretaker'"
     caretakers = db.session.execute(caretakersquery).fetchall()
     
-    profilequery = "SELECT * FROM users WHERE usertype = 'caretaker'"
-    profile = db.session.execute(profilequery).fetchone()
+    contact = current_user.contact
+    query = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
+    profile = db.session.execute(query).fetchone()
 
     return render_template("owner.html", profile=profile, caretakers=caretakers, username=current_user.username + " owner")
 
