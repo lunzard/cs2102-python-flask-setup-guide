@@ -32,16 +32,16 @@
                 <td>{{item.age}}</td>
                 <td>
                     <form action="{{url_for('view.render_owner_pet_update')}}" method="GET">
-                        <input id="petname" name="petname" type="hidden" value="{{item.petname}}">
-                        <input id="category" name="category" type="hidden" value="{{item.category}}">
-                        <input id="age" name="age" type="hidden" value="{{item.age}}">
-                        <button id="edit"type="submit" name="edit"> Edit </button>
+                        <input id="petname"+item.petname name="petname" type="hidden" value="{{item.petname}}">
+                        <input id="category"+item.petname name="category" type="hidden" value="{{item.category}}">
+                        <input id="age"+item.petname name="age" type="hidden" value="{{item.age}}">
+                        <button id="edit"+item.petname type="submit" name="edit"> Edit </button>
                     </form>
                 </td>>
                 <td>
                     <form action="{{url_for('view.render_owner_pet_delete')}}" method="GET">
-                        <input id="pn" name="petname" type="hidden" value="{{item.petname}}">
-                        <button id="delete" type="submit" name="delete"> Delete </button>
+                        <input id="pn"+item.petname name="petname" type="hidden" value="{{item.petname}}">
+                        <button id="delete"+item.petname type="submit" name="delete"> Delete </button>
                     </form>
                 </td>>
             </tr>
