@@ -23,27 +23,7 @@
 
     <div>
         <p>Here are the list of caretakers:</p>
-        <table>
-
-            <th>Username</th>
-            <th>Contact</th>
-            <th>postalcode</th>
-            {% for item in caretakers %}
-            <tr>
-                <td>{{item.username}}</td>
-                <td>{{item.contact}}</td>
-                <td>{{item.postalcode}}</td>
-                <td>
-                    <form action="{{url_for('view.render_owner_bid_new')}}" method="GET">
-                        <input id="username"+item.ccontact name="username" type="hidden" value="{{item.username}}">
-                        <input id="ccontact"+item.ccontact name="ccontact" type="hidden" value="{{item.contact}}">
-                        <input id="postalcode"+item.ccontact name="postalcode" type="hidden" value="{{item.postalcode}}">
-                        <button id="edit"+item.ccontact type="submit" name="edit"> Bid </button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+        {{ caretable}}
     </div>
     <div>
         <hi>Here is your profile!</hi>
