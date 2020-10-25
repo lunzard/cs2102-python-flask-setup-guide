@@ -335,7 +335,7 @@ def render_owner_pet():
 
 @view.route("/test", methods=["GET", "POST"])
 @roles_required('petowner')
-def render_owner_pet():
+def render_test():
     contact = current_user.contact
     query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
     pets = db.session.execute(query).fetchall()
