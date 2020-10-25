@@ -2,64 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Owner</title>
+    <title>Bid</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="https://cs2102project.herokuapp.com/static/images/icons/favicon.ico"/>
-    <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="https://cs2102project.herokuapp.com/static/vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="https://cs2102project.herokuapp.com/static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="https://cs2102project.herokuapp.com/static/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-    <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="https://cs2102project.herokuapp.com/static/vendor/animate/animate.css">
-    <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="https://cs2102project.herokuapp.com/static/vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="https://cs2102project.herokuapp.com/static/vendor/animsition/css/animsition.min.css">
-    <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="https://cs2102project.herokuapp.com/static/vendor/select2/select2.min.css">
-    <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="https://cs2102project.herokuapp.com/static/vendor/daterangepicker/daterangepicker.css">
-    <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="https://cs2102project.herokuapp.com/static/css/login-util.css">
-	<link rel="stylesheet" type="text/css" href="https://cs2102project.herokuapp.com/static/css/login-main.css">
-    <!--===============================================================================================-->
 
-	<link rel="stylesheet" type="text/css" href="https://cs2102project.herokuapp.com/static/css/topbar.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/topbar.css">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="table_style/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="table_style/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="table_style/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="table_style/vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="table_style/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="table_style/vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="table_style/css/util.css">
+	<link rel="stylesheet" type="text/css" href="table_style/css/main.css">
+<!--===============================================================================================-->
+    
     <style>
-        .container {
-            width: 1000px;
-            text-align: center;
-        }
-
-        #addButton{
-            display: block;
-            margin: 0 auto;
-        }
-
-        .buttonWrapper {
-            padding-bottom: 32px;
-            padding-top: 30px;
-        }
-
-        #registerButton {
-            display: block;
-            margin: 0 auto;
-        }
-
-        .formField {
-            padding: 10px 0;
-        }
-
-        .div-color {
-            background-color:rgba(212, 212, 212, 0.4)
-        }
-        #logout {
+        #logout{
             float: right;
         }
-
         :root {
             --light: #92DE34;
             --dark: #69BC22;
@@ -67,19 +34,17 @@
         }
 
 
-        .button_wrapper{
-            display: block;
+        .button_wrapper div {
+            display: inline;
             width: 400px;
-            margin: 0 auto;
-            text-align: center;
+            margin: 0 auto 0 auto;
             left: 0;
             right: 0;
             top: 30vh;
-            margin-left: 60px;
         }
 
         button {
-            display: block;
+            display: inline;
             cursor: pointer;
             outline: none;
             border: none;
@@ -119,21 +84,15 @@
                 background-position: 400px 0;
             }
         }
-        h3{
-            padding-top: 20px;
+        .column2{
+            width: 230px;
         }
-        .result-row{
-            padding: 10px 0;
+        .column4{
+            width: 130px;
         }
-
-        .edit{
-            display: inline;
-            opacity: 1; 
-            width: 70px;
-            height: 35px;
-            margin-left: 20px;
+        .column5{
+            width: 130px;
         }
-    
     </style>
 </head>
 
@@ -144,25 +103,64 @@
       <a href="https://cs2102project.herokuapp.com/owner/bid">Bid</a>
       <a href="https://cs2102project.herokuapp.com/logout" id="logout">Logout</a>
     </div>
-    <div class="limiter">
-        <div class="container-login100" style="background-image: url('https://cs2102project.herokuapp.com/static/images/bg-01.jpg');">
-            <div class="container div-color">
-                <div>
-                    <h3>Here are the list of your pets:</h3>
-                    <div class="result-row">
-                        {{ table }} 
-                        <button onclick="location.href='https://cs2102project.herokuapp.com/owner/pet/new'" type="button" class="edit">
-                            <p>Edit</p>
-                        </button>
+
+    <div>
+        
+
+        <div class="limiter">
+            <div class="container-table100">
+                <div class="wrap-table100">
+                    <div class="table100">
+                        <div class="button_wrapper">
+                            <button onclick="location.href='https://cs2102project.herokuapp.com/owner/bid/new'" type="button">
+                                <p>Add a new bid</p>
+                            </button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr class="table100-head">
+                                    <th class="column1">Owner Contact</th>
+                                    <th class="column2">Caretaker Contact</th>
+                                    <th class="column3">Pet Name</th>
+                                    <th class="column4">Start Day</th>
+                                    <th class="column5">End Day</th>
+                                    <th class="column6">Payment Mode</th>
+                                    <th class="column7">Delivery Mode</th>
+                                    <th class="column8">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for item in bidding %}
+                                <tr>
+                                    <td class="column1">{{item.pcontact}}</td>
+                                    <td class="column2">{{item.ccontact}}</td>
+                                    <td class="column3">{{item.petname}}</td>
+                                    <td class="column4">{{item.startday}}</td>
+                                    <td class="column5">{{item.endday}}</td>
+                                    <td class="column6">{{item.paymentmode}}</td>
+                                    <td class="column7">{{item.deliverymode}}</td>
+                                    <td class="column8">{{item.status}}</td>
+                                </tr>
+                                {% endfor %}
+                                   
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <div class="button_wrapper">
-                <button onclick="location.href='https://cs2102project.herokuapp.com/owner/pet/new'" type="button">
-                    <p>Add a pet</p>
-                </button>
-            </div>
         </div>
-    </div>
+
+
+    <!--===============================================================================================-->	
+	<script src="table_style/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="table_style/vendor/bootstrap/js/popper.js"></script>
+        <script src="table_style/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="table_style/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="table_style/js/main.js"></script>
+
 </body>
 </html>

@@ -3,8 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Bid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href="../static/css/topbar.css">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="table_style/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="table_style/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="table_style/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="table_style/vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="table_style/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="table_style/vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="table_style/css/util.css">
+	<link rel="stylesheet" type="text/css" href="table_style/css/main.css">
+<!--===============================================================================================-->
     
     <style>
         #logout{
@@ -18,17 +35,16 @@
 
 
         .button_wrapper div {
-            display: block;
+            display: inline;
             width: 400px;
             margin: 0 auto 0 auto;
-            position: absolute;
             left: 0;
             right: 0;
             top: 30vh;
         }
 
         button {
-            display: block;
+            display: inline;
             cursor: pointer;
             outline: none;
             border: none;
@@ -68,6 +84,15 @@
                 background-position: 400px 0;
             }
         }
+        .column2{
+            width: 230px;
+        }
+        .column4{
+            width: 130px;
+        }
+        .column5{
+            width: 130px;
+        }
     </style>
 </head>
 
@@ -80,36 +105,62 @@
     </div>
 
     <div>
-        <div class="button_wrapper">
-            <button onclick="location.href='https://cs2102project.herokuapp.com/owner/bid/new'" type="button">
-                <p>Add a new bid</p>
-            </button>
-        </div>
-        <p>Here are the list of all your bids:</p>
-        <table>
+        
 
-            <th>Owner Contact</th>
-            <th>Caretaker Contact</th>
-            <th>Pet Name</th>
-            <th>Start Day</th>
-            <th>End Day</th>
-            <th>Payment Mode</th>
-            <th>Delivery Mode</th>
-            <th>Status</th>
-            {% for item in bidding %}
-            <tr>
-                <td>{{item.pcontact}}</td>
-                <td>{{item.ccontact}}</td>
-                <td>{{item.petname}}</td>
-                <td>{{item.startday}}</td>
-                <td>{{item.endday}}</td>
-                <td>{{item.paymentmode}}</td>
-                <td>{{item.deliverymode}}</td>
-                <td>{{item.status}}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
+        <div class="limiter">
+            <div class="container-table100">
+                <div class="wrap-table100">
+                    <div class="table100">
+                        <div class="button_wrapper">
+                            <button onclick="location.href='https://cs2102project.herokuapp.com/owner/bid/new'" type="button">
+                                <p>Add a new bid</p>
+                            </button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr class="table100-head">
+                                    <th class="column1">Owner Contact</th>
+                                    <th class="column2">Caretaker Contact</th>
+                                    <th class="column3">Pet Name</th>
+                                    <th class="column4">Start Day</th>
+                                    <th class="column5">End Day</th>
+                                    <th class="column6">Payment Mode</th>
+                                    <th class="column7">Delivery Mode</th>
+                                    <th class="column8">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for item in bidding %}
+                                <tr>
+                                    <td class="column1">{{item.pcontact}}</td>
+                                    <td class="column2">{{item.ccontact}}</td>
+                                    <td class="column3">{{item.petname}}</td>
+                                    <td class="column4">{{item.startday}}</td>
+                                    <td class="column5">{{item.endday}}</td>
+                                    <td class="column6">{{item.paymentmode}}</td>
+                                    <td class="column7">{{item.deliverymode}}</td>
+                                    <td class="column8">{{item.status}}</td>
+                                </tr>
+                                {% endfor %}
+                                   
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <!--===============================================================================================-->	
+	<script src="table_style/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="table_style/vendor/bootstrap/js/popper.js"></script>
+        <script src="table_style/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="table_style/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="table_style/js/main.js"></script>
 
 </body>
 </html>
