@@ -53,17 +53,9 @@
     <div class="limiter">
         <div class="container-login100" style="background-image: url('../static/images/bg-01.jpg');">
             <div class="container">
+                <div>Bidding for {{ target }}</div>
                 <form class="registrationForm login100-form">
                     {{ form.hidden_tag() }}
-                    <div class="formField wrap-input100 validate-input">
-                        {{ form.ccontact }} {% if form.ccontact.errors %}
-                        <div class="errorMessage">
-                            {% for error in form.ccontact.errors %}
-                            <li>{{ error }}</li>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                    </div>
 
                     <div class="formField wrap-input100 validate-input">
                         {{ form.petname }} {% if form.petname.errors %}

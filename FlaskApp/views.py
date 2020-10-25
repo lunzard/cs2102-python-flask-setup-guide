@@ -7,6 +7,7 @@ from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
 from models import Users, Role, Pets, Available
 from tables import userInfoTable
+from datetime import timedelta
 import sys
 
 view = Blueprint("view", __name__)
@@ -316,13 +317,13 @@ def render_owner_profile_update():
         if request.method == 'POST' and form.validate_on_submit():
             profile = Users.query.filter_by(contact=contact).first()
             profile.username = form.username.data
-            profile.password = form.password.data
+            profile.password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             profile.card = form.credit_card.data
             profile.postalcode = form.postal_code.data
             db.session.commit()
             print("Owner profile has been updated", flush=True)
             return redirect(url_for('view.render_owner_profile'))
-        return render_template("profile.html", form=form, username=current_user.username + " owner")
+        return render_template("update.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet", methods=["GET", "POST"])
@@ -401,23 +402,20 @@ def render_owner_bid_new():
     
     cn = request.args.get('ccontact')
     contact = current_user.contact
-    bid = Bid(contact, cn)
-    form = BiddingForm(obj=bid)
-
+    form = BiddingForm()
     if request.method == 'POST' and form.validate_on_submit():
-        ccontact = form.ccontact.data
         petname = form.petname.data
         startdate = form.startdate.data
         enddate = form.enddate.data
         paymentmode = form.paymentmode.data
         deliverymode = form.deliverymode.data
-        if(enddate - startdate >= 0):
+        if(enddate - startdate >= timedelta(minutes=1)):
             query = "INSERT INTO biddings(pcontact, ccontact, petname, startday, endday, paymentmode, deliverymode, status) VALUES ('{}', '{}', '{}', '{}','{}', '{}', '{}', '{}')" \
-            .format(contact, ccontact, petname, startdate, enddate, paymentmode, deliverymode, "pending")
+            .format(contact, cn, petname, startdate, enddate, paymentmode, deliverymode, "pending")
             db.session.execute(query)
             db.session.commit()
         return redirect(url_for('view.render_owner_bid'))
-    return render_template("ownerBidNew.html", form=form, username=current_user.username + " owner")
+    return render_template("ownerBidNew.html", target=cn, form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/bid/update", methods=["GET", "POST"])
