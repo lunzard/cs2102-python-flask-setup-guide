@@ -319,7 +319,7 @@ def render_owner_profile_update():
             db.session.commit()
             print("Owner profile has been updated", flush=True)
             return redirect(url_for('view.render_owner_profile'))
-        return render_template("profile.html", form=form, username=current_user.username + " owner")
+        return render_template("update.html", form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet", methods=["GET", "POST"])
