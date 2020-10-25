@@ -397,7 +397,7 @@ def render_owner_bid():
 @roles_required('petowner')
 def render_owner_bid_new():
     
-    cn = requq.args.get('ccontact')
+    cn = request.args.get('ccontact')
     contact = current_user.contact
     form = BiddingForm()
     if request.method == 'POST' and form.validate_on_submit():
