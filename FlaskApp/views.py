@@ -342,7 +342,7 @@ def render_test():
     print(pets, flush=True)
     profile = db.session.execute(query)
     table = userInfoTable(profile)
-    return render_template("ownerPetWithEdit.html", table=table, pets=pets, username=current_user.username + " owner")
+    return render_template("zeonTest.html", table=table, pets=pets, username=current_user.username + " owner")
 
 
 @view.route("/owner/pet/new", methods=["GET", "POST"])
