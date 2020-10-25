@@ -282,7 +282,7 @@ def render_owner_page():
     queryCopy = "SELECT * FROM users WHERE contact = '{}'"
     profile = db.session.execute(query).fetchone()
     profileCopy = db.session.execute(queryCopy).fetchone()
-    table = userInfoTable(profile)
+    table = userInfoTable(profileCopy)
 
     return render_template("owner.html", profile=profile, caretakers=caretakers, table=table, username=current_user.username + " owner")
 
