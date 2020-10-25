@@ -12,4 +12,4 @@ class editPetTable(Table):
     contact = Col('pcontact')
     category = Col('Pet Name')
     age = Col('Pet Name')
-    edit = ButtonCol('Edit', 'update', url_kwargs=dict(id='id',)
+    edit = ButtonCol('Edit', 'update', url_kwargs=dict(id='id')
