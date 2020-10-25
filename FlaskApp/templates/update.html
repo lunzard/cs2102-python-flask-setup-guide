@@ -97,6 +97,16 @@
                         {% endif %}
                     </div>
 
+                    <div class="formField wrap-input100 validate-input">
+                        {{ form.confirm_password }} {% if form.confirm_password.errors %}
+                        <div class="errorMessage">
+                            {% for error in form.confirm_password.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
                     <div class="buttonWrapper">
                         <button id="registerButton" class="login100-form-btn" formmethod="post">register</button>
                     </div>
