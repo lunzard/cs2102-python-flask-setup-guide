@@ -273,8 +273,9 @@ def render_owner_page():
     caretakersquery = "SELECT * FROM users WHERE usertype = 'caretaker'"
     caretakers = db.session.execute(caretakersquery).fetchall()
     
-    profilequery = "SELECT * FROM users WHERE usertype = 'caretaker'"
-    profile = db.session.execute(profilequery).fetchone()
+    contact = current_user.contact
+    query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
+    profile = db.session.execute(query).fetchone()
 
     return render_template("owner.html", profile=profile, caretakers=caretakers, username=current_user.username + " owner")
 
@@ -293,7 +294,7 @@ def render_owner_summary():
 def render_owner_profile():
     form = ProfileForm()
     contact = current_user.contact
-    query = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
+    query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
     profile = db.session.execute(query).fetchone()
     return render_template("profile.html", profile=profile, form=form, username=current_user.username + " owner")
 
@@ -395,8 +396,9 @@ def render_owner_bid():
 @roles_required('petowner')
 def render_owner_bid_new():
     form = BiddingForm()
+    cn = request.args.get('ccontact')
     contact = current_user.contact
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'GET' and form.validate_on_submit():
         pcontact = contact
         ccontact = form.ccontact.data
         petname = form.petname.data
