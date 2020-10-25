@@ -130,11 +130,11 @@ class UserUpdateForm(FlaskForm):
         label='New Password',
         render_kw={'placeholder': 'New Password', 'class': 'input100'}
     )
-    confirm_password = PasswordField(
-        label='Confirm New Password',
-        validators=[EqualTo('password')],
-        render_kw={'placeholder': 'Confirmed New Password', 'class': 'input100'}
-    )
+    # confirm_password = PasswordField(
+    #     label='Confirm New Password',
+    #     validators=[EqualTo('password')],
+    #     render_kw={'placeholder': 'Confirmed New Password', 'class': 'input100'}
+    # )
 
 class PetUpdateForm(FlaskForm):	
     petname = StringField(	
