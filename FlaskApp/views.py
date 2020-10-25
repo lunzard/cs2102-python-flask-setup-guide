@@ -1,6 +1,7 @@
 from flask import Blueprint, redirect, flash, url_for, render_template, request
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
+from flask_table import Table, Col
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, PetUpdateForm, PetUpdate
 from models import Users, Role, Pets
