@@ -2,7 +2,8 @@ from flask import Blueprint, redirect, flash, url_for, render_template, request
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from __init__ import db, login_manager, bcrypt
-from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, AvailableUpdateForm, PetUpdateForm, PetUpdate, UserUpdateForm
+from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm
+from forms import AvailableUpdateForm, PetUpdateForm, PetUpdate, UserUpdateForm, Bid
 from models import Users, Role, Pets, Available
 import sys
 
@@ -387,7 +388,7 @@ def render_owner_pet_delete():
 @roles_required('petowner')
 def render_owner_bid():
     contact = current_user.contact
-    query = "SELECT * FROM biddings WHERE status = 'end' AND pcontact= '{}'".format(contact)
+    query = "SELECT * FROM biddings WHERE pcontact= '{}'".format(contact)
     bidding = db.session.execute(query).fetchall()
     return render_template("ownerBid.html", bidding=bidding, username=current_user.username + " owner")
 
@@ -395,21 +396,22 @@ def render_owner_bid():
 @view.route("/owner/bid/new", methods=["GET", "POST"])
 @roles_required('petowner')
 def render_owner_bid_new():
-    form = BiddingForm()
+    
     cn = request.args.get('ccontact')
     contact = current_user.contact
-    if request.method == 'GET' and form.validate_on_submit():
-        pcontact = contact
+    bid = Bid(contact, cn)
+    form = BiddingForm(obj=bid)
+
+    if form.validate_on_submit():
         ccontact = form.ccontact.data
         petname = form.petname.data
         startdate = form.startdate.data
         enddate = form.enddate.data
         paymentmode = form.paymentmode.data
         deliverymode = form.deliverymode.data
-
         if(enddate - startdate >= 0):
             query = "INSERT INTO biddings(pcontact, ccontact, petname, startday, endday, paymentmode, deliverymode, status) VALUES ('{}', '{}', '{}', '{}','{}', '{}', '{}', '{}')" \
-            .format(pcontact, ccontact, petname, startdate, enddate, paymentmode, deliverymode, "pending")
+            .format(contact, ccontact, petname, startdate, enddate, paymentmode, deliverymode, "pending")
             db.session.execute(query)
             db.session.commit()
         return redirect(url_for('view.render_owner_bid'))
