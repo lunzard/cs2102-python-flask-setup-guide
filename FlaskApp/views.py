@@ -5,6 +5,7 @@ from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
 from models import Users, Role, Pets, Available
+from datetime import timedelta
 import sys
 
 view = Blueprint("view", __name__)
@@ -401,14 +402,14 @@ def render_owner_bid_new():
     bid = Bid(contact, cn)
     form = BiddingForm(obj=bid)
 
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         ccontact = form.ccontact.data
         petname = form.petname.data
         startdate = form.startdate.data
         enddate = form.enddate.data
         paymentmode = form.paymentmode.data
         deliverymode = form.deliverymode.data
-        if(enddate - startdate >= 0):
+        if(enddate - startdate >= timedelta(minutes=1)):
             query = "INSERT INTO biddings(pcontact, ccontact, petname, startday, endday, paymentmode, deliverymode, status) VALUES ('{}', '{}', '{}', '{}','{}', '{}', '{}', '{}')" \
             .format(contact, ccontact, petname, startdate, enddate, paymentmode, deliverymode, "pending")
             db.session.execute(query)

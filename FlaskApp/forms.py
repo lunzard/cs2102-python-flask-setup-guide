@@ -152,7 +152,7 @@ class PetUpdateForm(FlaskForm):
         validators=[InputRequired()],	
         render_kw={'placeholder': 'Age', 'class': 'input100'}	
     )
-    
+
 class LoginForm(FlaskForm):
     contact = StringField(
         label='Contact',
@@ -186,11 +186,11 @@ class Bid:
     def __init__(self, pcontact, ccontact):
         self.pcontact = pcontact
         self.ccontact = ccontact
-        self.petname
-        self.startDate
-        self.endDate
-        self.paymentmode
-        self.deliverymode
+        self.petname = None
+        self.startDate = None
+        self.endDate = None
+        self.paymentmode = None
+        self.deliverymode = None
 
 class BiddingForm(FlaskForm):
     pcontact = StringField(
@@ -202,7 +202,7 @@ class BiddingForm(FlaskForm):
     ccontact = StringField(
         label='Ccontact',
         validators=[InputRequired()],
-        render_kw={'placeholder': 'Ccontact', 'class': 'input100', 'readonly': True}
+        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
     )
     petname = StringField(
         label='Petname',
