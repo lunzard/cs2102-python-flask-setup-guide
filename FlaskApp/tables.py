@@ -20,4 +20,4 @@ class ownerHomePage(Table):
     contact = Col('Contact ')
     postalcode = Col('Pet Name ')
     edit = ""
-    bid = ButtonCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', contact='contact', postalcode='postalcode', edit=''))
+    bid = ButtonCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', contact='contact', postalcode='postalcode', edit='edit'))
