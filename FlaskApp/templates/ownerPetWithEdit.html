@@ -72,7 +72,7 @@
             --text: #025600;
         }
 
-        body {
+        .button_wrapper {
             background-color: var(--background);
             background-image: linear-gradient(var(--background-accent-2) 50%,
                     var(--background-accent) 50%), linear-gradient(var(--background-accent) 50%,
@@ -83,7 +83,7 @@
             min-height: 98vh;
         }
 
-        div {
+        .button_wrapper div {
             display: block;
             width: 400px;
             margin: 0 auto 0 auto;
@@ -149,7 +149,7 @@
         <div class="container-login100" style="background-image: url('https://cs2102project.herokuapp.com/static/images/bg-01.jpg');">
             <div class="container div-color">
                 <div>
-                    <button onclick="location.href='https://cs2102project.herokuapp.com/owner/pet/new'" type="button">
+                    <button onclick="location.href='https://cs2102project.herokuapp.com/owner/pet/new'" type="button" class="button_wrapper">
                         <p>Add a pet</p>
                     </button>
                     <p>Here are the list of your pets:</p>
