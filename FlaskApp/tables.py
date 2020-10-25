@@ -16,7 +16,7 @@ class editPetTable(Table):
     delete = ButtonCol('Delete', 'view.render_owner_pet_delete', url_kwargs=dict(petname='petname'))
 
 class ownerHomePage(Table):
-    username = Col('Pet Name ')
+    username = Col('Caretaker Name ')
     contact = Col('Contact ')
-    postalcode = Col('Pet Name ')
+    postalcode = Col('Postal Code ')
     bid = ButtonCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', contact='contact', postalcode='postalcode', edit='contact'), url_kwargs_extra=dict(edit='edit'))
