@@ -3,9 +3,9 @@ from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from flask_table import Table, Col
 from __init__ import db, login_manager, bcrypt
-from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm
+from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, CanTakeCareForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
-from models import Users, Role, Pets, Available
+from models import Users, Role, Pets, Available, CanTakeCare
 from tables import userInfoTable, editPetTable, ownerHomePage
 from datetime import timedelta
 import sys
@@ -259,12 +259,42 @@ def render_caretaker_available_new():
     return render_template('availableNew.html', form = form, username=current_user.username + " caretaker")
 
 
-@view.route("/caretaker/update-cantakecare", methods=["GET", "POST"])
+@view.route("/caretaker/cantakecare", methods=["GET", "POST"])
 @roles_required('caretaker')
-def render_caretaker_update_cantakecare():
+def render_caretaker_cantakecare():
     return render_template('profile.html', username=current_user.username + " caretaker")
 
+@view.route("/caretaker/cantakecare/new", methods=["GET", "POST"])
+@roles_required('caretaker')
+def render_caretaker_cantakecare_new():
+    cn = request.args.get('ccontact')
+    contact = current_user.contact
+    form = CanTakeCareForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        category = form.category.data
+        dailyprice = form.dailyprice.data
+        query = "INSERT INTO cantakecare(ccontact, category, dailyprice) VALUES ('{}', '{}', '{}')" \
+        .format(contact, category, dailyprice)
+        db.session.execute(query)
+        db.session.commit()
+        return redirect(url_for('view.render_caretaker_cantakecare'))
+    return render_template('profile.html', username=current_user.username + " caretaker")
 
+@view.route("/caretaker/cantakecare/delete", methods=["GET", "POST"])
+@roles_required('caretaker')
+def render_caretaker_cantakecare_delete():
+    contact = current_user.contact
+    category = request.args.get('category')
+    pet = CanTakeCare.query.filter_by(ccontact=contact, category=category).first()
+    if pet:
+        form = CanTakeCareForm(obj=pet)
+        if request.method == 'POST' and form.validate_on_submit():
+            category = form.category
+            thiscategory = Pets.query.filter_by(ccontact=contact, category=category).first()
+            db.session.delete(thiscategory)
+            db.session.commit()
+            return redirect(url_for('view.render_caretaker_cantakecare'))
+    return render_template('profile.html', username=current_user.username + " caretaker")
 # END OF CARETAKER END OF CARETAKER END OF CARETAKER END OF CARETAKER END OF CARETAKER END OF CARETAKER
 
 # PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER
