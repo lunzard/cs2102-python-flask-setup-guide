@@ -71,12 +71,12 @@ class RegistrationForm(FlaskForm):
 
 class PetForm(FlaskForm):
     petname = StringField(
-        label='Petname',
+        label='Pet Name',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Petname', 'class': 'input100'}
     )
     category = StringField(
-        label='Credit Card',
+        label='Category',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Credit Card', 'class': 'input100'}
     )
@@ -88,7 +88,7 @@ class PetForm(FlaskForm):
 
 class PetUpdateForm(FlaskForm):
     petname = StringField(
-        label='Petname',
+        label='Pet Name',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Petname', 'class': 'input100'}
     )

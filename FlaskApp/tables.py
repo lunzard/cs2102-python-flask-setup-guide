@@ -13,3 +13,4 @@ class editPetTable(Table):
     category = Col('Pet Name')
     age = Col('Pet Name')
     edit = ButtonCol('Edit', 'view.render_owner_pet_update', url_kwargs=dict(petname='petname', category='category', age='age'))
+    delete = ButtonCol('Delete', 'view.render_owner_pet_delete', url_kwargs=dict(petname='petname'))
