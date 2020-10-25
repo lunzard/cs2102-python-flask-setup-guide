@@ -2,8 +2,8 @@ from flask import Blueprint, redirect, flash, url_for, render_template, request
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from __init__ import db, login_manager, bcrypt
-from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, PetUpdateForm, PetUpdate, UserUpdateForm
-from models import Users, Role, Pets
+from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, AvailableUpdateForm, PetUpdateForm, PetUpdate, UserUpdateForm
+from models import Users, Role, Pets, Available
 import sys
 
 view = Blueprint("view", __name__)
@@ -147,12 +147,12 @@ def render_admin_profile():
 @view.route("/admin/profile/update", methods=["GET"])
 @roles_required('admin')
 def render_admin_update_profile():
-    acontact = current_user.contact
-    admin = Users.query.filter_by(contact=acontact).first()
+    contact = current_user.contact
+    admin = Users.query.filter_by(contact=contact).first()
     if admin:
         form = UserUpdateForm(obj=admin)
         if request.method == 'POST' and form.validate_on_submit():
-            profile = Users.query.filter_by(contact=acontact).first()
+            profile = Users.query.filter_by(contact=contact).first()
             profile.username = form.username.data
             profile.password = form.password.data
             db.session.commit()
@@ -192,12 +192,12 @@ def render_caretaker_profile():
 @view.route("/caretaker/profile/update", methods=["GET"])
 @roles_required('caretaker')
 def render_caretaker_update_profile():
-    ccontact = current_user.contact
-    caretaker = Users.query.filter_by(contact=ccontact).first()
+    contact = current_user.contact
+    caretaker = Users.query.filter_by(contact=contact).first()
     if caretaker:
         form = UserUpdateForm(obj=caretaker)
         if request.method == 'POST' and form.validate_on_submit():
-            profile = Users.query.filter_by(contact=ccontact).first()
+            profile = Users.query.filter_by(contact=contact).first()
             profile.username = form.username.data
             profile.password = form.password.data
             profile.isparttime = form.is_part_time.data
@@ -302,14 +302,14 @@ def render_owner_profile():
 @roles_required('petowner')
 def render_owner_profile_update():
     # form = ProfileForm()
-    pcontact = current_user.contact
-    petowner = Users.query.filter_by(contact=pcontact).first()
+    contact = current_user.contact
+    petowner = Users.query.filter_by(contact=contact).first()
     # query = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
     # profile = db.session.execute(query).fetchone()
     if petowner:
         form = UserUpdateForm(obj=petowner)
         if request.method == 'POST' and form.validate_on_submit():
-            profile = Users.query.filter_by(contact=pcontact).first()
+            profile = Users.query.filter_by(contact=contact).first()
             profile.username = form.username.data
             profile.password = form.password.data
             profile.card = form.credit_card.data
@@ -439,16 +439,16 @@ def render_profile_page():
     return render_template('profile.html', username=current_user.username + "profile")
 
 
-@view.route('/update/username', methods=['POST', 'GET'])
-@login_required
-def update(contact):
-    user_to_update = Users.query.get_or_404(contact)
-    if request.method == "POST" and form.validate_on_submit():
-        user_to_update.username = request.form['username']
-        try:
-            db.session.commit()
-            return redirect('/profile')
-        except:
-            return "There is a problem updating user"
-    else:
-        return render_template('update.html', user_to_update=user_to_update)
+# @view.route('/update/username', methods=['POST', 'GET'])
+# @login_required
+# def update(contact):
+#     user_to_update = Users.query.get_or_404(contact)
+#     if request.method == "POST" and form.validate_on_submit():
+#         user_to_update.username = request.form['username']
+#         try:
+#             db.session.commit()
+#             return redirect('/profile')
+#         except:
+#             return "There is a problem updating user"
+#     else:
+#         return render_template('update.html', user_to_update=user_to_update)
