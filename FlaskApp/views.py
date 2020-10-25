@@ -374,7 +374,6 @@ def render_owner_pet_delete():
     pn = request.args.get('petname')
     pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
     if pet:
-        newpet = PetUpdate(pet.petname, pet.category, pet.age)
         form = PetUpdateForm(obj=pet)
         if request.method == 'POST' and form.validate_on_submit():
             petname = form.petname
