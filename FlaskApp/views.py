@@ -279,7 +279,7 @@ def render_caretaker_cantakecare_new():
         db.session.execute(query)
         db.session.commit()
         return redirect(url_for('view.render_caretaker_cantakecare'))
-    return render_template('caretakerCantakecareNew.html', username=current_user.username + " caretaker")
+    return render_template('caretakerCantakecareNew.html', form=form, username=current_user.username + " caretaker")
 
 @view.route("/caretaker/cantakecare/delete", methods=["GET", "POST"])
 @roles_required('caretaker')
