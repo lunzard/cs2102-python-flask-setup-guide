@@ -145,7 +145,7 @@ class UserUpdateForm(FlaskForm):
 class LoginForm(FlaskForm):
     contact = StringField(
         label='Contact',
-        validators=[InputRequired(), Regexp(r'^[-+]?[0-9]+$')],
+        validators=[InputRequired(), Regexp('^[-+]?[0-9]+$', message="Field must be contact number")],
         render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
     password = PasswordField(
