@@ -202,7 +202,7 @@ class BiddingForm(FlaskForm):
     ccontact = StringField(
         label='Ccontact',
         validators=[InputRequired()],
-        render_kw={'placeholder': 'Ccontact', 'class': 'input100', 'readonly': True}
+        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
     )
     petname = StringField(
         label='Petname',
