@@ -1,114 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <title>Add New Pet</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="../static/images/icons/favicon.ico" />
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/vendor/animate/animate.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/vendor/animsition/css/animsition.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/vendor/select2/select2.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/vendor/daterangepicker/daterangepicker.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/css/login-util.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/login-main.css">
-    <!--===============================================================================================-->
+  <meta charset="utf-8"/>
+  <title>JavaScript Calendar: Blocking Selected Dates</title>
 
-    <style>
-        .container {
-            width: 390px;
-        }
-        
-        .buttonWrapper {
-            padding-bottom: 32px;
-            padding-top: 30px;
-        }
-        
-        #registerButton {
-            display: block;
-            margin: 0 auto;
-        }
-        
-        #partTimeOption {
-            display: inline;
-            float: left;
-            padding-left: 60px;
-            padding-right: 40px;
-        }
-        
-        #is_part_time {
-            float: left;
-            height: 20px;
-            width: 20px;
-        }
-        
-        .partTimeWrapper {
-            padding-top: 10px;
-            border-top: 1px solid #e6e6e6;
-        }
-        
-        .formField {
-            padding: 10px 0;
-        }
-    </style>
+
+  <style>
+    .navigator_default_cell.navigator-disabled-cell {
+      background-color: #ddd !important;
+      color: #888;
+      cursor: not-allowed !important;
+    }
+
+    .main {
+      display: flex;
+    }
+
+    .col-left {
+      padding-right: 10px;
+    }
+    .col-main {
+      flex: 1;
+    }
+  </style>
+
+  <!-- DayPilot library -->
+  <script src="js/daypilot/daypilot-all.min.js"></script>
+
 </head>
 <body>
-    <div class="limiter">
-        <div class="container-login100" style="background-image: url('../static/images/bg-01.jpg');">
-            <div class="container">
-                <form class="registrationForm login100-form">
-                    {{ form.hidden_tag() }}
 
-                    <div class="formField wrap-input100 validate-input">
-                        {{ form.petname }} {% if form.petname.errors %}
-                        <span class="focus-input100" data-placeholder="&#xe82a;"></span>
-                        <div class="errorMessage">
-                            {% for error in form.petname.errors %}
-                            <li>{{ error }}</li>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                    </div>
+<div class="main">
+  <div class="col-left">
+    <div id="nav"></div>
+  </div>
+  <div class="col-main">
+    <div id="dp"></div>
+  </div>
+</div>
 
-                    <div class="formField wrap-input100 validate-input">
-                        {{ form.category }} {% if form.category.errors %}
-                        <div class="errorMessage">
-                            {% for error in form.category.errors %}
-                            <li>{{ error }}</li>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                    </div>
+<script>
 
-                    <div class="formField wrap-input100 validate-input">
-                        {{ form.age }} {% if form.age.errors %}
-                        <div class="errorMessage">
-                            {% for error in form.age.errors %}
-                            <li>{{ error }}</li>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                    </div>
-                    <div class="buttonWrapper">
-                        <button id="registerButton" class="login100-form-btn" formmethod="post">Add</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+  var lastDate = null;
+
+  var nav = new DayPilot.Navigator("nav", {
+    selectMode: "week",
+    onBeforeCellRender: function(args) {
+      if (args.cell.day < DayPilot.Date.today()) {
+        args.cell.cssClass = "navigator-disabled-cell";
+      }
+    },
+    onTimeRangeSelect: function(args) {
+      if (args.day < DayPilot.Date.today()) {
+        args.preventDefault();
+        nav.select(lastDate, {dontNotify: true, dontFocus: true});
+      }
+      else {
+        lastDate = args.start;
+      }
+    },
+    onTimeRangeSelected: function(args) {
+      dp.startDate = args.start;
+      dp.update();
+    }
+  });
+  nav.init();
+
+  var dp = new DayPilot.Calendar("dp", {
+    viewType: "Week",
+    onTimeRangeSelected: function (args) {
+      DayPilot.Modal.prompt("Create a new event:", "Event 1").then(function(modal) {
+        var dp = args.control;
+        dp.clearSelection();
+        if (!modal.result) { return; }
+        dp.events.add(new DayPilot.Event({
+          start: args.start,
+          end: args.end,
+          id: DayPilot.guid(),
+          text: modal.result
+        }));
+      });
+    },
+    onBeforeCellRender: function(args) {
+      if (args.cell.start < DayPilot.Date.today()) {
+        args.cell.disabled = true;
+        args.cell.backColor = "#eee";
+      }
+    }
+  });
+  dp.events.list = [
+    {
+      id: "1",
+      start: DayPilot.Date.today().addHours(10),
+      end: DayPilot.Date.today().addHours(12),
+      text: "Event 1"
+    }
+  ];
+  dp.init();
+</script>
+
 </body>
 </html>
