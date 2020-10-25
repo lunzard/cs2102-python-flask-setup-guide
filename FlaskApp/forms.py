@@ -36,7 +36,7 @@ class RegistrationForm(FlaskForm):
         render_kw={'placeholder': 'Name', 'class': 'input100'}
     )
     usertype = SelectField(
-        u'User Type',
+        label='User Type',
         choices=[('petowner', 'Pet Owner'), ('caretaker', 'Caretaker'), ('admin', 'Administrator')],
         validators=[InputRequired()],
         render_kw={'placeholder': 'User Type', 'class': 'input100'}
