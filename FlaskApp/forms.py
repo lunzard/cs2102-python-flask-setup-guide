@@ -156,7 +156,8 @@ class PetUpdateForm(FlaskForm):
 class LoginForm(FlaskForm):
     contact = IntegerField(
         label='Contact',
-        validators=[InputRequired(), Regexp('^[-+]?[0-9]+$', message="Field must be contact number")],
+        validators=[InputRequired(), ],
+        
         render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
     password = PasswordField(
