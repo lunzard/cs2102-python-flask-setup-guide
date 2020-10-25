@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, SelectField
 from wtforms.fields.html5 import DateField
-from wtforms.validators import InputRequired, ValidationError, EqualTo
+from wtforms.validators import InputRequired, ValidationError, EqualTo, Regexp
 from wtforms.widgets import HiddenInput
 from models import Users
 from datetime import date
@@ -36,7 +36,7 @@ class RegistrationForm(FlaskForm):
         render_kw={'placeholder': 'Name', 'class': 'input100'}
     )
     usertype = SelectField(
-        u'User Type',
+        label='User Type',
         choices=[('petowner', 'Pet Owner'), ('caretaker', 'Caretaker'), ('admin', 'Administrator')],
         validators=[InputRequired()],
         render_kw={'placeholder': 'User Type', 'class': 'input100'}
@@ -85,12 +85,6 @@ class PetForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Age', 'class': 'input100'}
     )
-
-class PetUpdate: 
-    def __init__(self, petname, category, age):
-        self.petname = petname
-        self.category = category
-        self.age = age
 
 class PetUpdateForm(FlaskForm):
     petname = StringField(
@@ -141,11 +135,28 @@ class UserUpdateForm(FlaskForm):
         validators=[EqualTo('password')],
         render_kw={'placeholder': 'Confirmed New Password', 'class': 'input100'}
     )
-    
+
+class PetUpdateForm(FlaskForm):	
+    petname = StringField(	
+        label='Petname',	
+        validators=[InputRequired()],	
+        render_kw={'placeholder': 'Petname', 'class': 'input100'}	
+    )	
+    category = StringField(	
+        label='Category',	
+        validators=[InputRequired()],	
+        render_kw={'placeholder': 'Category', 'class': 'input100'}	
+    )	
+    age = IntegerField(	
+        label='Age',	
+        validators=[InputRequired()],	
+        render_kw={'placeholder': 'Age', 'class': 'input100'}	
+    )
+
 class LoginForm(FlaskForm):
     contact = StringField(
         label='Contact',
-        validators=[InputRequired()],
+        validators=[InputRequired(), Regexp('^[-+]?[0-9]+$', message="Field must be contact number")],
         render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
     password = PasswordField(
@@ -170,9 +181,20 @@ class CaretakerForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'PostalCode', 'class': 'input100'}
     )
-         
+
+class Bid:
+    def __init__(self, pcontact, ccontact):
+        self.pcontact = pcontact
+        self.ccontact = ccontact
+        self.petname = None
+        self.startDate = None
+        self.endDate = None
+        self.paymentmode = None
+        self.deliverymode = None
+
 class BiddingForm(FlaskForm):
     pcontact = StringField(
+        widget=HiddenInput(),
         label='Pcontact',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Pcontact', 'class': 'input100'}

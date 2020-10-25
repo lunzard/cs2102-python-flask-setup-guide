@@ -37,7 +37,7 @@
                         <input id="age"+item.petname name="age" type="hidden" value="{{item.age}}">
                         <button id="edit"+item.petname type="submit" name="edit"> Edit </button>
                     </form>
-                </td>>
+                </td>
                 <td>
                     <form action="{{url_for('view.render_owner_pet_delete')}}" method="GET">
                         <input id="pn"+item.petname name="petname" type="hidden" value="{{item.petname}}">

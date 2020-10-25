@@ -42,6 +42,11 @@
 					<div class="wrap-input100 validate-input" data-validate="Enter username">
 						{{ form.contact }}
 						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+						<div class="errorMessage">
+                            {% for error in form.contact.errors %}
+                            <li>{{ message }}</li>
+                            {% endfor %}
+                        </div>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
