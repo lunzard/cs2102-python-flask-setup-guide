@@ -79,6 +79,7 @@ class Users(db.Model, UserMixin):
     postalcode = db.Column(db.String)
     
     biddingccontact = db.relationship('Biddings', backref='contact')
+    cantakecareccontact = db.relationship('CanTakeCare', backref='contact')
     pet = db.relationship('Pets', backref='owner')
     
     # Relationships
@@ -115,6 +116,7 @@ class UserRoles(db.Model):
 class categories(db.Model, UserMixin):
     category = db.Column(db.String, primary_key=True, nullable=False)
     petcat = db.relationship('Pets', backref='type')
+    cantakecarecat = db.relationship('CanTakeCare', backref='type')
     
 class Pets(db.Model, UserMixin):
     petname = db.Column(db.String, primary_key=True, nullable=False)
@@ -185,4 +187,12 @@ class Reviews(db.Model, UserMixin):
     def get_key(self):
         return (self.startdate, self.enddate, self.ccontact, self.petname, self.pcontact, self.rating, self.review)
     
+class CanTakeCare(db.Model, UserMixin):
+    ccontact = db.Column(db.String, db.ForeignKey('users.contact'), primary_key=True, nullable=False)
+    category = db.Column(db.String, db.ForeignKey('categories.category'), primary_key=True, nullable=False)
+    dailyprice = db.Column(db.Integer, nullable=False)
+    def get_dailyprice(self):
+        return self.dailyprice
     
+    def get_key(self):
+        return (self.ccontact, self.category)
