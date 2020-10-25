@@ -439,15 +439,6 @@ def render_owner_bid_delete():
 def render_profile_page():
     return render_template('profile.html', username=current_user.username + "profile")
 
-@view.route("/test", methods=["GET", "POST"])
-@login_required
-def render_profile_page():
-    contact = current_user.contact
-    query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
-    pets = db.session.execute(query).fetchall()
-    print(pets, flush=True)
-    return render_template("zeonTest.html", pets=pets, username=current_user.username + " owner")
-
 
 # @view.route('/update/username', methods=['POST', 'GET'])
 # @login_required
