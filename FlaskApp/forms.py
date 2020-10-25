@@ -193,18 +193,6 @@ class Bid:
         self.deliverymode = None
 
 class BiddingForm(FlaskForm):
-    pcontact = StringField(
-        widget=HiddenInput(),
-        label='Pcontact',
-        validators=[InputRequired()],
-        render_kw={'placeholder': 'Pcontact', 'class': 'input100'}
-    )
-    ccontact = StringField(
-        widget=HiddenInput(),
-        label='Ccontact',
-        validators=[InputRequired()],
-        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
-    )
     petname = StringField(
         label='Petname',
         validators=[InputRequired()],
