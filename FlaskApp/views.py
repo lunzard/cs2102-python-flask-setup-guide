@@ -6,7 +6,7 @@ from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
 from models import Users, Role, Pets, Available
-from tables import userInfoTable, editPetTable
+from tables import userInfoTable, editPetTable, ownerHomePage
 from datetime import timedelta
 import sys
 
@@ -275,14 +275,14 @@ def render_caretaker_update_cantakecare():
 @roles_required('petowner')
 def render_owner_page():
     caretakersquery = "SELECT * FROM users WHERE usertype = 'caretaker'"
-    caretakers = db.session.execute(caretakersquery).fetchall()
-    
+    caretakers = db.session.execute(caretakersquery)
+    caretable = ownerHomePage(caretakers)
     contact = current_user.contact
     query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
     profile = db.session.execute(query)
     table = userInfoTable(profile)
 
-    return render_template("owner.html", profile=profile, caretakers=caretakers, table=table, username=current_user.username + " owner")
+    return render_template("owner.html", caretable=caretable, profile=profile, caretakers=caretakers, table=table, username=current_user.username + " owner")
 
 
 @view.route("/owner/summary", methods=["GET", "POST"])
