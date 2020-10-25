@@ -6,7 +6,7 @@ from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
 from models import Users, Role, Pets, Available
-from tables import userInfoTable
+from tables import userInfoTable, editPetTable
 from datetime import timedelta
 import sys
 
@@ -341,7 +341,7 @@ def render_test():
     pets = db.session.execute(query).fetchall()
     print(pets, flush=True)
     profile = db.session.execute(query)
-    table = userInfoTable(profile)
+    table = editPetTable(profile)
     return render_template("zeonTest.html", table=table, pets=pets, username=current_user.username + " owner")
 
 
