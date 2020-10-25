@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, SelectField
 from wtforms.fields.html5 import DateField
-from wtforms.validators import InputRequired, ValidationError, EqualTo
+from wtforms.validators import InputRequired, ValidationError, EqualTo, Regexp
 from wtforms.widgets import HiddenInput
 from models import Users
 from datetime import date
@@ -145,7 +145,7 @@ class UserUpdateForm(FlaskForm):
 class LoginForm(FlaskForm):
     contact = StringField(
         label='Contact',
-        validators=[InputRequired()],
+        validators=[InputRequired(), Regexp('^[-+]?[0-9]+$')],
         render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
     password = PasswordField(

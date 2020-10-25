@@ -67,6 +67,9 @@
         #usertype{
             border: 0;
         }
+        #contact{
+            border-top: 1px solid #e6e6e6;
+        }
     </style>
 </head>
 
@@ -91,7 +94,7 @@
                         {{ form.usertype }}
                     </div>
 
-                    <div class="formField wrap-input100 validate-input">
+                    <div class="formField wrap-input100 validate-input" id="contact">
                         {{ form.contact }} {% if form.contact.errors %}
                         <div class="errorMessage">
                             {% for error in form.contact.errors %}
