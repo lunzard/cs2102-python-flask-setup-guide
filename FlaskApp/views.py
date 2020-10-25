@@ -162,7 +162,7 @@ def render_admin_update_profile():
             db.session.commit()
             print("Admin profile has been updated", flush=True)
             return redirect(url_for('view.render_admin_profile'))
-        return render_template("profile.html", form=form, username=current_user.username + " admin")
+        return render_template("update.html", form=form, username=current_user.username + " admin")
 
 
 @view.route("/caretaker", methods=["GET"])
@@ -209,7 +209,7 @@ def render_caretaker_update_profile():
             db.session.commit()
             print("Caretaker profile has been updated", flush=True)
             return redirect(url_for('view.render_caretaker_profile'))
-        return render_template("profile.html", form=form, username=current_user.username + " caretaker")
+        return render_template("update.html", form=form, username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/available", methods=["GET", "POST"])
@@ -308,11 +308,8 @@ def render_owner_profile():
 @view.route("/owner/profile/update", methods=["GET", "POST"])
 @roles_required('petowner')
 def render_owner_profile_update():
-    # form = ProfileForm()
     contact = current_user.contact
     petowner = Users.query.filter_by(contact=contact).first()
-    # query = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
-    # profile = db.session.execute(query).fetchone()
     if petowner:
         form = UserUpdateForm(obj=petowner)
         if request.method == 'POST' and form.validate_on_submit():

@@ -107,6 +107,13 @@
                         {% endif %}
                     </div>
 
+                    <div class="formField" id="parttime_checkbox" style="display: none;">
+                        <div class="partTimeWrapper">
+                            <p id="partTimeOption">Are you a part-time caretaker? </p>
+                            <div class="checkbox"> {{ form.is_part_time }} </div>
+                        </div>
+                    </div>
+
                     <div class="buttonWrapper">
                         <button id="registerButton" class="login100-form-btn" formmethod="post">register</button>
                     </div>
