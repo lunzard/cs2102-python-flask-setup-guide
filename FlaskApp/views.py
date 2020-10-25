@@ -343,8 +343,9 @@ def render_owner_bid():
 @roles_required('petowner')
 def render_owner_bid_new():
     form = BiddingForm()
+    cn = request.args.get('ccontact')
     contact = current_user.contact
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'GET' and form.validate_on_submit():
         pcontact = contact
         ccontact = form.ccontact.data
         petname = form.petname.data

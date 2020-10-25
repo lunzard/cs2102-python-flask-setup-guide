@@ -28,13 +28,30 @@
             <th>Username</th>
             <th>Contact</th>
             <th>postalcode</th>
-            {% for item in pets %}
+            {% for item in caretakers %}
             <tr>
                 <td>{{item.username}}</td>
                 <td>{{item.contact}}</td>
                 <td>{{item.postalcode}}</td>
             </tr>
             {% endfor %}
+        </table>
+    </div>
+    <div>
+        <hi>This is me</hi>
+        <table>
+            <th>Username</th>
+            <th>Contact</th>
+            <th>Usertype</th>
+            <th>Card</th>
+            <th>postalcode</th>
+            <tr>
+                <td>{{profile.username}}</td>
+                <td>{{profile.contact}}</td>
+                <td>{{profile.usertype}}</td>
+                <td>{{profile.card}}</td>
+                <td>{{profile.postalcode}}</td>
+            </tr>
         </table>
     </div>
 
