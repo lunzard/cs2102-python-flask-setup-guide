@@ -1,10 +1,12 @@
 from flask import Blueprint, redirect, flash, url_for, render_template, request
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
+from flask_table import Table, Col
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
 from models import Users, Role, Pets, Available
+from tables import userInfoTable
 from datetime import timedelta
 import sys
 
@@ -277,9 +279,12 @@ def render_owner_page():
     
     contact = current_user.contact
     query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
+    queryCopy = "SELECT * FROM users WHERE contact = '{}'"
     profile = db.session.execute(query).fetchone()
+    profileCopy = db.session.execute(queryCopy).fetchone()
+    table = userInfoTable(profileCopy)
 
-    return render_template("owner.html", profile=profile, caretakers=caretakers, username=current_user.username + " owner")
+    return render_template("owner.html", profile=profile, caretakers=caretakers, table=table, username=current_user.username + " owner")
 
 
 @view.route("/owner/summary", methods=["GET", "POST"])
