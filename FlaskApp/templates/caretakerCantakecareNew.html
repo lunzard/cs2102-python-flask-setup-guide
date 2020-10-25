@@ -58,17 +58,6 @@
                 <form class="registrationForm login100-form">
                     {{ form.hidden_tag() }}
                     <div class="formField wrap-input100 validate-input">
-                        {{ form.ccontact }} {% if form.ccontact.errors %}
-                        <span class="focus-input100" data-placeholder="&#xe82a;"></span>
-                        <div class="errorMessage">
-                            {% for error in form.ccontact.errors %}
-                            <li>{{ error }}</li>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="formField wrap-input100 validate-input">
                         {{ form.category }} {% if form.category.errors %}
                         <div class="errorMessage">
                             {% for error in form.category.errors %}
