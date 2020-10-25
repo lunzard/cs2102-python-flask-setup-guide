@@ -238,7 +238,7 @@ def render_owner_page():
     caretakers = db.session.execute(caretakersquery).fetchall()
     
     contact = current_user.contact
-    query = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
+    query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
     profile = db.session.execute(query).fetchone()
 
     return render_template("owner.html", profile=profile, caretakers=caretakers, username=current_user.username + " owner")
@@ -258,7 +258,7 @@ def render_owner_summary():
 def render_owner_profile():
     form = ProfileForm()
     contact = current_user.contact
-    query = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
+    query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
     profile = db.session.execute(query).fetchone()
     return render_template("profile.html", profile=profile, form=form, username=current_user.username + " owner")
 
@@ -268,7 +268,7 @@ def render_owner_profile():
 def render_owner_profile_update():
     form = ProfileForm()
     contact = current_user.contact
-    query = "SELECT * FROM petowners WHERE contact = '{}'".format(contact)
+    query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
     profile = db.session.execute(query).fetchone()
     if form.validate_on_submit():
         profile.username = form.username.data
