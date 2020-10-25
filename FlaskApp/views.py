@@ -6,6 +6,7 @@ from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
 from models import Users, Role, Pets, Available
+from tables import userInfoTable
 import sys
 
 view = Blueprint("view", __name__)
@@ -278,8 +279,9 @@ def render_owner_page():
     contact = current_user.contact
     query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
     profile = db.session.execute(query).fetchone()
+    table = userInfoTable(profile)
 
-    return render_template("owner.html", profile=profile, caretakers=caretakers, username=current_user.username + " owner")
+    return render_template("owner.html", profile=profile, caretakers=caretakers, table=table, username=current_user.username + " owner")
 
 
 @view.route("/owner/summary", methods=["GET", "POST"])
