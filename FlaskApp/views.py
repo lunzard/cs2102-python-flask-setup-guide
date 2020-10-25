@@ -333,6 +333,18 @@ def render_owner_pet():
     return render_template("ownerPetWithEdit.html", pets=pets, username=current_user.username + " owner")
 
 
+@view.route("/test", methods=["GET", "POST"])
+@roles_required('petowner')
+def render_owner_pet():
+    contact = current_user.contact
+    query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
+    pets = db.session.execute(query).fetchall()
+    print(pets, flush=True)
+    profile = db.session.execute(query)
+    table = userInfoTable(profile)
+    return render_template("ownerPetWithEdit.html", table=table, pets=pets, username=current_user.username + " owner")
+
+
 @view.route("/owner/pet/new", methods=["GET", "POST"])
 @roles_required('petowner')
 def render_owner_pet_new():
