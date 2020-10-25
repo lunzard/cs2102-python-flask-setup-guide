@@ -328,9 +328,11 @@ def render_owner_profile_update():
 def render_owner_pet():
     contact = current_user.contact
     query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
-    pets = db.session.execute(query).fetchall()
+    pets = db.session.execute(query)
     print(pets, flush=True)
-    return render_template("ownerPetWithEdit.html", pets=pets, username=current_user.username + " owner")
+    table = editPetTable(pets)
+    return render_template("ownerPetWithEdit.html", table=table, pets=pets, username=current_user.username + " owner")
+
 
 @view.route("/owner/pet/new", methods=["GET", "POST"])
 @roles_required('petowner')
