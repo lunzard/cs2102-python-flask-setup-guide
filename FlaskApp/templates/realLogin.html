@@ -44,7 +44,7 @@
 						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
 						<div class="errorMessage">
                             {% for error in form.contact.errors %}
-                            <li>{{ message }}</li>
+                            <li>{{ error.message }}</li>
                             {% endfor %}
                         </div>
 					</div>
