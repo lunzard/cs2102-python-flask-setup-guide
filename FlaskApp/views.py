@@ -315,18 +315,22 @@ def render_owner_pet_update():
         return render_template("pet.html", form=form, username=current_user.username + " owner")
 
 
-@view.route("/owner/pet/delete", methods=["POST"])
+@view.route("/owner/pet/delete", methods=["GET","POST"])
 @roles_required('petowner')
 def render_owner_pet_delete():
-#     pc = current_user.contact
-#     pn = request.args.get('petname')
-#     pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
-#     if pet:
-#         db.session.delete(pet)
-#         db.session.commit()
-#         flash('Deleted successfully')
-#         return redirect(url_for('view.render_owner_pet'))
-    return redirect(url_for('view.render_owner_pet'))
+    pc = current_user.contact
+    pn = request.args.get('petname')
+    pet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
+    if pet:
+        newpet = PetUpdate(pet.petname, pet.category, pet.age)
+        form = PetUpdateForm(obj=pet)
+        if request.method == 'POST' and form.validate_on_submit():
+            petname = form.petname
+            thispet = Pets.query.filter_by(petname=pn, pcontact=pc).first()
+            db.session.delete(thispet)
+            db.session.commit()
+            return redirect(url_for('view.render_owner_pet'))
+    return render_template("pet.html", form=form, username=current_user.username + " owner")
 
 @view.route("/owner/bid", methods=["GET", "POST"])
 @roles_required('petowner')
