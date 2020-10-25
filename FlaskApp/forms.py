@@ -99,7 +99,7 @@ class PetUpdateForm(FlaskForm):
         render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
     category = StringField(
-        label='Credit Card',
+        label='Category',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Crredit Card', 'class': 'input100'}
     )
