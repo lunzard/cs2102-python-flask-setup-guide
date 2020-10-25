@@ -248,8 +248,8 @@ def render_owner_page():
 @roles_required('petowner')
 def render_owner_summary():
     contact = current_user.contact
-    query = "SELECT * FROM users WHERE contact = '{}' AND usertype = 'pet owner'".format(contact)
-    results = db.session.execute(query).fetchall()
+    query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
+    results = db.session.execute(query).fetchone()
     return render_template("profile.html", results=results, username=current_user.username + " owner")
 
 
