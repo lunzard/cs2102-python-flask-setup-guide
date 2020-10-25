@@ -314,7 +314,7 @@ def render_owner_profile_update():
         if request.method == 'POST' and form.validate_on_submit():
             profile = Users.query.filter_by(contact=contact).first()
             profile.username = form.username.data
-            profile.password = form.password.data
+            profile.password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             profile.card = form.credit_card.data
             profile.postalcode = form.postal_code.data
             db.session.commit()
