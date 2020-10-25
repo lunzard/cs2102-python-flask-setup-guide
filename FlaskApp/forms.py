@@ -141,6 +141,23 @@ class UserUpdateForm(FlaskForm):
         validators=[EqualTo('password')],
         render_kw={'placeholder': 'Confirmed New Password', 'class': 'input100'}
     )
+
+class PetUpdateForm(FlaskForm):	
+    petname = StringField(	
+        label='Petname',	
+        validators=[InputRequired()],	
+        render_kw={'placeholder': 'Petname', 'class': 'input100'}	
+    )	
+    category = StringField(	
+        label='Category',	
+        validators=[InputRequired()],	
+        render_kw={'placeholder': 'Category', 'class': 'input100'}	
+    )	
+    age = IntegerField(	
+        label='Age',	
+        validators=[InputRequired()],	
+        render_kw={'placeholder': 'Age', 'class': 'input100'}	
+    )
     
 class LoginForm(FlaskForm):
     contact = StringField(
@@ -170,8 +187,7 @@ class CaretakerForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'PostalCode', 'class': 'input100'}
     )
-        
-        
+         
 class BiddingForm(FlaskForm):
     pcontact = StringField(
     label='Pcontact',
