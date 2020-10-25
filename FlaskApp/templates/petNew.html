@@ -33,6 +33,11 @@
             width: 390px;
         }
 
+        #addButton{
+            display: block;
+            margin: 0 auto;
+        }
+
         .buttonWrapper {
             padding-bottom: 32px;
             padding-top: 30px;
@@ -51,7 +56,7 @@
 
 <body>
     <div class="limiter">
-        <div class="container-login100" style="background-image: url('../static/images/bg-01.jpg');">
+        <div class="container-login100" style="background-image: url('https://cs2102project.herokuapp.com/static/images/bg-01.jpg');">
             <div class="container">
                 <form class="registrationForm login100-form">
                     {{ form.hidden_tag() }}
@@ -87,7 +92,7 @@
                     </div>
 
                     <div class="buttonWrapper">
-                        <button class="login100-form-btn" formmethod="post">Add new pet</button>
+                        <button id="addButton" class="login100-form-btn" formmethod="post">Add new pet</button>
                     </div>
                 </form>
             </div>
