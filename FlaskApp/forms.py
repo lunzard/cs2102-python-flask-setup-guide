@@ -200,6 +200,7 @@ class BiddingForm(FlaskForm):
         render_kw={'placeholder': 'Pcontact', 'class': 'input100'}
     )
     ccontact = StringField(
+        widget=HiddenInput(),
         label='Ccontact',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Ccontact', 'class': 'input100'}

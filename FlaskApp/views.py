@@ -399,9 +399,7 @@ def render_owner_bid_new():
     
     cn = request.args.get('ccontact')
     contact = current_user.contact
-    bid = Bid(contact, cn)
-    form = BiddingForm(obj=bid)
-
+    form = BiddingForm()
     if request.method == 'POST' and form.validate_on_submit():
         ccontact = form.ccontact.data
         petname = form.petname.data
@@ -411,11 +409,11 @@ def render_owner_bid_new():
         deliverymode = form.deliverymode.data
         if(enddate - startdate >= timedelta(minutes=1)):
             query = "INSERT INTO biddings(pcontact, ccontact, petname, startday, endday, paymentmode, deliverymode, status) VALUES ('{}', '{}', '{}', '{}','{}', '{}', '{}', '{}')" \
-            .format(contact, ccontact, petname, startdate, enddate, paymentmode, deliverymode, "pending")
+            .format(contact, cn, petname, startdate, enddate, paymentmode, deliverymode, "pending")
             db.session.execute(query)
             db.session.commit()
         return redirect(url_for('view.render_owner_bid'))
-    return render_template("ownerBidNew.html", form=form, username=current_user.username + " owner")
+    return render_template("ownerBidNew.html", target=cn, form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/bid/update", methods=["GET", "POST"])
