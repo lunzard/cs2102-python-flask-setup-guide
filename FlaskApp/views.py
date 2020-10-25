@@ -279,7 +279,7 @@ def render_owner_page():
     
     contact = current_user.contact
     query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
-    queryCopy = "SELECT * FROM users WHERE contact = '{}'"
+    queryCopy = "SELECT * FROM users WHERE contact = '{}'".format(contact)
     profile = db.session.execute(query).fetchone()
     profileCopy = db.session.execute(queryCopy).fetchone()
     table = userInfoTable(profileCopy)
