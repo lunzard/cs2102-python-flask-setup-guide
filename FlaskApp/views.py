@@ -279,9 +279,8 @@ def render_owner_page():
     
     contact = current_user.contact
     query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
-    profile = db.session.execute(query).fetchone()
-    profileCopy = db.session.execute(query)
-    table = userInfoTable(profileCopy)
+    profile = db.session.execute(query)
+    table = userInfoTable(profile)
 
     return render_template("owner.html", profile=profile, caretakers=caretakers, table=table, username=current_user.username + " owner")
 
@@ -439,6 +438,15 @@ def render_owner_bid_delete():
 @login_required
 def render_profile_page():
     return render_template('profile.html', username=current_user.username + "profile")
+
+@view.route("/test", methods=["GET", "POST"])
+@login_required
+def render_profile_page():
+    contact = current_user.contact
+    query = "SELECT * FROM pets WHERE pcontact = '{}'".format(contact)
+    pets = db.session.execute(query).fetchall()
+    print(pets, flush=True)
+    return render_template("zeonTest.html", pets=pets, username=current_user.username + " owner")
 
 
 # @view.route('/update/username', methods=['POST', 'GET'])
