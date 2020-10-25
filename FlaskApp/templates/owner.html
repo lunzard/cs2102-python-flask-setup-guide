@@ -36,7 +36,7 @@
                 <td>
                     <form action="{{url_for('view.render_owner_bid_new')}}" method="GET">
                         <input id="username"+item.ccontact name="username" type="hidden" value="{{item.username}}">
-                        <input id="ccontact"+item.ccontact name="ccontact" type="hidden" value="{{item.ccontact}}">
+                        <input id="ccontact"+item.ccontact name="ccontact" type="hidden" value="{{item.contact}}">
                         <input id="postalcode"+item.ccontact name="postalcode" type="hidden" value="{{item.postalcode}}">
                         <button id="edit"+item.ccontact type="submit" name="edit"> Bid </button>
                     </form>
