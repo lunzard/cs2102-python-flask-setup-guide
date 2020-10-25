@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, DateField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, SelectField
+from wtforms.fields.html5 import DateField
 from wtforms.validators import InputRequired, ValidationError, EqualTo
 from wtforms.widgets import HiddenInput
 from models import Users
@@ -271,14 +272,14 @@ class AvailableForm(FlaskForm):
         label='Startdate',
         validators=[InputRequired()],
         default=date.today(), 
-        format='%d/%m/%Y',
+        format='%Y/%m/%d',
         render_kw={'placeholder': 'Startdate', 'class': 'input100'}
     )
     enddate = DateField(
         label='Enddate',
         validators=[InputRequired()],
         default=date.today(), 
-        format='%d/%m/%Y',
+        format='%Y/%m/%d',
         render_kw={'placeholder': 'Enddate', 'class': 'input100'}
     )
     def validate_on_submit(self):
