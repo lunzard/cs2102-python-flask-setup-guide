@@ -271,6 +271,34 @@ class AvailableForm(FlaskForm):
             else:
                 return result
 
+class AvailableUpdateForm(FlaskForm):
+    startdate = DateField(
+        label='Startdate',
+        validators=[InputRequired()],
+        default=date.today(), 
+        format='%Y-%m-%d',
+        render_kw={'placeholder': 'Startdate', 'class': 'input100'}
+    )
+    enddate = DateField(
+        label='Enddate',
+        validators=[InputRequired()],
+        default=date.today(), 
+        format='%Y-%m-%d',
+        render_kw={'placeholder': 'Enddate', 'class': 'input100'}
+    )
+    contact = IntegerField(
+        widget=HiddenInput(),
+        label='Contact',
+        validators=[InputRequired(), is_valid_contact],
+        render_kw={'placeholder': 'Contact', 'class': 'input100'}
+    )
+    def validate_on_submit(self):
+            result = super(AvailableUpdateForm, self).validate()
+            if (self.startdate.data>self.enddate.data):
+                return False
+            else:
+                return result
+
 class SearchCaretakerForm(FlaskForm):
     ccontact = StringField(
         label='Ccontact',
