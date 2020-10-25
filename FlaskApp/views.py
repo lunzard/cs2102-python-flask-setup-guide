@@ -330,7 +330,7 @@ def render_owner_pet_delete():
             db.session.delete(thispet)
             db.session.commit()
             return redirect(url_for('view.render_owner_pet'))
-    return render_template("pet.html", form=form, username=current_user.username + " owner")
+        return render_template("pet.html", form=form, username=current_user.username + " owner")
 
 @view.route("/owner/bid", methods=["GET", "POST"])
 @roles_required('petowner')
