@@ -6,7 +6,7 @@ from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, CanTakeCareForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
 from models import Users, Role, Pets, Available, CanTakeCare, Biddings
-from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable
+from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable, biddingTable
 from datetime import timedelta
 import sys
 
@@ -452,7 +452,8 @@ def render_owner_bid():
     contact = current_user.contact
     query = "SELECT * FROM biddings WHERE pcontact= '{}'".format(contact)
     bidding = db.session.execute(query).fetchall()
-    return render_template("ownerBid.html", bidding=bidding, username=current_user.username + " owner")
+    table = biddingTable(bidding)
+    return render_template("ownerBid.html", table=table, bidding=bidding, username=current_user.username + " owner")
 
 
 @view.route("/owner/bid/new", methods=["GET", "POST"])
