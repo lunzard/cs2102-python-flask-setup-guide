@@ -29,7 +29,7 @@ class ownerHomePage(Table):
     bid = LinkCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', ccontact='contact', postalcode='postalcode', edit='contact'), url_kwargs_extra=dict(edit='edit'))
 
 
-class bidding(Table):
+class biddingTable(Table):
     pcontact = Col('Owner Contact')	
     ccontact = Col('Caretaker Contact')	
     petname	= Col('Pet name')
