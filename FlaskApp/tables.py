@@ -1,4 +1,4 @@
-from flask_table import Table, Col, ButtonCol
+from flask_table import Table, Col, ButtonCol, LinkCol
 
 class userInfoTable(Table):
     username = Col('Username ')
@@ -19,4 +19,4 @@ class ownerHomePage(Table):
     username = Col('Caretaker Name ')
     contact = Col('Contact ')
     postalcode = Col('Postal Code ')
-    bid = ButtonCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', contact='contact', postalcode='postalcode', edit='contact'), url_kwargs_extra=dict(edit='edit'))
+    bid = LinkCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', contact='contact', postalcode='postalcode', edit='contact'), url_kwargs_extra=dict(edit='edit'))
