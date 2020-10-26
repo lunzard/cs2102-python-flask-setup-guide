@@ -6,7 +6,7 @@ from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, CanTakeCareForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
 from models import Users, Role, Pets, Available, CanTakeCare, Biddings
-from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable, biddingTable
+from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable, biddingTable, caretakerCantakecare
 from datetime import timedelta
 import sys
 
@@ -293,8 +293,9 @@ def render_caretaker_available_new():
 @roles_required('caretaker')
 def render_caretaker_cantakecare():
     query = "SELECT * FROM cantakecare"
-
-    return render_template('profile.html', username=current_user.username + " caretaker")
+    canTakeCare = db.session.execute(query)
+    table = caretakerCantakecare(canTakeCare)
+    return render_template('caretakerCantakecare.html', table=table, username=current_user.username + " caretaker")
 
 @view.route("/caretaker/cantakecare/new", methods=["GET", "POST"])
 @roles_required('caretaker')
