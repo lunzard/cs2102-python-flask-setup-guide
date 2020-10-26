@@ -146,8 +146,8 @@ class Biddings(db.Model, UserMixin):
     petname = db.Column(db.String, db.ForeignKey('pets.petname'), primary_key=True, nullable=False)
     pcontact = db.Column(db.Integer, db.ForeignKey('pets.pcontact'), primary_key=True, nullable=False)
     ccontact = db.Column(db.Integer, db.ForeignKey('users.contact'), primary_key=True, nullable=False)
-    startdate = db.Column(db.Date, primary_key=True, nullable=False)
-    enddate = db.Column(db.Date, primary_key=True, nullable=False)
+    startday = db.Column(db.Date, primary_key=True, nullable=False)
+    endday = db.Column(db.Date, primary_key=True, nullable=False)
     paymentmode = db.Column(db.String, nullable=False)
     deliverymode = db.Column(db.String, nullable=False)
     status = db.Column(db.String, nullable=False)
@@ -165,27 +165,27 @@ class Biddings(db.Model, UserMixin):
         return self.status
 
     def get_key(self):
-        return (self.startdate, self.enddate, self.ccontact, self.petname, self.pcontact)
+        return (self.startday, self.endday, self.ccontact, self.petname, self.pcontact)
     
 class Reviews(db.Model, UserMixin):
     petname = db.Column(db.String, db.ForeignKey('biddings.petname'), primary_key=True, nullable=False)
     pcontact = db.Column(db.Integer, db.ForeignKey('biddings.pcontact'), primary_key=True, nullable=False)
     ccontact = db.Column(db.Integer, db.ForeignKey('biddings.ccontact'), primary_key=True, nullable=False)
-    startdate = db.Column(db.Date, db.ForeignKey('biddings.startdate'), primary_key=True, nullable=False)
-    enddate = db.Column(db.Date, db.ForeignKey('biddings.enddate'), primary_key=True, nullable=False)
+    startday = db.Column(db.Date, db.ForeignKey('biddings.startday'), primary_key=True, nullable=False)
+    endday = db.Column(db.Date, db.ForeignKey('biddings.endday'), primary_key=True, nullable=False)
     rating = db.Column(db.Integer, primary_key=True, nullable=False)
     review = db.Column(db.String, primary_key=True, nullable=False)
     
     reviewpetname = db.relationship('Biddings', foreign_keys=[petname])
     reviewpcontact = db.relationship('Biddings', foreign_keys=[pcontact])
     reviewccontact = db.relationship('Biddings', foreign_keys=[ccontact])
-    reviewstartdate = db.relationship('Biddings', foreign_keys=[startdate])
-    reviewenddate = db.relationship('Biddings', foreign_keys=[enddate])
+    reviewstartdate = db.relationship('Biddings', foreign_keys=[startday])
+    reviewenddate = db.relationship('Biddings', foreign_keys=[endday])
     def get_rating(self):
         return self.rating
  
     def get_key(self):
-        return (self.startdate, self.enddate, self.ccontact, self.petname, self.pcontact, self.rating, self.review)
+        return (self.startday, self.endday, self.ccontact, self.petname, self.pcontact, self.rating, self.review)
     
 class CanTakeCare(db.Model, UserMixin):
     ccontact = db.Column(db.Integer, db.ForeignKey('users.contact'), primary_key=True, nullable=False)

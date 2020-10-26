@@ -5,8 +5,8 @@ from flask_table import Table, Col
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, CanTakeCareForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
-from models import Users, Role, Pets, Available, CanTakeCare
-from tables import userInfoTable, editPetTable, ownerHomePage
+from models import Users, Role, Pets, Available, CanTakeCare, Biddings
+from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable, biddingTable
 from datetime import timedelta
 import sys
 
@@ -182,9 +182,24 @@ def render_caretaker_page():
 def render_caretaker_biddings():
     form = BiddingForm()
     contact = current_user.contact
-    query = "SELECT * FROM biddings WHERE contact = '{}'".format(contact)
+    query = "SELECT * FROM biddings WHERE ccontact = '{}'".format(contact)
     results = db.session.execute(query).fetchall()
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
+    table = biddingCaretakerTable(results)
+    return render_template("caretakerBid.html", table=table, username=current_user.username + " owner")
+
+@view.route("/caretaker/biddings/accept", methods=["POST"])
+@roles_required('caretaker')
+def render_caretaker_biddings_accept():
+    contact = current_user.contact
+    bid = Biddings.query.filter_by(pcontact=request.args.get('ownerContact'), 
+        ccontact=request.args.get('ccontact'),  petname=request.args.get('petName'),
+        startday=request.args.get('startDay'), endday=request.args.get('endDay')).first()
+    if bid:
+        bid.status = "success"
+        db.session.commit()
+        print("Owner profile has been updated", flush=True)
+    return redirect(url_for('view.render_caretaker_biddings'))
+
 
 
 @view.route("/caretaker/profile", methods=["GET"])
@@ -215,7 +230,11 @@ def render_caretaker_update_profile():
 @view.route("/caretaker/available", methods=["GET", "POST"])
 @roles_required('caretaker')
 def render_caretaker_available():
-    return render_template('profile.html', username=current_user.username + " caretaker")
+    contact = current_user.contact
+    query = "SELECT * FROM available WHERE ccontact = '{}'".format(contact)
+    availables = db.session.execute(query)
+    table = editAvailableTable(availables)
+    return render_template('availableWithEdit.html', username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/available/edit", methods=["GET", "POST"])
@@ -233,13 +252,24 @@ def render_caretaker_available_edit():
             thisavailable.endday = form.enddate.data
             db.session.commit()
             return redirect(url_for('view.render_caretaker_available'))
-    return render_template('profile.html', username=current_user.username + " caretaker")
+    return render_template('available.html', username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/available/delete", methods=["GET", "POST"])
 @roles_required('caretaker')
 def render_caretaker_available_delete():
-    return render_template('profile.html', username=current_user.username + " caretaker")
+    ac = current_user.contact
+    astart = request.args.get('startdate')
+    aend = request.args.get('enddate')
+    available = Available.query.filter_by(startdate=astart,enddate=aend,ccontact=ac).first()
+    if available:
+        form = AvailableUpdateForm(obj=available)
+        if request.method == 'POST' and form.validate_on_submit():
+            thisavailable = Available.query.filter_by(startdate=astart,enddate=aend,ccontact=ac).first()
+            db.seesion.delete(thisavailable)
+            db.session.commit()
+            return redirect(url_for('view.render_caretaker_available'))
+    return render_template('available.html', username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/available/new", methods=["GET", "POST"])
@@ -423,16 +453,17 @@ def render_owner_bid():
     contact = current_user.contact
     query = "SELECT * FROM biddings WHERE pcontact= '{}'".format(contact)
     bidding = db.session.execute(query).fetchall()
-    return render_template("ownerBid.html", bidding=bidding, username=current_user.username + " owner")
+    table = biddingTable(bidding)
+    return render_template("ownerBid.html", table=table, username=current_user.username + " owner")
 
 
 @view.route("/owner/bid/new", methods=["GET", "POST"])
 @roles_required('petowner')
 def render_owner_bid_new():
-    
     cn = request.args.get('ccontact')
     contact = current_user.contact
     form = BiddingForm()
+    form.ccontact.data = cn
     if request.method == 'POST' and form.validate_on_submit():
         petname = form.petname.data
         startdate = form.startdate.data

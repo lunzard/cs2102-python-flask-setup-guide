@@ -1,4 +1,4 @@
-from flask_table import Table, Col, ButtonCol
+from flask_table import Table, Col, ButtonCol, LinkCol
 
 class userInfoTable(Table):
     username = Col('Username ')
@@ -15,11 +15,41 @@ class editPetTable(Table):
     edit = ButtonCol('Edit ', 'view.render_owner_pet_update', url_kwargs=dict(petname='petname', category='category', age='age'))
     delete = ButtonCol('Delete', 'view.render_owner_pet_delete', url_kwargs=dict(petname='petname'))
 
+class editAvailableTable(Table):
+    startdate = Col('Start Date ')
+    enddate = Col('End Date ')
+    ccontact = Col('Contact')
+    edit = ButtonCol('Edit ', 'view.render_caretaker_available_edit', url_kwargs=dict(startdate='startdate', enddate='enddate'))
+    delete = ButtonCol('Delete', 'view.render_caretaker_available_delete', url_kwargs=dict(startdate='startdate', enddate='enddate'))
+
 class ownerHomePage(Table):
     username = Col('Caretaker Name ')
     contact = Col('Contact ')
     postalcode = Col('Postal Code ')
-    bid = ButtonCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', contact='contact', postalcode='postalcode', edit='contact'), url_kwargs_extra=dict(edit='edit'))
+    bid = LinkCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', ccontact='contact', postalcode='postalcode', edit='contact'), url_kwargs_extra=dict(edit='edit'))
+
+
+class biddingTable(Table):
+    pcontact = Col('Owner Contact')	
+    ccontact = Col('Caretaker Contact')	
+    petname	= Col('Pet name')
+    startday = Col('Start date')
+    endday = Col('End date')
+    paymentmode = Col('Payment mode')
+    deliverymode = Col('Delivery mode')
+    status = Col('Status')
+
+class biddingCaretakerTable(Table):
+    pcontact = Col('Owner Contact')	
+    ccontact = Col('Caretaker Contact')	
+    petname	= Col('Pet name')
+    startday = Col('Start date')
+    endday = Col('End date')
+    paymentmode = Col('Payment mode')
+    deliverymode = Col('Delivery mode')
+    status = Col('Status')
+    accept = ButtonCol('Accept', 'view.render_caretaker_biddings_accept', url_kwargs=dict(ownerContact='pcontact', 
+        ccontact='ccontact', petName='petname', startDay='startday', endDay='endday'))
 
 class caretakerCantakecare(Table):
     category = Col('Category')

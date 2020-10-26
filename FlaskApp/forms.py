@@ -5,6 +5,7 @@ from wtforms.validators import InputRequired, ValidationError, EqualTo, Regexp
 from wtforms.widgets import HiddenInput
 from models import Users
 from datetime import date
+from _datetime import timedelta
 
 def is_valid_name(form, field):
     if not all(map(lambda char: char.isalpha(), field.data)):
@@ -194,6 +195,11 @@ class Bid:
         self.deliverymode = None
 
 class BiddingForm(FlaskForm):
+    ccontact = IntegerField(
+        label='Ccontact',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
+    )   
     petname = StringField(
         label='Petname',
         validators=[InputRequired()],
@@ -220,11 +226,11 @@ class BiddingForm(FlaskForm):
         render_kw={'placeholder': 'Deliverymode', 'class': 'input100'}
     )
     def validate_on_submit(self):
-            result = super(BiddingForm, self).validate()
-            if (self.startdate.data>self.enddate.data):
-                return False
-            else:
-                return result
+        result = super(BiddingForm, self).validate()
+        if (self.startdate.data - self.enddate.data >= timedelta(minutes=1)):
+            return False
+        else:
+            return True
    
 class ReviewForm(FlaskForm):
     pcontact = StringField(
@@ -277,11 +283,11 @@ class AvailableForm(FlaskForm):
         render_kw={'placeholder': 'Enddate', 'class': 'input100'}
     )
     def validate_on_submit(self):
-            result = super(AvailableForm, self).validate()
-            if (self.startdate.data>self.enddate.data):
-                return False
-            else:
-                return result
+        result = super(AvailableForm, self).validate()
+        if (self.startdate.data>self.enddate.data):
+            return False
+        else:
+            return result
 
 class AvailableUpdateForm(FlaskForm):
     startdate = DateField(
@@ -305,11 +311,11 @@ class AvailableUpdateForm(FlaskForm):
         render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
     def validate_on_submit(self):
-            result = super(AvailableUpdateForm, self).validate()
-            if (self.startdate.data>self.enddate.data):
-                return False
-            else:
-                return result
+        result = super(AvailableUpdateForm, self).validate()
+        if (self.startdate.data>self.enddate.data):
+            return False
+        else:
+            return result
 
 class SearchCaretakerForm(FlaskForm):
     ccontact = IntegerField(
