@@ -117,37 +117,6 @@
                             </button>
                         </div>
                         {{ table }}
-
-                        <table>
-                            <thead>
-                                <tr class="table100-head">
-                                    <th class="column1">Owner Contact</th>
-                                    <th class="column2">Caretaker Contact</th>
-                                    <th class="column3">Pet Name</th>
-                                    <th class="column4">Start Day</th>
-                                    <th class="column5">End Day</th>
-                                    <th class="column6">Payment Mode</th>
-                                    <th class="column7">Delivery Mode</th>
-                                    <th class="column8">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                {% for item in bidding %}
-                                <tr>
-                                    <td class="column1">{{item.pcontact}}</td>
-                                    <td class="column2">{{item.ccontact}}</td>
-                                    <td class="column3">{{item.petname}}</td>
-                                    <td class="column4">{{item.startday}}</td>
-                                    <td class="column5">{{item.endday}}</td>
-                                    <td class="column6">{{item.paymentmode}}</td>
-                                    <td class="column7">{{item.deliverymode}}</td>
-                                    <td class="column8">{{item.status}}</td>
-                                </tr>
-                                {% endfor %}
-                                   
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>

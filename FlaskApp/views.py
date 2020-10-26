@@ -185,7 +185,7 @@ def render_caretaker_biddings():
     query = "SELECT * FROM biddings WHERE ccontact = '{}'".format(contact)
     results = db.session.execute(query).fetchall()
     table = biddingCaretakerTable(results)
-    return render_template("caretakerBid.html", bidding=results, table=table, username=current_user.username + " owner")
+    return render_template("caretakerBid.html", table=table, username=current_user.username + " owner")
 
 @view.route("/caretaker/biddings/accept", methods=["POST"])
 @roles_required('caretaker')
@@ -453,7 +453,7 @@ def render_owner_bid():
     query = "SELECT * FROM biddings WHERE pcontact= '{}'".format(contact)
     bidding = db.session.execute(query).fetchall()
     table = biddingTable(bidding)
-    return render_template("ownerBid.html", table=table, bidding=bidding, username=current_user.username + " owner")
+    return render_template("ownerBid.html", table=table, username=current_user.username + " owner")
 
 
 @view.route("/owner/bid/new", methods=["GET", "POST"])
