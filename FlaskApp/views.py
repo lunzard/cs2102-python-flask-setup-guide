@@ -182,9 +182,9 @@ def render_caretaker_page():
 def render_caretaker_biddings():
     form = BiddingForm()
     contact = current_user.contact
-    query = "SELECT * FROM biddings WHERE contact = '{}'".format(contact)
+    query = "SELECT * FROM biddings WHERE ccontact = '{}'".format(contact)
     results = db.session.execute(query).fetchall()
-    return render_template("profile.html", results=results, username=current_user.username + " owner")
+    return render_template("ownerBid.html", bidding=results, username=current_user.username + " owner")
 
 
 @view.route("/caretaker/profile", methods=["GET"])

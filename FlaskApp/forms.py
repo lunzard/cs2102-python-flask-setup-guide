@@ -194,6 +194,11 @@ class Bid:
         self.deliverymode = None
 
 class BiddingForm(FlaskForm):
+    ccontact = IntegerField(
+        label='Ccontact',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
+    )   
     petname = StringField(
         label='Petname',
         validators=[InputRequired()],
