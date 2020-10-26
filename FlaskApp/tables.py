@@ -20,3 +20,8 @@ class ownerHomePage(Table):
     contact = Col('Contact ')
     postalcode = Col('Postal Code ')
     bid = ButtonCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', contact='contact', postalcode='postalcode', edit='contact'), url_kwargs_extra=dict(edit='edit'))
+
+class caretakerCantakecare(Table):
+    category = Col('Category')
+    dailyprice = Col('Daily Price')
+    delete = ButtonCol('Delete', 'view.render_owner_pet_delete', url_kwargs=dict(category='category', dailyprice='dailyprice'))

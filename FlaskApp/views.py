@@ -262,6 +262,7 @@ def render_caretaker_available_new():
 @view.route("/caretaker/cantakecare", methods=["GET", "POST"])
 @roles_required('caretaker')
 def render_caretaker_cantakecare():
+    query = "SELECT * FROM cantakecare"
 
     return render_template('profile.html', username=current_user.username + " caretaker")
 
