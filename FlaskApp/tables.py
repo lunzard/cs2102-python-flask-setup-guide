@@ -19,4 +19,4 @@ class ownerHomePage(Table):
     username = Col('Caretaker Name ')
     contact = Col('Contact ')
     postalcode = Col('Postal Code ')
-    bid = LinkCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', contact='ccontact', postalcode='postalcode', edit='contact'), url_kwargs_extra=dict(edit='edit'))
+    bid = LinkCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', ccontact='contact', postalcode='postalcode', edit='contact'), url_kwargs_extra=dict(edit='edit'))
