@@ -30,23 +30,23 @@ class ownerHomePage(Table):
 
 
 class bidding(Table):
-    ownerContact = ('Owner Contact')	
-    caretakerContact = ('Caretaker Contact')	
-    petName	= ('Pet name')
-    startDay = ('Start date')
-    endDay = ('End date')
-    paymentMode = ('Payment mode')
-    deliveryMode = ('Delivery mode')
+    pcontact = ('Owner Contact')	
+    ccontact = ('Caretaker Contact')	
+    petname	= ('Pet name')
+    startdate = ('Start date')
+    enddate = ('End date')
+    paymentmode = ('Payment mode')
+    deliverymode = ('Delivery mode')
     status = ('Status')
 
 class biddingCaretakerTable(Table):
-    ownerContact = ('Owner Contact')	
-    caretakerContact = ('Caretaker Contact')	
-    petName	= ('Pet name')
-    startDay = ('Start date')
-    endDay = ('End date')
-    paymentMode = ('Payment mode')
-    deliveryMode = ('Delivery mode')
+    pcontact = ('Owner Contact')	
+    ccontact = ('Caretaker Contact')	
+    petname	= ('Pet name')
+    startdate = ('Start date')
+    enddate = ('End date')
+    paymentmode = ('Payment mode')
+    deliverymode = ('Delivery mode')
     status = ('Status')
-    accept = LinkCol('Accept', 'view.render_caretaker_biddings_accept', url_kwargs=dict(ownerContact='ownerContact', 
-        ccontact='caretakerContact', petName='petName', startDay='startDay', endDay='endDay'))
+    accept = LinkCol('Accept', 'view.render_caretaker_biddings_accept', url_kwargs=dict(ownerContact='pcontact', 
+        ccontact='ccontact', petName='petname', startDay='startdate', endDay='enddate'))
