@@ -48,5 +48,5 @@ class biddingCaretakerTable(Table):
     paymentmode = Col('Payment mode')
     deliverymode = Col('Delivery mode')
     status = Col('Status')
-    accept = LinkCol('Accept', 'view.render_caretaker_biddings_accept', url_kwargs=dict(ownerContact='pcontact', 
+    accept = ButtonCol('Accept', 'view.render_caretaker_biddings_accept', url_kwargs=dict(ownerContact='pcontact', 
         ccontact='ccontact', petName='petname', startDay='startday', endDay='endday'))
