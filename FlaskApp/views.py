@@ -443,10 +443,10 @@ def render_owner_bid():
 @view.route("/owner/bid/new", methods=["GET", "POST"])
 @roles_required('petowner')
 def render_owner_bid_new():
-    
     cn = request.args.get('ccontact')
     contact = current_user.contact
     form = BiddingForm()
+    form.ccontact.data = cn
     if request.method == 'POST' and form.validate_on_submit():
         petname = form.petname.data
         startdate = form.startdate.data

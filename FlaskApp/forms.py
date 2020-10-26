@@ -230,7 +230,7 @@ class BiddingForm(FlaskForm):
         if (self.startdate.data - self.enddate.data >= timedelta(minutes=1)):
             return False
         else:
-            return result
+            return True
    
 class ReviewForm(FlaskForm):
     pcontact = StringField(
