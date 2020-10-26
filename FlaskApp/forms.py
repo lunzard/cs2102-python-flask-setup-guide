@@ -5,6 +5,7 @@ from wtforms.validators import InputRequired, ValidationError, EqualTo, Regexp
 from wtforms.widgets import HiddenInput
 from models import Users
 from datetime import date
+from _datetime import timedelta
 
 def is_valid_name(form, field):
     if not all(map(lambda char: char.isalpha(), field.data)):
@@ -226,7 +227,7 @@ class BiddingForm(FlaskForm):
     )
     def validate_on_submit(self):
         result = super(BiddingForm, self).validate()
-        if (self.startdate.data>self.enddate.data):
+        if (self.startdate.data - self.enddate.data >= timedelta(minutes=1)):
             return False
         else:
             return result
