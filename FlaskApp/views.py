@@ -215,7 +215,11 @@ def render_caretaker_update_profile():
 @view.route("/caretaker/available", methods=["GET", "POST"])
 @roles_required('caretaker')
 def render_caretaker_available():
-    return render_template('profile.html', username=current_user.username + " caretaker")
+    contact = current_user.contact
+    query = "SELECT * FROM available WHERE ccontact = '{}'".format(contact)
+    availables = db.session.execute(query)
+    table = editAvailableTable(availables)
+    return render_template('availableWithEdit.html', username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/available/edit", methods=["GET", "POST"])
@@ -233,13 +237,24 @@ def render_caretaker_available_edit():
             thisavailable.endday = form.enddate.data
             db.session.commit()
             return redirect(url_for('view.render_caretaker_available'))
-    return render_template('profile.html', username=current_user.username + " caretaker")
+    return render_template('available.html', username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/available/delete", methods=["GET", "POST"])
 @roles_required('caretaker')
 def render_caretaker_available_delete():
-    return render_template('profile.html', username=current_user.username + " caretaker")
+    ac = current_user.contact
+    astart = request.args.get('startdate')
+    aend = request.args.get('enddate')
+    available = Available.query.filter_by(startdate=astart,enddate=aend,ccontact=ac).first()
+    if available:
+        form = AvailableUpdateForm(obj=available)
+        if request.method == 'POST' and form.validate_on_submit():
+            thisavailable = Available.query.filter_by(startdate=astart,enddate=aend,ccontact=ac).first()
+            db.seesion.delete(thisavailable)
+            db.session.commit()
+            return redirect(url_for('view.render_caretaker_available'))
+    return render_template('available.html', username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/available/new", methods=["GET", "POST"])
