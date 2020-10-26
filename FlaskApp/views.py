@@ -193,7 +193,7 @@ def render_caretaker_biddings_accept():
     contact = current_user.contact
     bid = Biddings.query.filter_by(pcontact=request.args.get('ownerContact'), 
         ccontact=request.args.get('ccontact'),  petname=request.args.get('petName'),
-        startdate=request.args.get('startDay'), enddate=request.args.get('endDay')).first()
+        startday=request.args.get('startDay'), endday=request.args.get('endDay')).first()
     if bid:
         bid.status = "success"
         db.session.commit()
