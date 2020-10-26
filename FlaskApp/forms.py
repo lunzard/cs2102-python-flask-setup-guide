@@ -154,9 +154,10 @@ class PetUpdateForm(FlaskForm):
     )
 
 class LoginForm(FlaskForm):
-    contact = StringField(
+    contact = IntegerField(
         label='Contact',
-        validators=[InputRequired(), Regexp('^[-+]?[0-9]+$', message="Field must be contact number")],
+        validators=[InputRequired(), ],
+        
         render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
     password = PasswordField(
@@ -231,7 +232,7 @@ class ReviewForm(FlaskForm):
     validators=[InputRequired()],
     render_kw={'placeholder': 'Pcontact', 'class': 'input100'}
     )
-    ccontact = StringField(
+    ccontact = IntegerField(
         label='Ccontact',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
@@ -311,19 +312,36 @@ class AvailableUpdateForm(FlaskForm):
             return result
 
 class SearchCaretakerForm(FlaskForm):
-    ccontact = StringField(
+    ccontact = IntegerField(
         label='Ccontact',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
     )
-    ccontact = StringField(
+    ccontact = IntegerField(
         label='Ccontact',
         validators=[InputRequired()],
         render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
     )
     def validate_on_submit(self):
-        result = super(AvailableForm, self).validate()
-        if (self.startdate.data>self.enddate.data):
-            return False
-        else:
-            return result
+            result = super(SearchCaretakerForm, self).validate()
+            if (self.startdate.data>self.enddate.data):
+                return False
+            else:
+                return result
+            
+class CanTakeCareForm(FlaskForm):
+    ccontact = IntegerField(
+        label='Ccontact',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
+    )
+    category = StringField(	
+        label='Category',	
+        validators=[InputRequired()],	
+        render_kw={'placeholder': 'Category', 'class': 'input100'}	
+    )	
+    dailyprice = IntegerField(	
+        label='Daily Price',	
+        validators=[InputRequired()],	
+        render_kw={'placeholder': 'Daily Price', 'class': 'input100'}	
+    )

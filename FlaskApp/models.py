@@ -79,6 +79,7 @@ class Users(db.Model, UserMixin):
     postalcode = db.Column(db.String)
     
     biddingccontact = db.relationship('Biddings', backref='contact')
+    cantakecareccontact = db.relationship('CanTakeCare', backref='contact')
     pet = db.relationship('Pets', backref='owner')
     
     # Relationships
@@ -105,7 +106,7 @@ class Role(db.Model):
     
 class UserRoles(db.Model):
     __tablename__ = 'user_roles'
-    contact = db.Column(db.String, db.ForeignKey('users.contact', ondelete='CASCADE'), primary_key=True, nullable=False)
+    contact = db.Column(db.Integer, db.ForeignKey('users.contact', ondelete='CASCADE'), primary_key=True, nullable=False)
     usertype = db.Column(db.String, db.ForeignKey('role.name', ondelete='CASCADE'), nullable=False)
     
     userrolecontact = db.relationship('Users', foreign_keys=[contact])
@@ -115,10 +116,11 @@ class UserRoles(db.Model):
 class categories(db.Model, UserMixin):
     category = db.Column(db.String, primary_key=True, nullable=False)
     petcat = db.relationship('Pets', backref='type')
+    cantakecarecat = db.relationship('CanTakeCare', backref='type')
     
 class Pets(db.Model, UserMixin):
     petname = db.Column(db.String, primary_key=True, nullable=False)
-    pcontact = db.Column(db.String, db.ForeignKey('users.contact'), primary_key=True, nullable=False)
+    pcontact = db.Column(db.Integer, db.ForeignKey('users.contact'), primary_key=True, nullable=False)
     category = db.Column(db.String, db.ForeignKey('categories.category'), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     # biddingpetname = db.relationship('Biddings', backref='pet')
@@ -135,15 +137,15 @@ class Pets(db.Model, UserMixin):
 class Available(db.Model, UserMixin):
     startdate = db.Column(db.Date, primary_key=True, nullable=False)
     enddate = db.Column(db.Date, primary_key=True, nullable=False)
-    ccontact = db.Column(db.String, primary_key=True, nullable=False)
+    ccontact = db.Column(db.Integer, primary_key=True, nullable=False)
     
     def get_key(self):
         return (self.startdate, self.enddate, self.ccontact)
 
 class Biddings(db.Model, UserMixin):
     petname = db.Column(db.String, db.ForeignKey('pets.petname'), primary_key=True, nullable=False)
-    pcontact = db.Column(db.String, db.ForeignKey('pets.pcontact'), primary_key=True, nullable=False)
-    ccontact = db.Column(db.String, db.ForeignKey('users.contact'), primary_key=True, nullable=False)
+    pcontact = db.Column(db.Integer, db.ForeignKey('pets.pcontact'), primary_key=True, nullable=False)
+    ccontact = db.Column(db.Integer, db.ForeignKey('users.contact'), primary_key=True, nullable=False)
     startdate = db.Column(db.Date, primary_key=True, nullable=False)
     enddate = db.Column(db.Date, primary_key=True, nullable=False)
     paymentmode = db.Column(db.String, nullable=False)
@@ -167,8 +169,8 @@ class Biddings(db.Model, UserMixin):
     
 class Reviews(db.Model, UserMixin):
     petname = db.Column(db.String, db.ForeignKey('biddings.petname'), primary_key=True, nullable=False)
-    pcontact = db.Column(db.String, db.ForeignKey('biddings.pcontact'), primary_key=True, nullable=False)
-    ccontact = db.Column(db.String, db.ForeignKey('biddings.ccontact'), primary_key=True, nullable=False)
+    pcontact = db.Column(db.Integer, db.ForeignKey('biddings.pcontact'), primary_key=True, nullable=False)
+    ccontact = db.Column(db.Integer, db.ForeignKey('biddings.ccontact'), primary_key=True, nullable=False)
     startdate = db.Column(db.Date, db.ForeignKey('biddings.startdate'), primary_key=True, nullable=False)
     enddate = db.Column(db.Date, db.ForeignKey('biddings.enddate'), primary_key=True, nullable=False)
     rating = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -185,4 +187,12 @@ class Reviews(db.Model, UserMixin):
     def get_key(self):
         return (self.startdate, self.enddate, self.ccontact, self.petname, self.pcontact, self.rating, self.review)
     
+class CanTakeCare(db.Model, UserMixin):
+    ccontact = db.Column(db.Integer, db.ForeignKey('users.contact'), primary_key=True, nullable=False)
+    category = db.Column(db.String, db.ForeignKey('categories.category'), primary_key=True, nullable=False)
+    dailyprice = db.Column(db.Integer, nullable=False)
+    def get_dailyprice(self):
+        return self.dailyprice
     
+    def get_key(self):
+        return (self.ccontact, self.category)
