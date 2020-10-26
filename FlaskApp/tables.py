@@ -27,3 +27,26 @@ class ownerHomePage(Table):
     contact = Col('Contact ')
     postalcode = Col('Postal Code ')
     bid = LinkCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', ccontact='contact', postalcode='postalcode', edit='contact'), url_kwargs_extra=dict(edit='edit'))
+
+
+class bidding(Table):
+    ownerContact = ('Owner Contact')	
+    caretakerContact = ('Caretaker Contact')	
+    petName	= ('Pet name')
+    startDay = ('Start date')
+    endDay = ('End date')
+    paymentMode = ('Payment mode')
+    deliveryMode = ('Delivery mode')
+    status = ('Status')
+
+class biddingCaretakerTable(Table):
+    ownerContact = ('Owner Contact')	
+    caretakerContact = ('Caretaker Contact')	
+    petName	= ('Pet name')
+    startDay = ('Start date')
+    endDay = ('End date')
+    paymentMode = ('Payment mode')
+    deliveryMode = ('Delivery mode')
+    status = ('Status')
+    accept = LinkCol('Accept', 'view.render_caretaker_biddings_accept', url_kwargs=dict(ownerContact='ownerContact', 
+        ccontact='caretakerContact', petName='petName', startDay='startDay', endDay='endDay'))

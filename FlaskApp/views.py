@@ -5,8 +5,8 @@ from flask_table import Table, Col
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, CanTakeCareForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
-from models import Users, Role, Pets, Available, CanTakeCare
-from tables import userInfoTable, editPetTable, ownerHomePage
+from models import Users, Role, Pets, Available, CanTakeCare, Biddings
+from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable
 from datetime import timedelta
 import sys
 
@@ -184,7 +184,22 @@ def render_caretaker_biddings():
     contact = current_user.contact
     query = "SELECT * FROM biddings WHERE ccontact = '{}'".format(contact)
     results = db.session.execute(query).fetchall()
-    return render_template("ownerBid.html", bidding=results, username=current_user.username + " owner")
+    table = biddingCaretakerTable(results)
+    return render_template("ownerBid.html", bidding=results, table=table, username=current_user.username + " owner")
+
+@view.route("/caretaker/biddings/accept", methods=["POST"])
+@roles_required('caretaker')
+def render_caretaker_biddings_accept():
+    contact = current_user.contact
+    bid = Biddings.query.filter_by(pcontact=request.args.get('ownerContact'), 
+        ccontact=request.args.get('ccontact'),  petname=request.args.get('petName'),
+        startdate=request.args.get('startDay'), enddate=request.args.get('endDay')).first()
+    if bid:
+        bid.status = "success"
+        db.session.commit()
+        print("Owner profile has been updated", flush=True)
+    return redirect(url_for('view.render_caretaker_biddings'))
+
 
 
 @view.route("/caretaker/profile", methods=["GET"])
