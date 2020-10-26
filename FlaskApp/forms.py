@@ -219,11 +219,11 @@ class BiddingForm(FlaskForm):
         render_kw={'placeholder': 'Deliverymode', 'class': 'input100'}
     )
     def validate_on_submit(self):
-            result = super(BiddingForm, self).validate()
-            if (self.startdate.data>self.enddate.data):
-                return False
-            else:
-                return result
+        result = super(BiddingForm, self).validate()
+        if (self.startdate.data>self.enddate.data):
+            return False
+        else:
+            return result
    
 class ReviewForm(FlaskForm):
     pcontact = StringField(
@@ -276,11 +276,11 @@ class AvailableForm(FlaskForm):
         render_kw={'placeholder': 'Enddate', 'class': 'input100'}
     )
     def validate_on_submit(self):
-            result = super(AvailableForm, self).validate()
-            if (self.startdate.data>self.enddate.data):
-                return False
-            else:
-                return result
+        result = super(AvailableForm, self).validate()
+        if (self.startdate.data>self.enddate.data):
+            return False
+        else:
+            return result
 
 class AvailableUpdateForm(FlaskForm):
     startdate = DateField(
@@ -304,11 +304,11 @@ class AvailableUpdateForm(FlaskForm):
         render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
     def validate_on_submit(self):
-            result = super(AvailableUpdateForm, self).validate()
-            if (self.startdate.data>self.enddate.data):
-                return False
-            else:
-                return result
+        result = super(AvailableUpdateForm, self).validate()
+        if (self.startdate.data>self.enddate.data):
+            return False
+        else:
+            return result
 
 class SearchCaretakerForm(FlaskForm):
     ccontact = StringField(
@@ -322,8 +322,8 @@ class SearchCaretakerForm(FlaskForm):
         render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
     )
     def validate_on_submit(self):
-            result = super(AvailableForm, self).validate()
-            if (self.startdate.data>self.enddate.data):
-                return False
-            else:
-                return result
+        result = super(AvailableForm, self).validate()
+        if (self.startdate.data>self.enddate.data):
+            return False
+        else:
+            return result
