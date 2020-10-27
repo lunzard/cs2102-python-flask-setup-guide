@@ -79,7 +79,7 @@ class Users(db.Model, UserMixin):
     postalcode = db.Column(db.String)
     
     biddingccontact = db.relationship('Biddings', backref='contact')
-    cantakecareccontact = db.relationship('CanTakeCare', backref='contact')
+    cantakecareccontact = db.relationship('Cantakecare', backref='contact')
     pet = db.relationship('Pets', backref='owner')
     
     # Relationships
@@ -116,7 +116,7 @@ class UserRoles(db.Model):
 class categories(db.Model, UserMixin):
     category = db.Column(db.String, primary_key=True, nullable=False)
     petcat = db.relationship('Pets', backref='type')
-    cantakecarecat = db.relationship('CanTakeCare', backref='type')
+    cantakecarecat = db.relationship('Cantakecare', backref='type')
     
 class Pets(db.Model, UserMixin):
     petname = db.Column(db.String, primary_key=True, nullable=False)
