@@ -247,7 +247,7 @@ def render_caretaker_available():
     query = "SELECT * FROM available WHERE ccontact = '{}'".format(contact)
     availables = db.session.execute(query)
     table = editAvailableTable(availables)
-    return render_template('availableWithEdit.html', username=current_user.username + " caretaker")
+    return render_template('availableWithEdit.html', table=table, username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/available/edit", methods=["GET", "POST"])
@@ -305,7 +305,8 @@ def render_caretaker_available_new():
 @view.route("/caretaker/cantakecare", methods=["GET", "POST"])
 @roles_required('caretaker')
 def render_caretaker_cantakecare():
-    query = "SELECT * FROM cantakecare"
+    contact = current_user.contact
+    query = "SELECT * FROM cantakecare WHERE ccontact = '{}'".format(contact)
     canTakeCare = db.session.execute(query)
     table = caretakerCantakecare(canTakeCare)
     return render_template('caretakerCantakecare.html', table=table, username=current_user.username + " caretaker")
