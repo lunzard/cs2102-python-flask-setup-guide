@@ -55,3 +55,10 @@ class caretakerCantakecare(Table):
     category = Col('Category')
     dailyprice = Col('Daily Price')
     delete = ButtonCol('Delete', 'view.render_caretaker_cantakecare_delete', url_kwargs=dict(category='category', dailyprice='dailyprice'))
+
+class profileTable(Table):
+    username = Col('Username')
+    contact = Col('Contact')
+    usertype = Col('User Type')
+    card = Col('Card')
+    postalcode = Col('Postal Code')

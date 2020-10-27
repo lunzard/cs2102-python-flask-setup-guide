@@ -8,7 +8,7 @@ from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
 from models import Users, Role, Pets, Available, Biddings, Cantakecare
 from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable, biddingTable, \
-    caretakerCantakecare, editAvailableTable
+    caretakerCantakecare, editAvailableTable, profileTable
 from datetime import timedelta
 import sys
 
@@ -147,7 +147,12 @@ def render_admin_summary_page():
 @view.route("/admin/profile", methods=["GET"])
 @roles_required('admin')
 def render_admin_profile():
-    return render_template('profile.html', username=current_user.username + " admin")
+    print(current_user, flush=True)
+    contact = current_user.contact
+    query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
+    results = db.session.execute(query)
+    table = profileTable(results)
+    return render_template('profile.html', table=table, username=current_user.username + " admin")
 
 
 @view.route("/admin/profile/update", methods=["GET"])
@@ -173,10 +178,11 @@ def render_admin_update_profile():
 def render_caretaker_page():
     print(current_user, flush=True)
     contact = current_user.contact
-    #insert query to show this caretaker's working hours and this month's pay.
-    query = "SELECT * FROM users WHERE contact = '{}' and usertype = 'admin'".format(contact)
-    results = db.session.execute(query).fetchall()
-    return render_template('caretaker.html', results=results, username=current_user.username + " caretaker")
+    #insert query to show this caretaker's total working hours and this month's pay.
+    query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
+    results = db.session.execute(query)
+    table = profileTable(results)
+    return render_template('caretaker.html', table=table, username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/biddings", methods=["GET", "POST"])
@@ -207,7 +213,12 @@ def render_caretaker_biddings_accept():
 @view.route("/caretaker/profile", methods=["GET"])
 @roles_required('caretaker')
 def render_caretaker_profile():
-    return render_template('profile.html', username=current_user.username + " caretaker")
+    print(current_user, flush=True)
+    contact = current_user.contact
+    query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
+    results = db.session.execute(query)
+    table = profileTable(results)
+    return render_template('profile.html', table=table, username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/profile/update", methods=["GET"])

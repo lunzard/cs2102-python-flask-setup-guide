@@ -10,24 +10,13 @@
     <div class="topbar">
       <a href="https://cs2102project.herokuapp.com//">Home</a>
       <a href="https://cs2102project.herokuapp.com/caretaker/profile">Profile</a>
+      <a href="https://cs2102project.herokuapp.com/caretaker/biddings">Biddings</a>
+      <a href="https://cs2102project.herokuapp.com/caretaker/available">Availability</a>
       <a href="https://cs2102project.herokuapp.com/logout">Logout</a>
     </div>
     <div>
-
-        <table>
-            <th>Username</th>
-            <th>Contact</th>
-            <th>Usertype</th>
-            <th>Card</th>
-            {% for item in results %}
-            <tr>
-                <td>{{item.username}}</td>
-                <td>{{item.contact}}</td>
-                <td>{{item.usertype}}</td>
-                <td>{{item.card}}</td>
-            </tr>
-            {% endfor %}
-        </table>
+        <p>Here are your working hours and pay this month! [placeholder table ofc]</p>
+        {{ table }}
     </div>
 
 </body>
