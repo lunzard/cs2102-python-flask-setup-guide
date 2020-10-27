@@ -75,7 +75,7 @@ class Users(db.Model, UserMixin):
     contact = db.Column(db.Integer, primary_key=True, nullable=False)
     usertype = db.Column(db.String, nullable=False)
     card = db.Column(db.String, nullable=False)
-    postalcode = db.Column(db.String, nullable=False)
+    postalcode = db.Column(db.Integer, nullable=False)
     
     biddingccontact = db.relationship('Biddings', backref='contact')
     cantakecareccontact = db.relationship('CanTakeCare', backref='contact')

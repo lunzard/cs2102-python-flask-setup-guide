@@ -12,8 +12,7 @@ CREATE TABLE users (
     card VARCHAR NOT NULL,
     password VARCHAR NOT NULL,
     usertype VARCHAR NOT NULL,
-    isPartTime BOOLEAN,
-    postalcode VARCHAR
+    postalcode BIGINT NOT NULL
 );
 
 CREATE TABLE role (
@@ -28,11 +27,16 @@ CREATE TABLE user_roles (
     usertype VARCHAR NOT NULL REFERENCES public.role(name)
 );
 
+CREATE TABLE canparttime (
+    ccontact BIGINT PRIMARY KEY NOT NULL REFERENCES public.users(contact),
+    isparttime BOOLEAN NOT NULL
+);
+
 CREATE TABLE pets(
     petname VARCHAR NOT NULL,
     pcontact BIGINT NOT NULL REFERENCES public.users(contact),
     category VARCHAR NOT NULL REFERENCES public.categories(category),
-    age INTEGER,
+    age INTEGER NOT NULL,
     PRIMARY KEY (petName, pcontact)
 );
 
