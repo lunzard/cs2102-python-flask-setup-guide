@@ -152,7 +152,7 @@ def render_admin_profile():
     query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
     results = db.session.execute(query)
     table = profileTable(results)
-    return render_template('profile.html', table=table, username=current_user.username + " admin")
+    return render_template('profileAdmin.html', table=table, username=current_user.username + " admin")
 
 
 @view.route("/admin/profile/update", methods=["GET"])
@@ -218,7 +218,7 @@ def render_caretaker_profile():
     query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
     results = db.session.execute(query)
     table = profileTable(results)
-    return render_template('profile.html', table=table, username=current_user.username + " caretaker")
+    return render_template('profileCaretaker.html', table=table, username=current_user.username + " caretaker")
 
 
 @view.route("/caretaker/profile/update", methods=["GET"])
@@ -371,7 +371,7 @@ def render_owner_profile():
     contact = current_user.contact
     query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
     profile = db.session.execute(query).fetchone()
-    return render_template("profile.html", profile=profile, form=form, username=current_user.username + " owner")
+    return render_template("profileOwner.html", profile=profile, form=form, username=current_user.username + " owner")
 
 
 @view.route("/owner/profile/update", methods=["GET", "POST"])
