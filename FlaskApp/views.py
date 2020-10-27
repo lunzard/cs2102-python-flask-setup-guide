@@ -277,7 +277,7 @@ def render_caretaker_available_delete():
     available = Available.query.filter_by(startday=astart,endday=aend,ccontact=ac).first()
     if available:
         if request.method == 'POST':
-            db.seesion.delete(available)
+            db.session.delete(available)
             db.session.commit()
     return redirect(url_for('view.render_caretaker_available'))
 
