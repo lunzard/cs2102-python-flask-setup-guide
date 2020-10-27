@@ -29,8 +29,12 @@
     <!--===============================================================================================-->
 
     <style>
+        #title{
+            display: block;
+            display: flex;
+        }
         .container {
-            width: 390px;
+            width: 400px;
             display:flex;
             display: -webkit-flex; 
             align-items:center;
@@ -57,11 +61,11 @@
 <body>
     <div class="limiter">
         <div class="container-login100" style="background-image: url('../static/images/bg-01.jpg');">
+            
             <div class="container">
-                <div>Bidding for {{ target }}</div>
                 <form class="registrationForm login100-form">
                     {{ form.hidden_tag() }}
-
+                    <h1 id="title">Bidding for {{ target }}</h1>
                     <div class="formField wrap-input100 validate-input">
                         {{ form.petname }} {% if form.petname.errors %}
                         <div class="errorMessage">
