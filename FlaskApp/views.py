@@ -265,10 +265,10 @@ def render_caretaker_available_edit():
             thisavailable.endday = form.enddate.data
             db.session.commit()
             return redirect(url_for('view.render_caretaker_available'))
-    return render_template('available.html', username=current_user.username + " caretaker")
+    return render_template('availableNew.html', form=form, username=current_user.username + " caretaker")
 
 
-@view.route("/caretaker/available/delete", methods=["GET", "POST"])
+@view.route("/caretaker/available/delete", methods=["POST"])
 @roles_required('caretaker')
 def render_caretaker_available_delete():
     ac = current_user.contact
@@ -276,13 +276,10 @@ def render_caretaker_available_delete():
     aend = request.args.get('enddate')
     available = Available.query.filter_by(startdate=astart,enddate=aend,ccontact=ac).first()
     if available:
-        form = AvailableUpdateForm(obj=available)
-        if request.method == 'POST' and form.validate_on_submit():
-            thisavailable = Available.query.filter_by(startdate=astart,enddate=aend,ccontact=ac).first()
-            db.seesion.delete(thisavailable)
+        if request.method == 'POST':
+            db.seesion.delete(available)
             db.session.commit()
-            return redirect(url_for('view.render_caretaker_available'))
-    return render_template('available.html', username=current_user.username + " caretaker")
+    return redirect(url_for('view.render_caretaker_available'))
 
 
 @view.route("/caretaker/available/new", methods=["GET", "POST"])
