@@ -3,7 +3,8 @@ from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from flask_table import Table, Col
 from __init__ import db, login_manager, bcrypt
-from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, CanTakeCareForm
+from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, CanTakeCareForm, \
+    CanTakeCareDeleteForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
 from models import Users, Role, Pets, Available, Biddings, Cantakecare
 from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable, biddingTable, \
@@ -322,7 +323,7 @@ def render_caretaker_cantakecare_delete():
     query = "SELECT * FROM cantakecare WHERE ccontact = '{}' AND category = '{}'".format(contact, category)
     pet = db.session.execute(query).first()
     if pet:
-        form = CanTakeCareForm(obj=pet)
+        form = CanTakeCareDeleteForm(obj=pet)
         if request.method == 'POST' and form.validate_on_submit():
             category = form.category
             thiscategory = Pets.query.filter_by(ccontact=contact, category=category).first()

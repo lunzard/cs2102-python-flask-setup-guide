@@ -346,3 +346,21 @@ class CanTakeCareForm(FlaskForm):
         validators=[InputRequired()],	
         render_kw={'placeholder': 'Daily Price', 'class': 'input100'}	
     )
+
+class CanTakeCareDeleteForm(FlaskForm):
+    ccontact = IntegerField(
+        label='Ccontact',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
+    )
+    category = StringField(
+        label='Category',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Category', 'class': 'input100'}
+    )
+    dailyprice = IntegerField(
+        label='Daily Price',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'Daily Price', 'class': 'input100'}
+    )
+
