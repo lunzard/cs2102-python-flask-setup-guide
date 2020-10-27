@@ -29,7 +29,15 @@ CREATE TABLE user_roles (
 
 CREATE TABLE canparttime (
     ccontact BIGINT PRIMARY KEY NOT NULL REFERENCES public.users(contact),
-    isparttime BOOLEAN NOT NULL
+    isparttime BOOLEAN NOT NULL,
+    avgrating INTEGER NOT NULL
+);
+
+CREATE TABLE dailyprice (
+    category VARCHAR NOT NULL REFERENCES public.categories(category),
+    rating INTEGER NOT NULL,
+    price INTEGER NOT NULL,
+    PRIMARY KEY (category, rating)
 );
 
 CREATE TABLE pets(
@@ -49,8 +57,7 @@ CREATE TABLE available (
 
 CREATE TABLE cantakecare (
     ccontact BIGINT NOT NULL REFERENCES public.users(contact),
-    category VARCHAR REFERENCES public.categories(category),
-    dailyprice INT NOT NULL,
+    category VARCHAR REFERENCES public.categories(category), 
     PRIMARY KEY (ccontact, category)
 );
 
