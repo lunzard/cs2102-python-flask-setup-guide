@@ -5,8 +5,9 @@ from flask_table import Table, Col
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, CanTakeCareForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
-from models import Users, Role, Pets, Available, CanTakeCare, Biddings
-from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable, biddingTable, caretakerCantakecare
+from models import Users, Role, Pets, Available, Biddings, Cantakecare
+from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable, biddingTable, \
+    caretakerCantakecare, editAvailableTable
 from datetime import timedelta
 import sys
 
@@ -318,7 +319,7 @@ def render_caretaker_cantakecare_new():
 def render_caretaker_cantakecare_delete():
     contact = current_user.contact
     category = request.args.get('category')
-    pet = CanTakeCare.query.filter_by(ccontact=contact, category=category).first()
+    pet = Cantakecare.query.filter_by(ccontact=contact, category=category).first()
     if pet:
         form = CanTakeCareForm(obj=pet)
         if request.method == 'POST' and form.validate_on_submit():

@@ -187,7 +187,7 @@ class Reviews(db.Model, UserMixin):
     def get_key(self):
         return (self.startday, self.endday, self.ccontact, self.petname, self.pcontact, self.rating, self.review)
     
-class CanTakeCare(db.Model, UserMixin):
+class Cantakecare(db.Model, UserMixin):
     ccontact = db.Column(db.Integer, db.ForeignKey('users.contact'), primary_key=True, nullable=False)
     category = db.Column(db.String, db.ForeignKey('categories.category'), primary_key=True, nullable=False)
     dailyprice = db.Column(db.Integer, nullable=False)
