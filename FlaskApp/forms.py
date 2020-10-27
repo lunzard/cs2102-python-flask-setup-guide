@@ -336,11 +336,6 @@ class SearchCaretakerForm(FlaskForm):
                 return result
             
 class CanTakeCareForm(FlaskForm):
-    ccontact = IntegerField(
-        label='Ccontact',
-        validators=[InputRequired()],
-        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
-    )
     category = StringField(	
         label='Category',	
         validators=[InputRequired()],	
