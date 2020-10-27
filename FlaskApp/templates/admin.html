@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <title>Admin</title>
     <link href="static/css/topbar.css" rel="stylesheet" media="all">
-
+    <link rel="stylesheet" type="text/css" href="../static/css/login-util.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/login-main.css">
     <style>
         .content {
             display: flex;
+            justify-content: center;
             display: -webkit-flex;
             align-items: center;
             margin: auto auto;
@@ -19,8 +21,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            display: flex;
-            justify-content: center;
+            
         }
 
         body {
@@ -40,17 +41,7 @@
             line-height: 24px;
             margin: 0 0 14px;
         }
-        a {
-            color: #ff6600;
-            transition: .5s;
-            -moz-transition: .5s;
-            -webkit-transition: .5s;
-            -o-transition: .5s;
-            font-family: 'Muli', sans-serif;
-        }
-        a:hover {
-            text-decoration: underline
-        }
+        
         a.more-link {
             color: white;
             font-weight: bold;
@@ -80,8 +71,10 @@
         <div class="table">
             <div>
                 <h1>
-                    Hello, {{ username }} ! See the summary data here: <a href="admin/summary/"
-                        class="btn btn-outline-secondary btn-sm">Summary</a>
+                    Hello, {{ username }} ! See the summary data here: 
+                    <button class="btn btn-outline-secondary btn-sm">
+                        <a href="admin/summary/" >Summary</a>
+                    </button>
                 </h1>
 
                 {{ results }}
