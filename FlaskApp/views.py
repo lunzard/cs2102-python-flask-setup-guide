@@ -254,8 +254,8 @@ def render_caretaker_available():
 @roles_required('caretaker')
 def render_caretaker_available_edit():
     ac = current_user.contact
-    astart = request.args.get('startdate')
-    aend = request.args.get('enddate')
+    astart = request.args.get('startday')
+    aend = request.args.get('endday')
     available = Available.query.filter_by(startdate=astart,enddate=aend,ccontact=ac).first()
     if available:
         form = AvailableUpdateForm(obj=available)
@@ -272,8 +272,8 @@ def render_caretaker_available_edit():
 @roles_required('caretaker')
 def render_caretaker_available_delete():
     ac = current_user.contact
-    astart = request.args.get('startdate')
-    aend = request.args.get('enddate')
+    astart = request.args.get('startday')
+    aend = request.args.get('endday')
     available = Available.query.filter_by(startdate=astart,enddate=aend,ccontact=ac).first()
     if available:
         if request.method == 'POST':
