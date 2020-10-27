@@ -304,12 +304,6 @@ class AvailableUpdateForm(FlaskForm):
         format='%Y-%m-%d',
         render_kw={'placeholder': 'endday', 'class': 'input100'}
     )
-    contact = IntegerField(
-        widget=HiddenInput(),
-        label='Contact',
-        validators=[InputRequired(), is_valid_contact],
-        render_kw={'placeholder': 'Contact', 'class': 'input100'}
-    )
     def validate_on_submit(self):
         result = super(AvailableUpdateForm, self).validate()
         if (self.startday.data - self.endday.data >= timedelta(minutes = 1)):
