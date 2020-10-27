@@ -8,7 +8,7 @@ from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm
 from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
 from models import Users, Role, Pets, Available, Biddings, Cantakecare
 from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable, biddingTable, \
-    caretakerCantakecare, editAvailableTable, profileTable
+    caretakerCantakecare, editAvailableTable, profileTable, CaretakersBidTable
 from datetime import timedelta
 import sys
 
@@ -176,12 +176,13 @@ def render_admin_update_profile():
 #@login_required
 @roles_required('caretaker')
 def render_caretaker_page():
-    print(current_user, flush=True)
     contact = current_user.contact
     #insert query to show this caretaker's total working hours and this month's pay.
-    query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
+    query = "SELECT pcontact, petname, Pets.category, startday, endday FROM biddings INNER JOIN Pets ON\
+        Pets.petname = biddings.petname and Pets.pcontact = biddings.pcontact WHERE ccontact = '{}'".format(contact)
     results = db.session.execute(query)
-    table = profileTable(results)
+    print(results, flush=True)
+    table = CaretakersBidTable(results)
     return render_template('caretaker.html', table=table, username=current_user.username + " caretaker")
 
 

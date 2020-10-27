@@ -62,3 +62,10 @@ class profileTable(Table):
     usertype = Col('User Type')
     card = Col('Card')
     postalcode = Col('Postal Code')
+
+class CaretakersBidTable(Table):
+    pcontact = Col('pcontact')
+    petname = Col('petname')
+    category = Col('category')
+    startday = Col('startday')
+    endday = Col('enddays')
