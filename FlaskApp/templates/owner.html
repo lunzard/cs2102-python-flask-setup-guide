@@ -63,6 +63,14 @@
             top: 50%;
             transform: translateY(-50%);
         }
+        .caretable{
+            display: flex;
+            justify-content: center;
+        }
+        .profiletable{
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 
@@ -76,11 +84,11 @@
 
     <div class="content">
         <div class="table">
-            <div>
+            <div class="caretable">
                 <p>Here are the list of caretakers:</p>
                 {{ caretable}}
             </div>
-            <div>
+            <div class="profiletable">
                 <hi>Here is your profile!</hi>
                 {{ table }}
             </div>
