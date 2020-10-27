@@ -488,6 +488,7 @@ def render_owner_bid_new():
                 db.session.commit()
             except exc.IntegrityError:
                 db.session.rollback()
+                return redirect("/")
 
         return redirect(url_for('view.render_owner_bid'))
     return render_template("ownerBidNew.html", target=cn, form=form, username=current_user.username + " owner")
