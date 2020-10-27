@@ -29,15 +29,16 @@
     <!--===============================================================================================-->
 
     <style>
-        #title{
+        #title {
             display: block;
             display: flex;
         }
+
         .container {
             width: 400px;
-            display:flex;
-            display: -webkit-flex; 
-            align-items:center;
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
             margin: auto auto;
             text-align: center;
         }
@@ -55,13 +56,25 @@
         .formField {
             padding: 10px 0;
         }
+
+        h1 {
+            color: #111;
+            font-family: 'Open Sans Condensed', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 48px;
+            margin: 0 0 24px;
+            padding: 0 30px;
+            text-align: center;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 
 <body>
     <div class="limiter">
-        <div class="container-login100" style="background-image: url('../static/images/bg-01.jpg');">
-            
+        <div class="container-login100" style="background-image: url('https://cs2102project.herokuapp.com/static/images/bg-01.jpg');">
+
             <div class="container">
                 <form class="registrationForm login100-form">
                     {{ form.hidden_tag() }}
@@ -120,13 +133,13 @@
                         <button class="login100-form-btn" formmethod="post">Add new bid</button>
                     </div>
                     <div>
-                        {% with messages = get_flashed_messages() %}  
-                        {% if messages %}  
-                              {% for message in messages %}  
-                                   <p>{{ message }}</p>  
-                              {% endfor %}  
-                        {% endif %}  
-                        {% endwith %}  
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        {% for message in messages %}
+                        <p>{{ message }}</p>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
                     </div>
                 </form>
             </div>
