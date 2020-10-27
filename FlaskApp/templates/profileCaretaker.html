@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Caretaker</title>
-
-	<link rel="stylesheet" type="text/css" href="../static/css/topbar.css">
+    <title>User Profile</title>
+    <link href="static/css/topbar.css" rel="stylesheet" media="all">
 </head>
 
 <body>
@@ -17,10 +17,12 @@
         <a href="https://cs2102project.herokuapp.com/logout">Logout</a>
     </div>
     <div>
-        <p>Add a available slot</p><a href="https://cs2102project.herokuapp.com/owner/pet/new">here</a>
-        <p>Here is the list of your available slots:</p>
-        {{ table }}
+        <h1>
+            Hello, {{ username }}! Update your profile <a href="caretaker/update" class="btn btn-outline-secondary btn-sm">HERE</a>
+        </h1>
+        {{table}}
     </div>
 
 </body>
+
 </html>
