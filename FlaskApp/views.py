@@ -332,11 +332,10 @@ def render_caretaker_cantakecare_new():
 def render_caretaker_cantakecare_delete():
     contact = current_user.contact
     category = request.args.get('category')
-    query = "SELECT * FROM cantakecare WHERE ccontact = '{}' AND category = '{}'".format(contact, category)
-    pet = db.session.execute(query).first()
-    if pet:
+    thispet = Cantakecare.query.filter_by(category=category, ccontact=contact).first()
+    if thispet:
         if request.method == 'POST':
-            db.session.delete(pet)
+            db.session.delete(thispet)
             db.session.commit()
         return redirect(url_for('view.render_caretaker_cantakecare'))
 # END OF CARETAKER END OF CARETAKER END OF CARETAKER END OF CARETAKER END OF CARETAKER END OF CARETAKER
