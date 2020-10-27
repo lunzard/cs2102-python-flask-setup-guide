@@ -178,7 +178,7 @@ def render_admin_update_profile():
 def render_caretaker_page():
     contact = current_user.contact
     #insert query to show this caretaker's total working hours and this month's pay.
-    query = "SELECT pcontact, petname, Pets.category, startday, endday FROM biddings INNER JOIN Pets ON\
+    query = "SELECT biddings.pcontact, biddings.petname, Pets.category, startday, endday FROM biddings INNER JOIN Pets ON\
         Pets.petname = biddings.petname and Pets.pcontact = biddings.pcontact WHERE ccontact = '{}'".format(contact)
     results = db.session.execute(query)
     print(results, flush=True)
