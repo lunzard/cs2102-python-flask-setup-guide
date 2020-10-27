@@ -68,9 +68,9 @@
                     </div>
 
                     <div class="formField wrap-input100 validate-input">
-                        {{ form.startdate }} {% if form.startdate.errors %}
+                        {{ form.startday }} {% if form.startday.errors %}
                         <div class="errorMessage">
-                            {% for error in form.startdate.errors %}
+                            {% for error in form.startday.errors %}
                             <li>{{ error }}</li>
                             {% endfor %}
                         </div>
@@ -78,9 +78,9 @@
                     </div>
 
                     <div class="formField wrap-input100 validate-input">
-                        {{ form.enddate }} {% if form.enddate.errors %}
+                        {{ form.endday }} {% if form.endday.errors %}
                         <div class="errorMessage">
-                            {% for error in form.enddate.errors %}
+                            {% for error in form.endday.errors %}
                             <li>{{ error }}</li>
                             {% endfor %}
                         </div>
