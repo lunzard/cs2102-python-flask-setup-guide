@@ -98,7 +98,7 @@ class Users(db.Model, UserMixin):
         return self.contact
     
 class CanPartTime(db.Model):
-    ccontact = db.Column(db.Integer, primary_key=True)
+    ccontact = db.Column(db.Integer, db.ForeignKey('users.contact', ondelete='CASCADE'), primary_key=True)
     isparttime = db.Column(db.Boolean, nullable=False)
     
 class Role(db.Model):
