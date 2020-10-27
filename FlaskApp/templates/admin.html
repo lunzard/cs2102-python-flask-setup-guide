@@ -1,24 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
-        <link href="static/css/topbar.css" rel="stylesheet" media="all">
+    <link href="static/css/topbar.css" rel="stylesheet" media="all">
+
+    <style>
+        .content {
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            margin: auto auto;
+            text-align: center;
+        }
+
+        .table {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        body {
+            color: #222;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 24px;
+            margin: 0 0 14px;
+        }
+
+        h1 {
+            color: #222;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 24px;
+            margin: 0 0 14px;
+        }
+    </style>
 </head>
 
 <body>
     <div class="topbar">
-      <a href="https://cs2102project.herokuapp.com/admin">Home</a>
-      <a href="https://cs2102project.herokuapp.com/admin/summary">Summary</a>
-      <a href="https://cs2102project.herokuapp.com/logout">Logout</a>
+        <a href="https://cs2102project.herokuapp.com/admin">Home</a>
+        <a href="https://cs2102project.herokuapp.com/admin/summary">Summary</a>
+        <a href="https://cs2102project.herokuapp.com/logout" id="logout">Logout</a>
     </div>
-    <div>
-        <h1>
-            Hello, {{ username }} ! See the summary data here: <a href="admin/summary/" class="btn btn-outline-secondary btn-sm">Summary</a>
-        </h1>
 
-        {{ results }}
+    <div class="content">
+        <div class="table">
+            <div>
+                <h1>
+                    Hello, {{ username }} ! See the summary data here: <a href="admin/summary/"
+                        class="btn btn-outline-secondary btn-sm">Summary</a>
+                </h1>
+
+                {{ results }}
+            </div>
+        </div>
     </div>
 
 </body>
+
 </html>
