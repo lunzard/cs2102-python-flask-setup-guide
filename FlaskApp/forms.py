@@ -312,7 +312,7 @@ class AvailableUpdateForm(FlaskForm):
     )
     def validate_on_submit(self):
         result = super(AvailableUpdateForm, self).validate()
-        if (self.startday.data>self.endday.data):
+        if (self.startday.data - self.endday.data >= timedelta(minutes = 1)):
             return False
         else:
             return result

@@ -155,7 +155,7 @@ def render_admin_profile():
     return render_template('profileAdmin.html', table=table, username=current_user.username + " admin")
 
 
-@view.route("/admin/profile/update", methods=["GET"])
+@view.route("/admin/profile/update", methods=["GET", "POST"])
 @roles_required('admin')
 def render_admin_update_profile():
     contact = current_user.contact
@@ -221,7 +221,7 @@ def render_caretaker_profile():
     return render_template('profileCaretaker.html', table=table, username=current_user.username + " caretaker")
 
 
-@view.route("/caretaker/profile/update", methods=["GET"])
+@view.route("/caretaker/profile/update", methods=["GET", "POST"])
 @roles_required('caretaker')
 def render_caretaker_update_profile():
     contact = current_user.contact
