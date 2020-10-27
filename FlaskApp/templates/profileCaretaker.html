@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Caretaker</title>
+    <title>User Profile</title>
     <link href="static/css/topbar.css" rel="stylesheet" media="all">
 </head>
 
@@ -16,9 +17,12 @@
         <a href="https://cs2102project.herokuapp.com/logout">Logout</a>
     </div>
     <div>
-        <p>Here are your working hours and pay this month! [placeholder table ofc]</p>
-        {{ table }}
+        <h1>
+            Hello, {{ username }}! Update your profile <a href="caretaker/update" class="btn btn-outline-secondary btn-sm">HERE</a>
+        </h1>
+        {{table}}
     </div>
 
 </body>
+
 </html>
