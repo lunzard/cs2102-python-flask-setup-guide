@@ -261,8 +261,8 @@ def render_caretaker_available_edit():
         form = AvailableUpdateForm(obj=available)
         if request.method == 'POST' and form.validate_on_submit():
             thisavailable = Available.query.filter_by(startday=astart,endday=aend,ccontact=ac).first()
-            thisavailable.startday = form.startdate.data
-            thisavailable.endday = form.enddate.data
+            thisavailable.startday = form.startday.data
+            thisavailable.endday = form.endday.data
             db.session.commit()
             return redirect(url_for('view.render_caretaker_available'))
     return render_template('availableNew.html', form=form, username=current_user.username + " caretaker")
@@ -288,11 +288,11 @@ def render_caretaker_available_new():
     form = AvailableForm()
     contact = current_user.contact
     if request.method == 'POST' and form.validate_on_submit():
-        startdate = form.startdate.data
-        enddate = form.enddate.data
+        startday = form.startday.data
+        endday = form.endday.data
         ccontact = contact
         query = "INSERT INTO available(startday, endday, ccontact) VALUES ('{}', '{}', '{}')" \
-        .format(startdate, enddate, ccontact)
+        .format(startday, endday, ccontact)
         db.session.execute(query)
         db.session.commit()
         return redirect(url_for('view.render_caretaker_available'))
@@ -474,13 +474,13 @@ def render_owner_bid_new():
     form.ccontact.data = cn
     if request.method == 'POST' and form.validate_on_submit():
         petname = form.petname.data
-        startdate = form.startdate.data
-        enddate = form.enddate.data
+        startday = form.startday.data
+        endday = form.endday.data
         paymentmode = form.paymentmode.data
         deliverymode = form.deliverymode.data
-        if(enddate - startdate >= timedelta(minutes=1)):
+        if(endday - startday >= timedelta(minutes=1)):
             query = "INSERT INTO biddings(pcontact, ccontact, petname, startday, endday, paymentmode, deliverymode, status) VALUES ('{}', '{}', '{}', '{}','{}', '{}', '{}', '{}')" \
-            .format(contact, cn, petname, startdate, enddate, paymentmode, deliverymode, "pending")
+            .format(contact, cn, petname, startday, endday, paymentmode, deliverymode, "pending")
             db.session.execute(query)
             db.session.commit()
         return redirect(url_for('view.render_owner_bid'))
