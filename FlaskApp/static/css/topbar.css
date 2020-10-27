@@ -45,3 +45,7 @@ a {
   -o-transition: .5s;
   font-family: 'Muli', sans-serif;
 }
+
+#logout{
+  float: right;
+}
