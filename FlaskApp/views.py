@@ -10,6 +10,7 @@ from models import Users, Role, Pets, Available, Biddings, Cantakecare
 from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable, biddingTable, \
     caretakerCantakecare, editAvailableTable, profileTable, CaretakersBidTable
 from datetime import timedelta
+from sqlalchemy import exc
 import sys
 
 view = Blueprint("view", __name__)
@@ -482,8 +483,12 @@ def render_owner_bid_new():
         if(endday - startday >= timedelta(minutes=1)):
             query = "INSERT INTO biddings(pcontact, ccontact, petname, startday, endday, paymentmode, deliverymode, status) VALUES ('{}', '{}', '{}', '{}','{}', '{}', '{}', '{}')" \
             .format(contact, cn, petname, startday, endday, paymentmode, deliverymode, "pending")
-            db.session.execute(query)
-            db.session.commit()
+            try:
+                db.session.execute(query)
+                db.session.commit()
+            except exc.IntegrityError:
+                db.session.rollback()
+
         return redirect(url_for('view.render_owner_bid'))
     return render_template("ownerBidNew.html", target=cn, form=form, username=current_user.username + " owner")
 
