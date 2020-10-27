@@ -31,9 +31,6 @@
     <!--===============================================================================================-->
 
     <style>
-        body{
-            
-        }
         .container {
             width: 390px;
         }
@@ -55,9 +52,9 @@
             float: right;
         }
         .content{
-            display:flex;/*Flex布局*/
-            display: -webkit-flex; /* Safari */
-            align-items:center;/*指定垂直居中*/
+            display:flex;
+            display: -webkit-flex; 
+            align-items:center;
             margin: auto auto;
             text-align: center;
         }
@@ -65,6 +62,21 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
+        }
+        .caretable{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        .profiletable{
+            display: flex;
+            justify-content: center;
+        }
+        .caption{
+            display: block;
+        }
+        .flasktable{
+            display: block;
         }
     </style>
 </head>
@@ -79,13 +91,14 @@
 
     <div class="content">
         <div class="table">
-            <div>
-                <p>Here are the list of caretakers:</p>
-                {{ caretable}}
+            <div class="caretable">
+                <div class="caption">Here are the list of caretakers:</div>
+                <div class="flasktable">{{ caretable}}</div> 
             </div>
-            <div>
-                <hi>Here is your profile!</hi>
-                {{ table }}
+            <div class="caption">Here is your profile!</div> 
+            <div class="profiletable">
+                
+                <div class="flasktable"> {{ table }} </div>
             </div>
         </div>
     </div>

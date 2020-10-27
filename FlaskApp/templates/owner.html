@@ -66,6 +66,7 @@
         .caretable{
             display: flex;
             justify-content: center;
+            margin-bottom: 40px;
         }
         .profiletable{
             display: flex;
@@ -84,12 +85,12 @@
 
     <div class="content">
         <div class="table">
+            <p class="caption">Here are the list of caretakers:</p>
             <div class="caretable">
-                <p>Here are the list of caretakers:</p>
                 {{ caretable}}
             </div>
+            <hi class="caption">Here is your profile!</hi>
             <div class="profiletable">
-                <hi>Here is your profile!</hi>
                 {{ table }}
             </div>
         </div>
