@@ -31,6 +31,9 @@
     <!--===============================================================================================-->
 
     <style>
+        body{
+            
+        }
         .container {
             width: 390px;
         }
@@ -52,7 +55,16 @@
             float: right;
         }
         .content{
+            display:flex;
+            display: -webkit-flex; 
+            align-items:center;
             margin: auto auto;
+            text-align: center;
+        }
+        .table{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
         }
     </style>
 </head>
@@ -66,13 +78,15 @@
     </div>
 
     <div class="content">
-        <div>
-            <p>Here are the list of caretakers:</p>
-            {{ caretable}}
-        </div>
-        <div>
-            <hi>Here is your profile!</hi>
-            {{ table }}
+        <div class="table">
+            <div>
+                <p>Here are the list of caretakers:</p>
+                {{ caretable}}
+            </div>
+            <div>
+                <hi>Here is your profile!</hi>
+                {{ table }}
+            </div>
         </div>
     </div>
 

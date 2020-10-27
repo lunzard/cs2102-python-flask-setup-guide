@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <title>Caretaker</title>
     <link href="static/css/topbar.css" rel="stylesheet" media="all">
+    <style>
+        #logout{
+            float: right;
+        }
+        .content{
+            display:flex;
+            display: -webkit-flex; 
+            align-items:center;
+            margin: auto auto;
+            text-align: center;
+        }
+        .table{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
 </head>
 
 <body>
@@ -13,11 +30,16 @@
         <a href="https://cs2102project.herokuapp.com/caretaker/cantakecare">Categories</a>
         <a href="https://cs2102project.herokuapp.com/caretaker/biddings">Biddings</a>
         <a href="https://cs2102project.herokuapp.com/caretaker/available">Availability</a>
-        <a href="https://cs2102project.herokuapp.com/logout">Logout</a>
+        <a href="https://cs2102project.herokuapp.com/logout" id="logout">Logout</a>
     </div>
-    <div>
-        <p>Here are your working hours and pay this month! [placeholder table ofc]</p>
-        {{ table }}
+    
+    <div class="content">
+        <div class="table">
+            <div>
+                <p>Here are your working hours and pay this month! [placeholder table ofc]</p>
+                {{ table }}
+            </div>
+        </div>
     </div>
 
 </body>
