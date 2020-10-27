@@ -19,7 +19,7 @@ class editAvailableTable(Table):
     startday = Col('Start Date ')
     endday = Col('End Date ')
     ccontact = Col('Contact')
-    edit = ButtonCol('Edit ', 'view.render_caretaker_available_edit', url_kwargs=dict(startday='startday', endday='endday'))
+    edit = LinkCol('Edit ', 'view.render_caretaker_available_edit', url_kwargs=dict(startday='startday', endday='endday'))
     delete = ButtonCol('Delete', 'view.render_caretaker_available_delete', url_kwargs=dict(startday='startday', endday='endday'))
 
 class ownerHomePage(Table):

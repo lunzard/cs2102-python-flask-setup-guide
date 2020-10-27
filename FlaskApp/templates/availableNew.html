@@ -82,10 +82,10 @@
                 <form class="registrationForm login100-form">
                     {{ form.hidden_tag() }}
                     <div class="formField wrap-input100 validate-input">
-                        {{ form.startdate }} {% if form.startdate.errors %}
+                        {{ form.startday }} {% if form.startday.errors %}
                         <span class="focus-input100" data-placeholder="&#xe82a;"></span>
                         <div class="errorMessage">
-                            {% for error in form.startdate.errors %}
+                            {% for error in form.startday.errors %}
                             <li>{{ error }}</li>
                             {% endfor %}
                         </div>
@@ -93,9 +93,9 @@
                     </div>
 
                     <div class="formField wrap-input100 validate-input">
-                        {{ form.enddate }} {% if form.enddate.errors %}
+                        {{ form.endday }} {% if form.endday.errors %}
                         <div class="errorMessage">
-                            {% for error in form.enddate.errors %}
+                            {% for error in form.endday.errors %}
                             <li>{{ error }}</li>
                             {% endfor %}
                         </div>
