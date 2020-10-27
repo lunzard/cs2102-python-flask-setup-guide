@@ -110,6 +110,15 @@
                     <div class="buttonWrapper">
                         <button class="login100-form-btn" formmethod="post">Add new bid</button>
                     </div>
+                    <div>
+                        {% with messages = get_flashed_messages() %}  
+                        {% if messages %}  
+                              {% for message in messages %}  
+                                   <p>{{ message }}</p>  
+                              {% endfor %}  
+                        {% endif %}  
+                        {% endwith %}  
+                    </div>
                 </form>
             </div>
         </div>
