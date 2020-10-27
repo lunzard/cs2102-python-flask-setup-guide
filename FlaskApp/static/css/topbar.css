@@ -36,3 +36,12 @@ html for top bar
   <a href="#about">About</a>
 </div>
 */
+
+a {
+  color: #ff6600;
+  transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+  -o-transition: .5s;
+  font-family: 'Muli', sans-serif;
+}
