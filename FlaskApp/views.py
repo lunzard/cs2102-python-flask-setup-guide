@@ -133,7 +133,7 @@ def render_admin_page():
     print(current_user, flush=True)
     contact = current_user.contact
     query = "SELECT * FROM users WHERE contact = '{}' AND usertype = 'admin'".format(contact)
-    results = db.session.execute(query).fetchall()
+    results = profileTable(db.session.execute(query))
     return render_template('admin.html', results=results, username=current_user.username + " admin")
 
 

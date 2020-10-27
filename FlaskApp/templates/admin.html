@@ -8,7 +8,7 @@
 
 <body>
     <div class="topbar">
-      <a href="https://cs2102project.herokuapp.com/admin/">Home</a>
+      <a href="https://cs2102project.herokuapp.com/admin">Home</a>
       <a href="https://cs2102project.herokuapp.com/admin/summary">Summary</a>
       <a href="https://cs2102project.herokuapp.com/logout">Logout</a>
     </div>
@@ -17,20 +17,7 @@
             Hello, {{ username }} ! See the summary data here: <a href="admin/summary/" class="btn btn-outline-secondary btn-sm">Summary</a>
         </h1>
 
-        <table>
-            <th>Username</th>
-            <th>Contact</th>
-            <th>Usertype</th>
-            <th>Card</th>
-            {% for item in results %}
-            <tr>
-                <td>{{item.username}}</td>
-                <td>{{item.contact}}</td>
-                <td>{{item.usertype}}</td>
-                <td>{{item.card}}</td>
-            </tr>
-            {% endfor %}
-        </table>
+        {{ results }}
     </div>
 
 </body>
