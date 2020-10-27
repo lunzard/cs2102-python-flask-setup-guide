@@ -326,7 +326,7 @@ def render_caretaker_cantakecare_new():
         return redirect(url_for('view.render_caretaker_cantakecare'))
     return render_template('caretakerCantakecareNew.html', form=form, username=current_user.username + " caretaker")
 
-@view.route("/caretaker/cantakecare/delete", methods=["GET", "POST"])
+@view.route("/caretaker/cantakecare/delete", methods=["POST"])
 @roles_required('caretaker')
 def render_caretaker_cantakecare_delete():
     contact = current_user.contact
@@ -334,14 +334,10 @@ def render_caretaker_cantakecare_delete():
     query = "SELECT * FROM cantakecare WHERE ccontact = '{}' AND category = '{}'".format(contact, category)
     pet = db.session.execute(query).first()
     if pet:
-        form = CanTakeCareDeleteForm(obj=pet)
-        if request.method == 'POST' and form.validate_on_submit():
-            category = form.category
-            thiscategory = Pets.query.filter_by(ccontact=contact, category=category).first()
-            db.session.delete(thiscategory)
+        if request.method == 'POST':
+            db.session.delete(pet)
             db.session.commit()
-            return redirect(url_for('view.render_caretaker_cantakecare'))
-        return render_template('caretakerCantakecare.html', form=form, username=current_user.username + " caretaker")
+        return redirect(url_for('view.render_caretaker_cantakecare'))
 # END OF CARETAKER END OF CARETAKER END OF CARETAKER END OF CARETAKER END OF CARETAKER END OF CARETAKER
 
 # PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER PETOWNER
