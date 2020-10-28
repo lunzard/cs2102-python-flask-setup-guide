@@ -96,9 +96,12 @@
     <div class="content">
         <div class="table">
             <p class="caption">Here are the list of caretakers:</p>
+            {% for caretaker_page in caretaker_pages %}
             <div class="caretable">
-                {{ caretable}}
+                {{ caretaker_page }}
             </div>
+            {% endfor %}
+            {{ pagination }}
             <hi class="caption">Here is your profile!</hi>
             <div class="profiletable">
                 {{ table }}
