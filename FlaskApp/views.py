@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, flash, url_for, render_template, request
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from flask_table import Table, Col
-from flask_paginate import Pagination, get_page_parameter
+# from flask_paginate import Pagination, get_page_parameter
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, CanTakeCareForm, \
     CanTakeCareDeleteForm
@@ -350,17 +350,17 @@ def render_owner_page():
     caretakersquery = "SELECT * FROM users WHERE usertype = 'caretaker'"
     caretakers = db.session.execute(caretakersquery)
 
-    PER_PAGE = 10
-    total = caretakers.count()
-    page = request.args.get(get_page_parameter(), type=int, default=1)
-    start = (page-1)*PER_PAGE
-    end = start + PER_PAGE
-    pagination = Pagination(bs_version=3, page=page, total=total)
-    caretaker_pages = caretakers.slice(start, end)
-    context = {
-        'pagination': pagination,
-        'caretaker_pages': caretaker_pages
-    }
+#     PER_PAGE = 10
+#   total = caretakers.count()
+#    page = request.args.get(get_page_parameter(), type=int, default=1)
+#    start = (page-1)*PER_PAGE
+#    end = start + PER_PAGE
+#    pagination = Pagination(bs_version=3, page=page, total=total)
+#    caretaker_pages = caretakers.slice(start, end)
+#    context = {
+#        'pagination': pagination,
+#        'caretaker_pages': caretaker_pages
+#    }
 
     caretable = ownerHomePage(caretakers)
     contact = current_user.contact
@@ -368,7 +368,7 @@ def render_owner_page():
     profile = db.session.execute(query)
     table = userInfoTable(profile)
 
-    return render_template("owner.html", caretable=caretable, profile=profile, **context, caretakers=caretakers, table=table, username=current_user.username + " owner")
+    return render_template("owner.html", caretable=caretable, profile=profile, caretakers=caretakers, table=table, username=current_user.username + " owner")
 
 
 @view.route("/owner/summary", methods=["GET", "POST"])
