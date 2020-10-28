@@ -8,17 +8,16 @@
         #logout{
             float: right;
         }
-        .content{
-            display:flex;
-            display: -webkit-flex; 
-            align-items:center;
-            margin: auto auto;
-            text-align: center;
+        .wrapper{
+            position: relative;
         }
-        .table{
+        .content{
             position: absolute;
+            left: 50%;
             top: 50%;
-            transform: translateY(-50%);
+            width: 900px;
+            height: 200px;
+            transform: translate(-28%,100%);
         }
     </style>
 </head>
@@ -33,8 +32,8 @@
         <a href="https://cs2102project.herokuapp.com/logout" id="logout">Logout</a>
     </div>
     
-    <div class="content">
-        <div class="table">
+    <div class="wrapper">
+        <div class="content">
             <div>
                 <p>Here are your working hours and pay this month! [placeholder table ofc]</p>
                 {{ table }}

@@ -53,15 +53,22 @@
         #logout{
             float: right;
         }
+        .wrapper{
+            position: relative;
+        }
         .content{
-            display:flex;
-            display: -webkit-flex; 
-            align-items:center;
-            margin: auto auto;
-            text-align: center;
             position: absolute;
+            left: 50%;
             top: 50%;
-            transform: translateY(-50%);
+            width: 900px;
+            height: 200px;
+            transform: translate(-28%,100%);
+        }
+        .table{
+            font-size: 14px;
+            position: absolute;
+            margin-top: 30px;
+            left: 23%;
         }
     </style>
 </head>
@@ -75,10 +82,12 @@
         <a href="https://cs2102project.herokuapp.com/caretaker/available">Availability</a>
         <a href="https://cs2102project.herokuapp.com/logout" id="logout">Logout</a>
     </div>
-    <div class="content">
-        <p>Add a new category <a href="https://cs2102project.herokuapp.com/caretaker/cantakecare/new">here</a></p>
-        <p>Here are a list of pets that you chose to be able to take care of:</p>
-        {{ table }}
+    <div class="wrapper">
+        <div class="content">
+            <p>Add a new category <a href="https://cs2102project.herokuapp.com/caretaker/cantakecare/new">here</a></p>
+            <p>Here are a list of pets that you chose to be able to take care of:</p>
+            <div class="table">{{table}}</div>  
+        </div>
     </div>
 </body>
 </html>
