@@ -82,6 +82,9 @@
             opacity: 0.7;
             color: white !important;
         }
+        .searchWrapper{
+            padding-bottom: 50px;
+        }
     </style>
 </head>
 
@@ -95,7 +98,7 @@
 
     <div class="content">
         <div class="content">
-            <form class="registrationForm login100-form">
+            <form class="registrationForm login100-form searchWrapper">
                 {{ form.hidden_tag() }}
                 <div class="formField wrap-input100 validate-input">
                     {{ form.ccontact }} {% if form.ccontact.errors %}
