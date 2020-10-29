@@ -369,6 +369,9 @@ def render_owner_page():
         cc = request.form.get('ccontact')
         postal_code = request.form.get('postal_code')
         category = request.form.get('category')
+        print(cc, flush=True)
+        print(postal_code, flush=True)
+        print(category, flush=True)
         query = "SELECT * FROM users WHERE usertype = 'caretaker' AND\
             contact = null"
         selectedCareTakers = db.session.execute(query)
