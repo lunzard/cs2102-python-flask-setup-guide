@@ -378,9 +378,9 @@ def render_owner_page():
             where
                 usertype = 'caretaker'
                 and
-                (%(cc)s is null or %(cc)s = contact)
+                (:cc is null or contact=:cc)
                 and
-                (%(postal_code)s is null or %(postal_code)s = postalcode)
+                (:postal_code is null or postalcode =:postal_code)
         """
         parameters = dict(cc = cc, postal_code = postal_code)
         selectedCareTakers = db.session.execute(query, parameters)
