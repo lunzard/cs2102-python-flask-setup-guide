@@ -314,14 +314,17 @@ class AvailableUpdateForm(FlaskForm):
 class SearchCaretakerForm(FlaskForm):
     ccontact = IntegerField(
         label='Contact',
+        default=None,
         render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
     postal_code = StringField(
         label='Postal Code',
+        default=None,
         render_kw={'placeholder': 'Postal Code', 'class': 'input100'}
     )
     category = StringField(	
-        label='Category',	
+        label='Category',
+        default=None,	
         render_kw={'placeholder': 'Category', 'class': 'input100'}	
     )
     
