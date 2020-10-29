@@ -313,21 +313,20 @@ class AvailableUpdateForm(FlaskForm):
 
 class SearchCaretakerForm(FlaskForm):
     ccontact = IntegerField(
-        label='Ccontact',
-        validators=[InputRequired()],
-        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
+        label='Contact',
+        render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
-    ccontact = IntegerField(
-        label='Ccontact',
-        validators=[InputRequired()],
-        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
+    postal_code = StringField(
+        label='Postal Code',
+        render_kw={'placeholder': 'Postal Code', 'class': 'input100'}
     )
+    category = StringField(	
+        label='Category',	
+        render_kw={'placeholder': 'Category', 'class': 'input100'}	
+    )
+    
     def validate_on_submit(self):
-            result = super(SearchCaretakerForm, self).validate()
-            if (self.startday.data>self.endday.data):
-                return False
-            else:
-                return result
+        return super(SearchCaretakerForm, self).validate()
             
 class CanTakeCareForm(FlaskForm):
     category = StringField(	

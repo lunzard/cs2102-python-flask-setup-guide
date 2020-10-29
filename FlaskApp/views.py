@@ -6,7 +6,7 @@ from flask_table import Table, Col
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, CanTakeCareForm, \
     CanTakeCareDeleteForm
-from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
+from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid, SearchCaretakerForm
 from models import Users, Role, Pets, Available, Biddings, Cantakecare
 from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable, biddingTable, \
     caretakerCantakecare, editAvailableTable, profileTable, CaretakersBidTable
@@ -363,6 +363,17 @@ def render_owner_page():
 #    }
 
     caretable = ownerHomePage(caretakers)
+    form = SearchCaretakerForm()
+
+    if request.method == 'POST' and form.validate_on_submit():
+        cc = request.form.get('ccontact')
+        postal_code = request.form.get('postal_code')
+        category = request.form.get('category')
+        selectedCareTakers = "SELECT * FROM users WHERE usertype = 'caretaker' AND\
+            contact = '{}' AND postalcode = '{}'"
+        caretable = ownerHomePage(selectedCareTakers)
+        
+
     contact = current_user.contact
     query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
     profile = db.session.execute(query)
