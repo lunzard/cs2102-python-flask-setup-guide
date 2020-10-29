@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, SelectField
 from wtforms.fields.html5 import DateField
-from wtforms.validators import InputRequired, ValidationError, EqualTo, Regexp
+from wtforms.validators import InputRequired, ValidationError, EqualTo, Regexp, Optional
 from wtforms.widgets import HiddenInput
 from models import Users
 from datetime import date
@@ -314,16 +314,19 @@ class AvailableUpdateForm(FlaskForm):
 class SearchCaretakerForm(FlaskForm):
     ccontact = IntegerField(
         label='Contact',
+        validators=[Optional()],
         default=None,
         render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
     postal_code = StringField(
         label='Postal Code',
+        validators=[Optional()],
         default=None,
         render_kw={'placeholder': 'Postal Code', 'class': 'input100'}
     )
     category = StringField(	
         label='Category',
+        validators=[Optional()],
         default=None,	
         render_kw={'placeholder': 'Category', 'class': 'input100'}	
     )
