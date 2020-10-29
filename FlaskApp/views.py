@@ -369,15 +369,9 @@ def render_owner_page():
         cc = request.form.get('ccontact')
         postal_code = request.form.get('postal_code')
         category = request.form.get('category')
-        if cc == "":
-            cc = "null"
-        if postal_code == "":
-            postal_code = "null"
-        if category == "":
-            category = "null"
         query = "SELECT * FROM users WHERE usertype = 'caretaker' AND\
-            （'{}' is null OR contact = '{}'） AND \
-             ('{}' is null OR postalcode = '{}')".format(cc,cc,postal_code,postal_code)
+            （'{}' = '' OR contact = '{}'） AND \
+             ('{}' = '' OR postalcode = '{}')".format(cc,cc,postal_code,postal_code)
         selectedCareTakers = db.session.execute(query)
         caretable = ownerHomePage(selectedCareTakers)
         
