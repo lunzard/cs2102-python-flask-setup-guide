@@ -379,7 +379,7 @@ def render_owner_page():
     profile = db.session.execute(query)
     table = userInfoTable(profile)
 
-    return render_template("owner.html", caretable=caretable, profile=profile, caretakers=caretakers, table=table, username=current_user.username + " owner")
+    return render_template("owner.html", form=form, caretable=caretable, profile=profile, caretakers=caretakers, table=table, username=current_user.username + " owner")
 
 
 @view.route("/owner/summary", methods=["GET", "POST"])
