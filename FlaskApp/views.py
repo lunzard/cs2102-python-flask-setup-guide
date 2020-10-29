@@ -370,11 +370,11 @@ def render_owner_page():
         postal_code = request.form.get('postal_code')
         category = request.form.get('category')
         if cc == "":
-            cc = None
+            cc = "null"
         if postal_code == "":
-            postal_code = None
+            postal_code = "null"
         if category == "":
-            category = None
+            category = "null"
         query = "SELECT * FROM users WHERE usertype = 'caretaker' AND\
             （'{}' is null OR contact = '{}'） AND \
              ('{}' is null OR postalcode = '{}')".format(cc,cc,postal_code,postal_code)
