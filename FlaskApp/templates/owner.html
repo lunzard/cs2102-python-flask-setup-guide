@@ -93,7 +93,28 @@
       <a href="https://cs2102project.herokuapp.com/logout" id="logout">Logout</a>
     </div>
 
-    <div>
+    <div class="content">
+        <div class="table">
+            <p class="caption">Here are the list of caretakers:</p>
+            <div class="profiletable">
+                {{ caretable }}
+            </div>
+            <!--
+            {% for caretaker_page in caretaker_pages %}
+                <div class="caretable">
+                    {{ caretaker_page }}
+                </div>
+            {% endfor %}
+            {{ pagination }}
+            -->
+            <hi class="caption">Here is your profile!</hi>
+            <div class="profiletable">
+                {{ table }}
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
         <form class="registrationForm login100-form">
             {{ form.hidden_tag() }}
             <div class="formField wrap-input100 validate-input">
@@ -116,16 +137,6 @@
                 {% endif %}
             </div>
 
-            <div class="formField wrap-input100 validate-input">
-                {{ form.category }} {% if form.category.errors %}
-                <div class="errorMessage">
-                    {% for error in form.category.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
-
             <div class="buttonWrapper">
                 <button class="login100-form-btn" formmethod="post">Search</button>
             </div>
@@ -142,26 +153,6 @@
 
     </div>
 
-    <div class="content">
-        <div class="table">
-            <p class="caption">Here are the list of caretakers:</p>
-            <div class="profiletable">
-                {{ caretable }}
-            </div>
-            <!--
-            {% for caretaker_page in caretaker_pages %}
-                <div class="caretable">
-                    {{ caretaker_page }}
-                </div>
-            {% endfor %}
-            {{ pagination }}
-            -->
-            <hi class="caption">Here is your profile!</hi>
-            <div class="profiletable">
-                {{ table }}
-            </div>
-        </div>
-    </div>
 
 </body>
 </html>
