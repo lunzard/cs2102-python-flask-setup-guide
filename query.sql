@@ -9,7 +9,7 @@ SELECT DISTINCT {"this.username"} AS petowner, username AS caretaker
 CREATE OR REPLACE FUNCTION 
 calculate_salary(start DATE, end DATE, price INTEGER) 
 RETURN INT AS
-    'BEGIN RETURN price * (start - end) + 3000;
+    'BEGIN RETURN price * (end - start)) + 3000;
     END;'
 LANGUAGE plpgsql;
 
