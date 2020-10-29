@@ -94,6 +94,43 @@
     </div>
 
     <div class="content">
+        <div class="content">
+            <form class="registrationForm login100-form">
+                {{ form.hidden_tag() }}
+                <div class="formField wrap-input100 validate-input">
+                    {{ form.ccontact }} {% if form.ccontact.errors %}
+                    <div class="errorMessage">
+                        {% for error in form.ccontact.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="formField wrap-input100 validate-input">
+                    {{ form.postal_code }} {% if form.postal_code.errors %}
+                    <div class="errorMessage">
+                        {% for error in form.postal_code.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="buttonWrapper">
+                    <button class="login100-form-btn" formmethod="post">Search</button>
+                </div>
+                <div>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <p>{{ message }}</p>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            </form>
+        </div>
         <div class="table">
             <p class="caption">Here are the list of caretakers:</p>
             <div class="profiletable">
@@ -114,44 +151,7 @@
         </div>
     </div>
 
-    <div class="content">
-        <form class="registrationForm login100-form">
-            {{ form.hidden_tag() }}
-            <div class="formField wrap-input100 validate-input">
-                {{ form.ccontact }} {% if form.ccontact.errors %}
-                <div class="errorMessage">
-                    {% for error in form.ccontact.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
 
-            <div class="formField wrap-input100 validate-input">
-                {{ form.postal_code }} {% if form.postal_code.errors %}
-                <div class="errorMessage">
-                    {% for error in form.postal_code.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
-
-            <div class="buttonWrapper">
-                <button class="login100-form-btn" formmethod="post">Search</button>
-            </div>
-            <div>
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                {% for message in messages %}
-                <p>{{ message }}</p>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
-            </div>
-        </form>
-
-    </div>
 
 
 </body>
