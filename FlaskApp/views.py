@@ -2,14 +2,16 @@ from flask import Blueprint, redirect, flash, url_for, render_template, request
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_user import roles_required
 from flask_table import Table, Col
+# from flask_paginate import Pagination, get_page_parameter
 from __init__ import db, login_manager, bcrypt
 from forms import LoginForm, RegistrationForm, BiddingForm, PetForm, ProfileForm, AvailableForm, CanTakeCareForm, \
     CanTakeCareDeleteForm
-from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid
+from forms import AvailableUpdateForm, PetUpdateForm, UserUpdateForm, Bid, SearchCaretakerForm
 from models import Users, Role, Pets, Available, Biddings, Cantakecare, CanPartTime
 from tables import userInfoTable, editPetTable, ownerHomePage, biddingCaretakerTable, biddingTable, \
-    caretakerCantakecare, editAvailableTable, profileTable
+    caretakerCantakecare, editAvailableTable, profileTable, CaretakersBidTable
 from datetime import timedelta
+from sqlalchemy import exc
 import sys
 
 view = Blueprint("view", __name__)
@@ -136,7 +138,7 @@ def render_admin_page():
     print(current_user, flush=True)
     contact = current_user.contact
     query = "SELECT * FROM users WHERE contact = '{}' AND usertype = 'admin'".format(contact)
-    results = db.session.execute(query).fetchall()
+    results = profileTable(db.session.execute(query))
     return render_template('admin.html', results=results, username=current_user.username + " admin")
 
 
@@ -158,7 +160,7 @@ def render_admin_profile():
     return render_template('profileAdmin.html', table=table, username=current_user.username + " admin")
 
 
-@view.route("/admin/profile/update", methods=["GET"])
+@view.route("/admin/profile/update", methods=["GET", "POST"])
 @roles_required('admin')
 def render_admin_update_profile():
     contact = current_user.contact
@@ -179,12 +181,13 @@ def render_admin_update_profile():
 #@login_required
 @roles_required('caretaker')
 def render_caretaker_page():
-    print(current_user, flush=True)
     contact = current_user.contact
     #insert query to show this caretaker's total working hours and this month's pay.
-    query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
+    query = "SELECT biddings.pcontact, biddings.petname, Pets.category, startday, endday FROM biddings INNER JOIN Pets ON\
+        Pets.petname = biddings.petname and Pets.pcontact = biddings.pcontact WHERE ccontact = '{}'".format(contact)
     results = db.session.execute(query)
-    table = profileTable(results)
+    print(results, flush=True)
+    table = CaretakersBidTable(results)
     return render_template('caretaker.html', table=table, username=current_user.username + " caretaker")
 
 
@@ -224,7 +227,7 @@ def render_caretaker_profile():
     return render_template('profileCaretaker.html', table=table, username=current_user.username + " caretaker")
 
 
-@view.route("/caretaker/profile/update", methods=["GET"])
+@view.route("/caretaker/profile/update", methods=["GET", "POST"])
 @roles_required('caretaker')
 def render_caretaker_update_profile():
     contact = current_user.contact
@@ -257,15 +260,15 @@ def render_caretaker_available():
 @roles_required('caretaker')
 def render_caretaker_available_edit():
     ac = current_user.contact
-    astart = request.args.get('startdate')
-    aend = request.args.get('enddate')
-    available = Available.query.filter_by(startdate=astart,enddate=aend,ccontact=ac).first()
+    astart = request.args.get('startday')
+    aend = request.args.get('endday')
+    available = Available.query.filter_by(startday=astart,endday=aend,ccontact=ac).first()
     if available:
         form = AvailableUpdateForm(obj=available)
         if request.method == 'POST' and form.validate_on_submit():
-            thisavailable = Available.query.filter_by(startdate=astart,enddate=aend,ccontact=ac).first()
-            thisavailable.startday = form.startdate.data
-            thisavailable.endday = form.enddate.data
+            thisavailable = Available.query.filter_by(startday=astart,endday=aend,ccontact=ac).first()
+            thisavailable.startday = form.startday.data
+            thisavailable.endday = form.endday.data
             db.session.commit()
             return redirect(url_for('view.render_caretaker_available'))
     return render_template('availableNew.html', form=form, username=current_user.username + " caretaker")
@@ -275,12 +278,12 @@ def render_caretaker_available_edit():
 @roles_required('caretaker')
 def render_caretaker_available_delete():
     ac = current_user.contact
-    astart = request.args.get('startdate')
-    aend = request.args.get('enddate')
-    available = Available.query.filter_by(startdate=astart,enddate=aend,ccontact=ac).first()
+    astart = request.args.get('startday')
+    aend = request.args.get('endday')
+    available = Available.query.filter_by(startday=astart,endday=aend,ccontact=ac).first()
     if available:
         if request.method == 'POST':
-            db.seesion.delete(available)
+            db.session.delete(available)
             db.session.commit()
     return redirect(url_for('view.render_caretaker_available'))
 
@@ -291,11 +294,11 @@ def render_caretaker_available_new():
     form = AvailableForm()
     contact = current_user.contact
     if request.method == 'POST' and form.validate_on_submit():
-        startdate = form.startdate.data
-        enddate = form.enddate.data
+        startday = form.startday.data
+        endday = form.endday.data
         ccontact = contact
         query = "INSERT INTO available(startday, endday, ccontact) VALUES ('{}', '{}', '{}')" \
-        .format(startdate, enddate, ccontact)
+        .format(startday, endday, ccontact)
         db.session.execute(query)
         db.session.commit()
         return redirect(url_for('view.render_caretaker_available'))
@@ -349,13 +352,50 @@ def render_caretaker_cantakecare_delete():
 def render_owner_page():
     caretakersquery = "SELECT * FROM users WHERE usertype = 'caretaker'"
     caretakers = db.session.execute(caretakersquery)
+
+#     PER_PAGE = 10
+#   total = caretakers.count()
+#    page = request.args.get(get_page_parameter(), type=int, default=1)
+#    start = (page-1)*PER_PAGE
+#    end = start + PER_PAGE
+#    pagination = Pagination(bs_version=3, page=page, total=total)
+#    caretaker_pages = caretakers.slice(start, end)
+#    context = {
+#        'pagination': pagination,
+#        'caretaker_pages': caretaker_pages
+#    }
+
     caretable = ownerHomePage(caretakers)
+    form = SearchCaretakerForm()
+
+    if request.method == 'POST' and form.validate_on_submit():
+        cc = request.form.get('ccontact')
+        postal_code = request.form.get('postal_code')
+        if cc == '':
+            cc = None
+        if postal_code == '':
+            postal_code = None
+        query = """
+            select *
+            from users
+            where
+                usertype = 'caretaker'
+                and
+                (:cc is null or contact=:cc)
+                and
+                (:postal_code is null or LEFT(postalcode, 3) = LEFT(:postal_code, 3) )
+        """
+        parameters = dict(cc = cc, postal_code = postal_code)
+        selectedCareTakers = db.session.execute(query, parameters)
+        caretable = ownerHomePage(selectedCareTakers)
+        
+
     contact = current_user.contact
     query = "SELECT * FROM users WHERE contact = '{}'".format(contact)
     profile = db.session.execute(query)
     table = userInfoTable(profile)
 
-    return render_template("owner.html", caretable=caretable, profile=profile, caretakers=caretakers, table=table, username=current_user.username + " owner")
+    return render_template("owner.html", form=form, caretable=caretable, profile=profile, caretakers=caretakers, table=table, username=current_user.username + " owner")
 
 
 @view.route("/owner/summary", methods=["GET", "POST"])
@@ -477,16 +517,20 @@ def render_owner_bid_new():
     form.ccontact.data = cn
     if request.method == 'POST' and form.validate_on_submit():
         petname = form.petname.data
-        startdate = form.startdate.data
-        enddate = form.enddate.data
+        startday = form.startday.data
+        endday = form.endday.data
         paymentmode = form.paymentmode.data
         deliverymode = form.deliverymode.data
-        if(enddate - startdate >= timedelta(minutes=1)):
+        if(endday - startday >= timedelta(minutes=1)):
             query = "INSERT INTO biddings(pcontact, ccontact, petname, startday, endday, paymentmode, deliverymode, status) VALUES ('{}', '{}', '{}', '{}','{}', '{}', '{}', '{}')" \
-            .format(contact, cn, petname, startdate, enddate, paymentmode, deliverymode, "pending")
-            db.session.execute(query)
-            db.session.commit()
-        return redirect(url_for('view.render_owner_bid'))
+            .format(contact, cn, petname, startday, endday, paymentmode, deliverymode, "pending")
+            try:
+                db.session.execute(query)
+                db.session.commit()
+                return redirect(url_for('view.render_owner_bid'))
+            except exc.IntegrityError:
+                db.session.rollback()
+                flash("Some of your input is not valid. Make sure your pet name is valid!")
     return render_template("ownerBidNew.html", target=cn, form=form, username=current_user.username + " owner")
 
 

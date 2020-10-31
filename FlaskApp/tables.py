@@ -16,17 +16,17 @@ class editPetTable(Table):
     delete = ButtonCol('Delete', 'view.render_owner_pet_delete', url_kwargs=dict(petname='petname'))
 
 class editAvailableTable(Table):
-    startdate = Col('Start Date ')
-    enddate = Col('End Date ')
+    startday = Col('Start Date ')
+    endday = Col('End Date ')
     ccontact = Col('Contact')
-    edit = ButtonCol('Edit ', 'view.render_caretaker_available_edit', url_kwargs=dict(startdate='startdate', enddate='enddate'))
-    delete = ButtonCol('Delete', 'view.render_caretaker_available_delete', url_kwargs=dict(startdate='startdate', enddate='enddate'))
+    edit = LinkCol('Edit ', 'view.render_caretaker_available_edit', url_kwargs=dict(startday='startday', endday='endday'))
+    delete = ButtonCol('Delete', 'view.render_caretaker_available_delete', url_kwargs=dict(startday='startday', endday='endday'))
 
 class ownerHomePage(Table):
     username = Col('Caretaker Name ')
     contact = Col('Contact ')
     postalcode = Col('Postal Code ')
-    bid = LinkCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', ccontact='contact', postalcode='postalcode', edit='contact'), url_kwargs_extra=dict(edit='edit'))
+    bid = LinkCol('Bid', 'view.render_owner_bid_new', url_kwargs=dict(username='username', ccontact='contact', postalcode='postalcode', edit='contact'), url_kwargs_extra=dict(edit='edit'), column_html_attrs = {'class': 'bid-button'})
 
 
 class biddingTable(Table):
@@ -62,3 +62,10 @@ class profileTable(Table):
     usertype = Col('User Type')
     card = Col('Card')
     postalcode = Col('Postal Code')
+
+class CaretakersBidTable(Table):
+    pcontact = Col('pcontact')
+    petname = Col('petname')
+    category = Col('category')
+    startday = Col('startday')
+    endday = Col('enddays')

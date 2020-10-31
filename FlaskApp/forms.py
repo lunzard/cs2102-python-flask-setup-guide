@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, SelectField
 from wtforms.fields.html5 import DateField
-from wtforms.validators import InputRequired, ValidationError, EqualTo, Regexp
+from wtforms.validators import InputRequired, ValidationError, EqualTo, Regexp, Optional
 from wtforms.widgets import HiddenInput
 from models import Users
 from datetime import date
@@ -79,7 +79,7 @@ class PetForm(FlaskForm):
     category = StringField(
         label='Category',
         validators=[InputRequired()],
-        render_kw={'placeholder': 'Credit Card', 'class': 'input100'}
+        render_kw={'placeholder': 'Category', 'class': 'input100'}
     )
     age = IntegerField(
         label='Age',
@@ -189,8 +189,8 @@ class Bid:
         self.pcontact = pcontact
         self.ccontact = ccontact
         self.petname = None
-        self.startDate = None
-        self.endDate = None
+        self.startday = None
+        self.endday = None
         self.paymentmode = None
         self.deliverymode = None
 
@@ -205,15 +205,15 @@ class BiddingForm(FlaskForm):
         validators=[InputRequired()],
         render_kw={'placeholder': 'Petname', 'class': 'input100'}
     )
-    startdate = DateField(
-        label='Startdate',
+    startday = DateField(
+        label='startday',
         validators=[InputRequired()],
-        render_kw={'placeholder': 'Startdate', 'class': 'input100'}
+        render_kw={'placeholder': 'startday', 'class': 'input100'}
     )
-    enddate = DateField(
-        label='Enddate',
+    endday = DateField(
+        label='endday',
         validators=[InputRequired()],
-        render_kw={'placeholder': 'Enddate', 'class': 'input100'}
+        render_kw={'placeholder': 'endday', 'class': 'input100'}
     )
     paymentmode = StringField(
         label='Paymentmode',
@@ -227,7 +227,7 @@ class BiddingForm(FlaskForm):
     )
     def validate_on_submit(self):
         result = super(BiddingForm, self).validate()
-        if (self.startdate.data - self.enddate.data >= timedelta(minutes=1)):
+        if (self.startday.data - self.endday.data >= timedelta(minutes=1)):
             return False
         else:
             return True
@@ -268,72 +268,71 @@ class ProfileForm(FlaskForm):
 
     
 class AvailableForm(FlaskForm):
-    startdate = DateField(
-        label='Startdate',
+    startday = DateField(
+        label='startday',
         validators=[InputRequired()],
         default=date.today(), 
         format='%Y-%m-%d',
-        render_kw={'placeholder': 'Startdate', 'class': 'input100'}
+        render_kw={'placeholder': 'startday', 'class': 'input100'}
     )
-    enddate = DateField(
-        label='Enddate',
+    endday = DateField(
+        label='endday',
         validators=[InputRequired()],
         default=date.today(), 
         format='%Y-%m-%d',
-        render_kw={'placeholder': 'Enddate', 'class': 'input100'}
+        render_kw={'placeholder': 'endday', 'class': 'input100'}
     )
     def validate_on_submit(self):
         result = super(AvailableForm, self).validate()
-        if (self.startdate.data>self.enddate.data):
+        if (self.startday.data - self.endday.data >= timedelta(minutes = 1)):
             return False
         else:
             return result
 
 class AvailableUpdateForm(FlaskForm):
-    startdate = DateField(
-        label='Startdate',
+    startday = DateField(
+        label='startday',
         validators=[InputRequired()],
         default=date.today(), 
         format='%Y-%m-%d',
-        render_kw={'placeholder': 'Startdate', 'class': 'input100'}
+        render_kw={'placeholder': 'startday', 'class': 'input100'}
     )
-    enddate = DateField(
-        label='Enddate',
+    endday = DateField(
+        label='endday',
         validators=[InputRequired()],
         default=date.today(), 
         format='%Y-%m-%d',
-        render_kw={'placeholder': 'Enddate', 'class': 'input100'}
-    )
-    contact = IntegerField(
-        widget=HiddenInput(),
-        label='Contact',
-        validators=[InputRequired(), is_valid_contact],
-        render_kw={'placeholder': 'Contact', 'class': 'input100'}
+        render_kw={'placeholder': 'endday', 'class': 'input100'}
     )
     def validate_on_submit(self):
         result = super(AvailableUpdateForm, self).validate()
-        if (self.startdate.data>self.enddate.data):
+        if (self.startday.data - self.endday.data >= timedelta(minutes = 1)):
             return False
         else:
             return result
 
 class SearchCaretakerForm(FlaskForm):
     ccontact = IntegerField(
-        label='Ccontact',
-        validators=[InputRequired()],
-        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
+        label='Contact',
+        validators=[Optional()],
+        default=None,
+        render_kw={'placeholder': 'Contact', 'class': 'input100'}
     )
-    ccontact = IntegerField(
-        label='Ccontact',
-        validators=[InputRequired()],
-        render_kw={'placeholder': 'Ccontact', 'class': 'input100'}
+    postal_code = StringField(
+        label='Postal Code',
+        validators=[Optional()],
+        default=None,
+        render_kw={'placeholder': 'Postal Code', 'class': 'input100'}
     )
+    category = StringField(	
+        label='Category',
+        validators=[Optional()],
+        default=None,	
+        render_kw={'placeholder': 'Category', 'class': 'input100'}	
+    )
+    
     def validate_on_submit(self):
-            result = super(SearchCaretakerForm, self).validate()
-            if (self.startdate.data>self.enddate.data):
-                return False
-            else:
-                return result
+        return super(SearchCaretakerForm, self).validate()
             
 class CanTakeCareForm(FlaskForm):
     category = StringField(	

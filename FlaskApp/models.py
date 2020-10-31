@@ -138,12 +138,12 @@ class Pets(db.Model, UserMixin):
         return (self.pcontact, self.petname)
     
 class Available(db.Model, UserMixin):
-    startdate = db.Column(db.Date, primary_key=True, nullable=False)
-    enddate = db.Column(db.Date, primary_key=True, nullable=False)
+    startday = db.Column(db.Date, primary_key=True, nullable=False)
+    endday = db.Column(db.Date, primary_key=True, nullable=False)
     ccontact = db.Column(db.Integer, primary_key=True, nullable=False)
     
     def get_key(self):
-        return (self.startdate, self.enddate, self.ccontact)
+        return (self.startday, self.endday, self.ccontact)
 
 class Biddings(db.Model, UserMixin):
     petname = db.Column(db.String, db.ForeignKey('pets.petname', ondelete='CASCADE'), primary_key=True, nullable=False)
